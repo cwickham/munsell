@@ -19,23 +19,59 @@ munsell.text <- function(colour.spec){
 
 # function that takes rgb and gives closest munsell
 
+.plot_common <- function(bg.col){
+	list(scale_fill_identity(), 
+	opts(panel.grid.major = theme_blank(), 
+	panel.grid.minor = theme_blank(), 
+	panel.background = theme_blank(), 
+	plot.background = theme_rect(fill = bg.col), 
+	axis.line = theme_blank(), 
+	axis.text.x = theme_blank(), 
+	axis.text.y = theme_blank(),
+	axis.ticks = theme_blank(),
+	axis.ticks.y = theme_blank(),
+	axis.title.x = theme_blank(),
+	axis.title.y = theme_blank(),
+	legend.background = theme_blank(),
+	legend.key = theme_blank(),
+	legend.text = theme_blank(),
+	legend.title = theme_blank(), 
+	drop = "legend_box"))
+}
+
+.plot_polar <- function(bg.col){
+	list(scale_fill_identity(), 
+	opts(panel.grid.major = theme_blank(), 
+	panel.grid.minor = theme_blank(), 
+	panel.background = theme_blank(), 
+	plot.background = theme_rect(fill = bg.col), 
+	axis.line = theme_blank(), 
+	axis.text.x = theme_blank(), 
+	axis.text.y = theme_blank(),
+	axis.ticks = theme_blank(),
+	axis.ticks.y = theme_blank(),
+	axis.title.x = theme_blank(),
+	axis.title.y = theme_blank(),
+	legend.background = theme_blank(),
+	legend.key = theme_blank(),
+	legend.text = theme_blank(),
+	legend.title = theme_blank(), 
+	drop = "legend_box"))
+}
+
+
 
 hue.slice <- function(hue.name = "all",  back.col = "white"){
 	if (hue.name == "all") {
 		return(ggplot(aes(x = factor(chroma), y = factor(value)), 
 			data = munsell.map) +
 		 	geom_tile(aes(fill = hex), colour = back.col) +
-			geom_text(aes(label = name, colour = value > 4), 
-				angle = 45, size = 2) +
-		 	scale_colour_manual(values = c("white","black")) +
-		 	scale_fill_identity() + 
-			opts(panel.grid.major = theme_blank(), 
-				panel.grid.minor = theme_blank(), 
-				panel.background = theme_blank(), 
-				plot.background = theme_rect(fill = back.col)) +
+			facet_wrap(~ hue) +
+			scale_colour_manual(values = c("white","black")) +
 			scale_x_discrete("Chroma") + 
-			scale_y_discrete("Value") +
-			facet_wrap(~ hue))
+			opts(aspect.ratio = 1) +
+			scale_y_discrete("Value", expand = c(0.25, 0)) +
+			.plot_common(back.col))
 	}
 	else {
 		if ( ! hue.name %in% munsell.map$hue) stop("invalid hue name")
@@ -45,14 +81,10 @@ hue.slice <- function(hue.name = "all",  back.col = "white"){
 		geom_text(aes(label = name, colour = value > 4), 
 			angle = 45, size = 2) +
 	 	scale_colour_manual(values = c("white","black")) +
-	 	scale_fill_identity() + 
-		opts(panel.grid.major = theme_blank(), 
-			panel.grid.minor = theme_blank(), 
-			panel.background = theme_blank(), 
-			plot.background = theme_rect(fill = back.col)) +
 		scale_x_discrete("Chroma") + 
-		scale_y_discrete("Value") +
-		opts(panel_background = theme_rect(colour = back.col))
+		scale_y_discrete("Value", expand = c(0.25, 0)) +
+		opts(aspect.ratio = 1) +
+		.plot_common(back.col)
 	}
 }
 
@@ -61,14 +93,10 @@ value.slice <- function(value.name,  back.col = "white"){
 	ggplot(aes(x = hue, y = chroma), 
 		data = subset(munsell.map, value == value.name & hue != "N")) +
 	 	geom_tile(aes(fill = hex), colour = back.col) +
-	 	scale_fill_identity() + 
-		coord_polar() +
-		opts(panel.grid.major = theme_blank(), 
-			panel.grid.minor = theme_blank(), 
-			panel.background = theme_blank(), 
-			plot.background = theme_rect(fill = back.col)) +
+	 	coord_polar() +
 		scale_x_discrete("Hue") + 
-		scale_y_continuous("Chroma") 
+		scale_y_continuous("Chroma") +
+		.plot_common(back.col)
 }
 
 chroma.slice <- function(chroma.name,  back.col = "white"){
@@ -79,15 +107,9 @@ chroma.slice <- function(chroma.name,  back.col = "white"){
 		geom_text(aes(label = name, colour = value > 4), 
 			angle = 45, size = 2) +
 	 	scale_colour_manual(values = c("white","black")) +
-	 	scale_fill_identity() + 
-		opts(panel.grid.major = theme_blank(), 
-			panel.grid.minor = theme_blank(), 
-			panel.background = theme_blank(), 
-			axis.text.x=theme_text(angle = 45,hjust=1), 
-			aspect.ratio = 1/4, 
-			plot.background = theme_rect(fill = back.col)) +
 		scale_x_discrete("Hue") + 
-		scale_y_continuous("Value")	
+		scale_y_continuous("Value") +
+		.plot_common(back.col)	
 }
 
 complement.slice <- function(hue.name,  back.col = "white"){
@@ -108,12 +130,8 @@ complement.slice <- function(hue.name,  back.col = "white"){
 		geom_text(aes(label = name, colour = value > 4), 
 			angle = 45, size = 2) +
 	 	scale_colour_manual(values = c("white","black")) +
-	 	scale_fill_identity() + 
-		opts(panel.grid.major = theme_blank(), 
-			panel.grid.minor = theme_blank(), 
-			panel.background =theme_blank(), 
-			plot.background = theme_rect(fill = back.col)) +
 		scale_x_discrete("Chroma") + 
 		scale_y_continuous("Value") +
-		facet_grid(. ~ hue,  scales = "free_x",  space = "free") 
+		facet_grid(. ~ hue,  scales = "free_x",  space = "free")  +
+		.plot_common(back.col)
 }
