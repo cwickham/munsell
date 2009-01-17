@@ -131,3 +131,39 @@ complement.slice <- function(hue.name,  back.col = "white"){
     opts(aspect.ratio = 1) +
     .plot_common(back.col)
 }
+
+# converting rgb to munsell
+# transform to uniform color space then find euclidean distance???
+# LUV - uniform space
+
+# convert hex/RGB to LUV
+# compare euclidean distance to munsell colours also in LUV
+# pick closest
+# output hex/RGB and Munsell colour
+
+not.miss <- subset(munsell.map, !is.na(hex))
+not.miss <- cbind(not.miss, as(hex2RGB(not.miss$hex), "LUV")@coords)
+munsell.map <- merge(munsell.map, not.miss,  all.x = TRUE)
+
+rgb2munsell <- function(R, G, B){
+    LUV.vals <- as(RGB(R, G, B), "LUV")@coords
+    dist.calc <- function(x, y) sum((x - y) ^ 2)
+    dists <- apply(munsell.map[, c("L", "U", "V")], 1, dist.calc, y = LUV.vals)
+    closest <- munsell.map[which.min(dists), "name"]
+    return(closest)
+}
+
+#plot rgb and closest
+plot.closest <- function(R, G, B,  back.col = "white"){
+    closest <- rgb2munsell(R, G, B)
+    little.df <- data.frame(type = c("actual", "closest"),  
+        hex = c(hex(RGB(R,G,B)),  munsell.text(closest)), 
+        name = c(paste(R, G, B, sep = ", "), closest), 
+        x = c(0, 1), y = c(0, 0))
+    ggplot(data = little.df, aes(x = x, y = y)) + geom_tile(aes(fill = hex)) +
+        geom_text(aes(label = name), size = 5) +
+        opts(aspect.ratio = 1) +
+        .plot_common(back.col) + facet_wrap(~ type,  scale = "free")
+}
+
+
