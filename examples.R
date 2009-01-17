@@ -13,3 +13,9 @@ chroma.slice(18)
 
 complement.slice("5Y")
 complement.slice("5PB")
+
+rgb2munsell(0.1, 0.1, 0.3)
+rgb2munsell(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3))
+
+plot.closest(0.1, 0.1, 0.3)
+plot.closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3))

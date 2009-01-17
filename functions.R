@@ -1,4 +1,5 @@
-library("ggplot2")
+library(ggplot2)
+library(colorspace)
 load("munsell_map.rdata")
 
 # takes hue (character), value(numeric) and chroma(numeric)
@@ -13,8 +14,7 @@ munsell <- function(hue, value, chroma){
 
 #take standard munsell color i.e. "5PB 5/10"
 munsell.text <- function(colour.spec){
-  hcv <- unlist(strsplit(strsplit(colour.spec, " ")[[1]],  "/"))
-  munsell(toupper(hcv[1]), as.numeric(hcv[2]), as.numeric(hcv[3]))
+  subset(munsell.map, name %in% colour.spec)$hex
 }
 
 # function that takes rgb and gives closest munsell
@@ -141,10 +141,6 @@ complement.slice <- function(hue.name,  back.col = "white"){
 # pick closest
 # output hex/RGB and Munsell colour
 
-not.miss <- subset(munsell.map, !is.na(hex))
-not.miss <- cbind(not.miss, as(hex2RGB(not.miss$hex), "LUV")@coords)
-munsell.map <- merge(munsell.map, not.miss,  all.x = TRUE)
-
 rgb2munsell <- function(R, G = NULL, B = NULL){
     LUV.vals <- as(RGB(R, G, B), "LUV")@coords
     ncolors <- nrow(LUV.vals)
@@ -156,17 +152,19 @@ rgb2munsell <- function(R, G = NULL, B = NULL){
 }
 
 #plot rgb and closest
-plot.closest <- function(R, G, B,  back.col = "white"){
-    
-    closest <- rgb2munsell(R, G, B)
-    little.df <- data.frame(type = c("actual", "closest"),  
-        hex = c(hex(RGB(R,G,B)),  munsell.text(closest)), 
-        name = c(paste(R, G, B, sep = ", "), closest), 
-        x = c(0, 1), y = c(0, 0))
-    ggplot(data = little.df, aes(x = x, y = y)) + geom_tile(aes(fill = hex)) +
-        geom_text(aes(label = name), size = 5) +
-        opts(aspect.ratio = 1) +
-        .plot_common(back.col) + facet_wrap(~ type,  scale = "free")
+plot.closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
+  closest <- rgb2munsell(R, G, B)
+  ncolours <- length(closest)
+  rgbnames <- apply(RGB(R, G, B)@coords, 1, paste, collapse = ", ")
+  little.df <- data.frame(type = rep(c("actual", "closest"), each = ncolours),  
+    hex = c(hex(RGB(R,G,B)),  munsell.text(closest)), 
+    name = c(rgbnames, closest), 
+    x = rep(c(0, 0), each = ncolours), y = rep(1:ncolours), 2)
+  ggplot(data = little.df, aes(x = x, y = y)) + geom_tile(aes(fill = hex),
+    colour = back.col, size = 2) +
+    geom_text(aes(label = name), size = 2) +
+    opts(aspect.ratio = ncolours) +
+    .plot_common(back.col) + facet_wrap(~ type)
 }
 
 
