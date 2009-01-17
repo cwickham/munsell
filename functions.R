@@ -145,16 +145,19 @@ not.miss <- subset(munsell.map, !is.na(hex))
 not.miss <- cbind(not.miss, as(hex2RGB(not.miss$hex), "LUV")@coords)
 munsell.map <- merge(munsell.map, not.miss,  all.x = TRUE)
 
-rgb2munsell <- function(R, G, B){
+rgb2munsell <- function(R, G = NULL, B = NULL){
     LUV.vals <- as(RGB(R, G, B), "LUV")@coords
-    dist.calc <- function(x, y) sum((x - y) ^ 2)
+    ncolors <- nrow(LUV.vals)
+    dist.calc <- function(x, y) rowSums((rep(x, each = ncolors) - y) ^ 2)
     dists <- apply(munsell.map[, c("L", "U", "V")], 1, dist.calc, y = LUV.vals)
-    closest <- munsell.map[which.min(dists), "name"]
-    return(closest)
+    if(is.null(dim(dists)))  closest <- which.min(dists)
+    else closest <- apply(dists, 1, which.min)
+    return(munsell.map[closest, "name"])
 }
 
 #plot rgb and closest
 plot.closest <- function(R, G, B,  back.col = "white"){
+    
     closest <- rgb2munsell(R, G, B)
     little.df <- data.frame(type = c("actual", "closest"),  
         hex = c(hex(RGB(R,G,B)),  munsell.text(closest)), 
