@@ -1,4 +1,4 @@
-library(ggplot2)
+`library(ggplot2)
 library(colorspace)
 load("munsell_map.rdata")
 
@@ -27,10 +27,12 @@ munsell <- function(hue, value, chroma){
 # takes munsell text specifications and plots them
 # should take hex too? 
 plot.munsell <- function(colour.specs,  back.col = "white"){
+  if(length(colour.specs) == 1) add.ops <- list(geom_text(aes(label = names)))
+  else add.ops <- list(facet_wrap(~ names))
   df <- data.frame(names = factor(colour.specs, levels = colour.specs),  
     hex = munsell.text(colour.specs), x = 0 , y = 0)
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = hex)) + 
-    scale_fill_identity() + facet_wrap(~ names) +
+    scale_fill_identity() + add.ops +
     opts(aspect.ratio = 1) + .plot_common(back.col)
 }
 
