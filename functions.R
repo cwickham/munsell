@@ -24,6 +24,18 @@ munsell <- function(hue, value, chroma){
   return(hex.vals)
 }
 
+# takes munsell text specifications and plots them
+# should take hex too? 
+plot.munsell <- function(colour.specs,  back.col = "white"){
+  df <- data.frame(names = colour.specs,  hex = munsell.text(colour.specs),  
+    x = 0 , y = 0)
+  ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = hex)) + 
+    scale_fill_identity() + facet_wrap(~ names) +
+    opts(aspect.ratio = 1) + .plot_common(back.col)
+}
+
+
+
 .plot_common <- function(bg.col){
   list(scale_fill_identity(), 
   opts(panel.grid.major = theme_blank(), 
