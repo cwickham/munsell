@@ -27,13 +27,20 @@ munsell <- function(hue, value, chroma){
 # takes munsell text specifications and plots them
 # should take hex too? 
 plot.munsell <- function(colour.specs,  back.col = "white"){
-  df <- data.frame(names = colour.specs,  hex = munsell.text(colour.specs),  
-    x = 0 , y = 0)
+  df <- data.frame(names = factor(colour.specs, levels = colour.specs),  
+    hex = munsell.text(colour.specs), x = 0 , y = 0)
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = hex)) + 
     scale_fill_identity() + facet_wrap(~ names) +
     opts(aspect.ratio = 1) + .plot_common(back.col)
 }
 
+seq.munsell <- function(from, to, n){
+  in.LUV <- munsell.map[match(c(from, to), munsell.map$name), c("L", "U", "V")]
+  LUV.seq <- matrix(c(seq(in.LUV$L[1], in.LUV$L[2],  length = n), 
+    seq(in.LUV$U[1], in.LUV$U[2],  length = n), 
+    seq(in.LUV$V[1], in.LUV$V[2],  length = n)),  ncol = 3)
+  rgb2munsell(as(LUV(LUV.seq), "RGB")@coords)
+}
 
 
 .plot_common <- function(bg.col){

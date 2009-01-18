@@ -1,7 +1,8 @@
-munsell("5Y", 5, 6)
-plot(1, 1, col = munsell("5Y", 4, 6), pch = 19, cex = 10)
-
 munsell.text("5Y 5/6")
+plot.munsell(c("5Y 5/6", "5Y 8/8"))
+munsell("5Y", 5, 6)
+
+plot(seq.munsell("5Y 8/8", "5PB 5/12",  10))
 
 hue.slice("5Y")
 hue.slice()
