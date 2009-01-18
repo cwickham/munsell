@@ -2,22 +2,27 @@ library(ggplot2)
 library(colorspace)
 load("munsell_map.rdata")
 
-# takes hue (character), value(numeric) and chroma(numeric)
-# outputs hex
-munsell <- function(hue, value, chroma){
-  selected <- data.frame(hue = hue,  value = value,  chroma = chroma)
-  hex.vals <- merge(selected, munsell.map, all.x = TRUE)$hex
+#### munsell are viewed under illuminant C
+### rgb in R is under illuminant D65??
+
+
+#take standard munsell color i.e. "5PB 5/10"
+munsell.text <- function(colour.spec){
+  positions <- match(colour.spec, munsell.map$name)
+  hex.vals <- munsell.map[positions, "hex"]
   if (any(is.na(hex.vals))) warning("Some colours were mispecified or 
     not available (in RGB) and assigned NA")
   return(hex.vals)
 }
 
-#take standard munsell color i.e. "5PB 5/10"
-munsell.text <- function(colour.spec){
-  subset(munsell.map, name %in% colour.spec)$hex
-}
 
-# function that takes rgb and gives closest munsell
+# takes hue (character), value(numeric) and chroma(numeric)
+# outputs hex
+munsell <- function(hue, value, chroma){
+  selected <- paste(hue, " ", value, "/", chroma,  sep = "")
+  hex.vals <- munsell.text(selected)
+  return(hex.vals)
+}
 
 .plot_common <- function(bg.col){
   list(scale_fill_identity(), 
@@ -155,7 +160,7 @@ rgb2munsell <- function(R, G = NULL, B = NULL){
 plot.closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
   closest <- rgb2munsell(R, G, B)
   ncolours <- length(closest)
-  rgbnames <- apply(RGB(R, G, B)@coords, 1, paste, collapse = ", ")
+  rgbnames <- apply(round(RGB(R, G, B)@coords, 2), 1, paste, collapse = ", ")
   little.df <- data.frame(type = rep(c("actual", "closest"), each = ncolours),  
     hex = c(hex(RGB(R,G,B)),  munsell.text(closest)), 
     name = c(rgbnames, closest), 
