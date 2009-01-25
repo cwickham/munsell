@@ -1,4 +1,4 @@
-`library(ggplot2)
+library(ggplot2)
 library(colorspace)
 load("munsell_map.rdata")
 
@@ -33,6 +33,8 @@ plot.munsell <- function(colour.specs,  back.col = "white"){
     hex = munsell.text(colour.specs), x = 0 , y = 0)
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = hex)) + 
     scale_fill_identity() + add.ops +
+    scale_x_continuous(expand = c(0, 0))+
+    scale_y_continuous(expand = c(0, 0))+
     opts(aspect.ratio = 1) + .plot_common(back.col)
 }
 
@@ -193,4 +195,32 @@ plot.closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
     .plot_common(back.col) + facet_wrap(~ type)
 }
 
+#lighter and darker functions
+lighter <- function(col.name){
+  col.split <- lapply(strsplit(col.name, "/"), 
+    function(x) unlist(strsplit(x, " ")))
+  unlist(lapply(col.split, function(x) 
+    paste(x[1], " ", as.numeric(x[2]) + 1,"/", x[3] , sep = "")))  
+}
 
+darker <- function(col.name){
+  col.split <- lapply(strsplit(col.name, "/"), 
+    function(x) unlist(strsplit(x, " ")))
+  unlist(lapply(col.split, function(x) 
+    paste(x[1], " ", as.numeric(x[2]) - 1,"/", x[3] , sep = "")))  
+}
+
+# saturate and desaturate
+saturate <- function(col.name){
+  col.split <- lapply(strsplit(col.name, "/"), 
+    function(x) unlist(strsplit(x, " ")))
+  unlist(lapply(col.split, function(x) 
+    paste(x[1], " ", x[2], "/", as.numeric(x[3]) + 2, sep = "")))  
+}
+
+desaturate <- function(col.name){
+  col.split <- lapply(strsplit(col.name, "/"), 
+    function(x) unlist(strsplit(x, " ")))
+  unlist(lapply(col.split, function(x) 
+    paste(x[1], " ", x[2], "/", as.numeric(x[3]) - 2, sep = "")))  
+}
