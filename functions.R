@@ -224,3 +224,77 @@ desaturate <- function(col.name){
   unlist(lapply(col.split, function(x) 
     paste(x[1], " ", x[2], "/", as.numeric(x[3]) - 2, sep = "")))  
 }
+
+# function to check specification is right
+# i.e. colour is of form h v/c 
+hue.steps <- seq(2.5, 10, 2.5)
+
+# regepr pattern for munsell colour format - maybe do toupper first
+grep("^[0-9]?.?[0-9][A-Z]{1,2}[ ][0-9]{1,2}/[0-9]{1,2}$" , cols)
+
+# function to check user supplied munsell specification
+check.munsell <- function(colour.spec){
+  colour.spec <- toupper(colour.spec)
+  # check format
+  right.format <- grep("^[0-9]?.?[0-9][A-Z]{1,2}[ ][0-9]?.?[0-9]/[0-9]?.?[0-9]{1,2}$",
+    colour.spec)
+  if (length(right.format) != length(colour.spec)) {
+   bad.cols <- paste(colour.spec[-right.format],  sep = ", ")
+    stop(paste("some of your colours are not correctly formatted:",  bad.cols))  
+  }
+  #check hues
+  hues <- gsub("[0-9 /.]", "", colour.spec)
+  act.hues <- c("R", "YR", "Y", "GY", "G", "BG", "B", "PB", "P", "RP")
+  good.hue <- hues %in% act.hues
+  if (!all(good.hue)){
+    bad.hue <- paste(hues[!good.hue], "in", colour.spec[!good.hue],  
+      collapse = "; ")
+    stop(paste("you have specified invalid hue names: ", bad.hue, 
+      "\n hues should be one of", paste(act.hues,  collapse = ", ")))
+  }
+  col.split <- lapply(strsplit(colour.spec, "/"), 
+     function(x) unlist(strsplit(x, " ")))
+  col.split <- lapply(col.split, gsub, pattern = "[A-Z]", replacement = "")
+  step <- as.numeric(sapply(col.split, "[", 1))
+  values <- as.numeric(sapply(col.split, "[", 2))
+  chromas <- as.numeric(sapply(col.split, "[", 3))
+  
+  act.steps <- seq(2.5, 10, by = 2.5)
+  good.step <- step %in% act.steps
+  if(!all(good.step)){
+    bad.step <- paste(step[!good.step], "in", colour.spec[!good.step],  
+      collapse = "; ")
+    stop(paste("you have specified invalid hue steps: ", bad.step, 
+       "\n hues steps should be one of", paste(act.steps,  collapse = ", ")))
+  }
+  good.value <- values == round(values)
+  if(!all(good.value)) {
+    bad.value <- paste(values[!good.value], "in", colour.spec[!good.value],  
+      collapse = "; ")
+    stop(paste("some colours have non-integer values: ", bad.value))
+  }
+  good.chroma <- (chromas %% 2) == 0
+  if(!all(good.chroma)) {
+    bad.chroma <- paste(chromas[!good.chroma], "in", colour.spec[!good.chroma],  
+      collapse = "; ")
+    stop(paste("some colours have chromas that aren't multiples of two: ",
+      bad.chroma))
+  }
+  
+  positions <- match(colour.spec, munsell.map$name)
+  if(any(is.na(positions))){
+    bad.colours <- paste(colour.spec[is.na(positions)], collapse = ", ")
+    stop(paste("despite your colours being correctly specifed they are unavailable munsell colours in the rgb system:", bad.colours, 
+    "\n you could try fix.munsell"))
+  }
+}
+
+# function to check colour is defined
+
+# function that take correctly specified but undefined colour and outputs 
+# something sensible
+
+
+
+
+
