@@ -225,15 +225,9 @@ desaturate <- function(col.name){
     paste(x[1], " ", x[2], "/", as.numeric(x[3]) - 2, sep = "")))  
 }
 
-# function to check specification is right
-# i.e. colour is of form h v/c 
-hue.steps <- seq(2.5, 10, 2.5)
-
-# regepr pattern for munsell colour format - maybe do toupper first
-grep("^[0-9]?.?[0-9][A-Z]{1,2}[ ][0-9]{1,2}/[0-9]{1,2}$" , cols)
-
 # function to check user supplied munsell specification
-check.munsell <- function(colour.spec){
+# i.e. colour is of form h v/c 
+check.munsell <- function(colour.spec,  fix = FALSE){
   colour.spec <- toupper(colour.spec)
   # check format
   right.format <- grep("^[0-9]?.?[0-9][A-Z]{1,2}[ ][0-9]?.?[0-9]/[0-9]?.?[0-9]{1,2}$",
@@ -267,33 +261,57 @@ check.munsell <- function(colour.spec){
     stop(paste("you have specified invalid hue steps: ", bad.step, 
        "\n hues steps should be one of", paste(act.steps,  collapse = ", ")))
   }
-  good.value <- values == round(values)
+  good.value <- values == round(values) & values <= 10 & values >= 0
   if(!all(good.value)) {
     bad.value <- paste(values[!good.value], "in", colour.spec[!good.value],  
       collapse = "; ")
-    stop(paste("some colours have non-integer values: ", bad.value))
+    stop(paste("some colours have do not have integer values between 0 and 10: ", bad.value))
   }
-  good.chroma <- (chromas %% 2) == 0
+  good.chroma <- (chromas %% 2) == 0 
   if(!all(good.chroma)) {
     bad.chroma <- paste(chromas[!good.chroma], "in", colour.spec[!good.chroma],  
       collapse = "; ")
     stop(paste("some colours have chromas that aren't multiples of two: ",
       bad.chroma))
   }
-  
-  positions <- match(colour.spec, munsell.map$name)
-  if(any(is.na(positions))){
-    bad.colours <- paste(colour.spec[is.na(positions)], collapse = ", ")
-    stop(paste("despite your colours being correctly specifed they are unavailable munsell colours in the rgb system:", bad.colours, 
-    "\n you could try fix.munsell"))
-  }
+  colour.spec <- is.munsell(colour.spec,  fix = fix)
+  colour.spec
 }
 
 # function to check colour is defined
+is.munsell <- function(colour.spec, fix = FALSE){
+  positions <- match(colour.spec, munsell.map$name)
+  hex <- munsell.map[positions, "hex"]
+  
+  if(any(is.na(hex))){
+    bad.colours <- paste(colour.spec[is.na(hex)], collapse = ", ")
+    if(!fix){
+      stop(paste("despite your colours being correctly specifed they are
+        unavailable munsell colours in the rgb system:", bad.colours, 
+        "\n you could try fix = TRUE"))
+      }
+    else{
+      warning(paste("some colours are undefined and have been replaced by
+        colours with the identical hue and value but maximum defined chroma:",
+        bad.colours))
+      colour.spec[is.na(hex)] <- fix.munsell(colour.spec[is.na(hex)])
+    }
+  }
+  colour.spec
+}
 
-# function that take correctly specified but undefined colour and outputs 
-# something sensible
-
+# function that take correctly specified but undefined colours and outputs 
+# something sensible - value should be ok - take highest chroma defined
+fix.munsell <- function(colour.spec){
+  col.split <- lapply(strsplit(colour.spec, "/"), 
+     function(x) unlist(strsplit(x, " ")))
+  max.chroma <- function(colour.args){
+    hue.value <- subset(munsell.map, hue == colour.args[1] & 
+        value == colour.args[2] & !is.na(hex)) 
+    hue.value[which.max(hue.value$chroma), "name"]
+  }
+  unlist(lapply(col.split, max.chroma))
+}
 
 
 
