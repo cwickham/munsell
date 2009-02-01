@@ -7,28 +7,28 @@ load("munsell_map.rdata")
 
 
 #take standard munsell color i.e. "5PB 5/10"
-munsell.text <- function(colour.spec){
+munsell.text <- function(colour.spec, ...){
+  colour.spec <- check.munsell(colour.spec, ...)
   positions <- match(colour.spec, munsell.map$name)
   hex.vals <- munsell.map[positions, "hex"]
-  if (any(is.na(hex.vals))) warning("Some colours were mispecified or 
-    not available (in RGB) and assigned NA")
   return(hex.vals)
 }
 
 
 # takes hue (character), value(numeric) and chroma(numeric)
 # outputs hex
-munsell <- function(hue, value, chroma){
+munsell <- function(hue, value, chroma, ...){
   selected <- paste(hue, " ", value, "/", chroma,  sep = "")
-  hex.vals <- munsell.text(selected)
+  hex.vals <- munsell.text(selected, ...)
   return(hex.vals)
 }
 
 # takes munsell text specifications and plots them
 # should take hex too? 
-plot.munsell <- function(colour.specs,  back.col = "white"){
+plot.munsell <- function(colour.specs,  back.col = "white", ...){
   if(length(colour.specs) == 1) add.ops <- list(geom_text(aes(label = names)))
   else add.ops <- list(facet_wrap(~ names))
+  colour.specs <- check.munsell(colour.specs, ...)
   df <- data.frame(names = factor(colour.specs, levels = colour.specs),  
     hex = munsell.text(colour.specs), x = 0 , y = 0)
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = hex)) + 
@@ -194,12 +194,15 @@ plot.closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
     opts(aspect.ratio = ncolours) +
     .plot_common(back.col) + facet_wrap(~ type)
 }
+#TO DO: fix lighter/darker etc. to warn if already lightest etc.
 
 #lighter and darker functions
 lighter <- function(col.name){
+  col.name <- check.munsell(col.name)
   col.split <- lapply(strsplit(col.name, "/"), 
     function(x) unlist(strsplit(x, " ")))
-  unlist(lapply(col.split, function(x) 
+  if(col.split[2] == 9) col.spec <- "N 10/0"
+  col.spec <- unlist(lapply(col.split, function(x) 
     paste(x[1], " ", as.numeric(x[2]) + 1,"/", x[3] , sep = "")))  
 }
 
@@ -225,21 +228,36 @@ desaturate <- function(col.name){
     paste(x[1], " ", x[2], "/", as.numeric(x[3]) - 2, sep = "")))  
 }
 
+
+complement <- function(col.name, ...){
+  col.name <- check.munsell(col.name, ...)
+  col.split <- lapply(strsplit(col.name, "/"), 
+    function(x) unlist(strsplit(x, " ")))
+  hues <- levels(munsell.map$hue)[-1]
+
+  comps <- unlist(lapply(col.split, function(x) {
+      hue.index <- match(x[1],  hues)
+      paste(hues[(hue.index + 20) %% 40], " ", x[2], "/", x[3], sep = "")
+    }))
+  check.munsell(comps, ...)
+}
+
 # function to check user supplied munsell specification
 # i.e. colour is of form h v/c 
 check.munsell <- function(colour.spec,  fix = FALSE){
-  colour.spec <- toupper(colour.spec)
+  missing <- is.na(colour.spec)
+  colour.spec <- toupper(colour.spec[!missing])
   # check format
   right.format <- grep("^[0-9]?.?[0-9][A-Z]{1,2}[ ][0-9]?.?[0-9]/[0-9]?.?[0-9]{1,2}$",
     colour.spec)
-  if (length(right.format) != length(colour.spec)) {
+  if (length(right.format) != length((colour.spec))) {
    bad.cols <- paste(colour.spec[-right.format],  sep = ", ")
     stop(paste("some of your colours are not correctly formatted:",  bad.cols))  
   }
   #check hues
   hues <- gsub("[0-9 /.]", "", colour.spec)
   act.hues <- c("R", "YR", "Y", "GY", "G", "BG", "B", "PB", "P", "RP")
-  good.hue <- hues %in% act.hues
+  good.hue <-  hues %in% act.hues
   if (!all(good.hue)){
     bad.hue <- paste(hues[!good.hue], "in", colour.spec[!good.hue],  
       collapse = "; ")
@@ -275,25 +293,22 @@ check.munsell <- function(colour.spec,  fix = FALSE){
       bad.chroma))
   }
   colour.spec <- is.munsell(colour.spec,  fix = fix)
-  colour.spec
+  result <- rep(NA,  length(missing))
+  result[!missing] <- colour.spec
+  result
 }
 
 # function to check colour is defined
 is.munsell <- function(colour.spec, fix = FALSE){
   positions <- match(colour.spec, munsell.map$name)
   hex <- munsell.map[positions, "hex"]
-  
   if(any(is.na(hex))){
     bad.colours <- paste(colour.spec[is.na(hex)], collapse = ", ")
     if(!fix){
-      stop(paste("despite your colours being correctly specifed they are
-        unavailable munsell colours in the rgb system:", bad.colours, 
-        "\n you could try fix = TRUE"))
+      warning("some specified colours are undefined. You could try fix = TRUE")
+      colour.spec[is.na(hex)] <- NA
       }
     else{
-      warning(paste("some colours are undefined and have been replaced by
-        colours with the identical hue and value but maximum defined chroma:",
-        bad.colours))
       colour.spec[is.na(hex)] <- fix.munsell(colour.spec[is.na(hex)])
     }
   }
