@@ -2,10 +2,8 @@
 
 #lighter and darker functions
 lighter <- function(col.name){
-  col.name <- check.munsell(col.name)
   col.split <- lapply(strsplit(col.name, "/"), 
     function(x) unlist(strsplit(x, " ")))
-  if(col.split[2] == 9) col.spec <- "N 10/0"
   col.spec <- unlist(lapply(col.split, function(x) 
     paste(x[1], " ", as.numeric(x[2]) + 1,"/", x[3] , sep = "")))  
 }
