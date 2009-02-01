@@ -4,7 +4,7 @@ check.munsell <- function(colour.spec,  fix = FALSE){
   missing <- is.na(colour.spec)
   colour.spec <- toupper(colour.spec[!missing])
   # check format
-  right.format <- grep("^[0-9]?.?[0-9][A-Z]{1,2}[ ][0-9]?.?[0-9]/[0-9]?.?[0-9]{1,2}$",
+  right.format <- grep("^[N]|([0-9]?.?[0-9][A-Z]{1,2})[ ][0-9]?.?[0-9]/[0-9]?.?[0-9]{1,2}$",
     colour.spec)
   if (length(right.format) != length((colour.spec))) {
    bad.cols <- paste(colour.spec[-right.format],  sep = ", ")
@@ -12,7 +12,7 @@ check.munsell <- function(colour.spec,  fix = FALSE){
   }
   #check hues
   hues <- gsub("[0-9 /.]", "", colour.spec)
-  act.hues <- c("R", "YR", "Y", "GY", "G", "BG", "B", "PB", "P", "RP")
+  act.hues <- c("N", "R", "YR", "Y", "GY", "G", "BG", "B", "PB", "P", "RP")
   good.hue <-  hues %in% act.hues
   if (!all(good.hue)){
     bad.hue <- paste(hues[!good.hue], "in", colour.spec[!good.hue],  
@@ -27,7 +27,7 @@ check.munsell <- function(colour.spec,  fix = FALSE){
   values <- as.numeric(sapply(col.split, "[", 2))
   chromas <- as.numeric(sapply(col.split, "[", 3))
   
-  act.steps <- seq(2.5, 10, by = 2.5)
+  act.steps <- c(seq(2.5, 10, by = 2.5),  NA)
   good.step <- step %in% act.steps
   if(!all(good.step)){
     bad.step <- paste(step[!good.step], "in", colour.spec[!good.step],  
