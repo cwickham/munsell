@@ -239,7 +239,7 @@ complement <- function(col.name, ...){
       hue.index <- match(x[1],  hues)
       paste(hues[(hue.index + 20) %% 40], " ", x[2], "/", x[3], sep = "")
     }))
-  check.munsell(comps, ...)
+  in.gamut(comps, ...)
 }
 
 # function to check user supplied munsell specification
@@ -292,14 +292,14 @@ check.munsell <- function(colour.spec,  fix = FALSE){
     stop(paste("some colours have chromas that aren't multiples of two: ",
       bad.chroma))
   }
-  colour.spec <- is.munsell(colour.spec,  fix = fix)
+  colour.spec <- in.gamut(colour.spec,  fix = fix)
   result <- rep(NA,  length(missing))
   result[!missing] <- colour.spec
   result
 }
 
 # function to check colour is defined
-is.munsell <- function(colour.spec, fix = FALSE){
+in.gamut <- function(colour.spec, fix = FALSE){
   positions <- match(colour.spec, munsell.map$name)
   hex <- munsell.map[positions, "hex"]
   if(any(is.na(hex))){
