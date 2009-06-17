@@ -101,6 +101,7 @@ hue.slice <- function(hue.name = "all",  back.col = "white"){
     facet_wrap(~ hue)
   }
 }
+
 #' Plot all colours with the same value
 #'
 #' Plots slices of the Munsell colour system where value is constant.
@@ -112,7 +113,6 @@ hue.slice <- function(hue.name = "all",  back.col = "white"){
 #' value.slice(c(2, 4))
 #' # all values 
 #' \dontrun{value.slice(1:10)}
-
 value.slice <- function(value.name,  back.col = "white"){
   if (!all(value.name %in% munsell.map$value)) stop("invalid Value")
   ggplot(aes(x = hue, y = factor(chroma)), 
@@ -125,10 +125,26 @@ value.slice <- function(value.name,  back.col = "white"){
     plot_polar(back.col)
 }
 
+#' Plot all colours with the same chroma
+#'
+#' Plots slices of the Munsell colour system where chroma is constant.
+#' @param chroma.name integer vector of the desired values. 
+#' @param back.col colour for the background
+#' @return ggplot object
+#' @examples
+#' chroma.slice(2)
+#' chroma.slice(18)
+#' Maybe want to delete text and add axis instead
+#' p <- chroma.slice(18)
+#' p$layers[[2]] <- NULL # remove text layer
+#' p + opts(axis.text.x = theme_text(angle = 90, hjust = 1), 
+#'  axis.text.y = theme_text())  
+#' # all values 
+#' \dontrun{chroma.slice(seq(0, 38, by = 2))}
 chroma.slice <- function(chroma.name,  back.col = "white"){
-  if (!chroma.name %in% munsell.map$chroma) stop("invalid Chroma")
+  if (!all(chroma.name %in% munsell.map$chroma)) stop("invalid Chroma")
   ggplot(aes(x = hue, y = value), 
-    data = subset(munsell.map, chroma == chroma.name & hue != "N")) +
+    data = subset(munsell.map, chroma %in% chroma.name & hue != "N")) +
      geom_tile(aes(fill = hex), colour = back.col) +
     geom_text(aes(label = name, colour = value > 4), 
       angle = 45, size = 2) +
@@ -136,35 +152,55 @@ chroma.slice <- function(chroma.name,  back.col = "white"){
     scale_x_discrete("Hue") + 
     scale_y_continuous("Value") +
     opts(aspect.ratio = 1/4) +
+    facet_wrap(~ chroma) +
      plot_common(back.col)  
 }
 
+#' A vertical slice through the Munsell space
+#'
+#' Plot a hue and its complement at all values and chromas
+#' @param hue.name character string of the desired hue. 
+#' @param back.col colour for the background
+#' @return ggplot object
+#' @examples
+#' complement.slice("5PB")
+#' complement.slice("5R")
 complement.slice <- function(hue.name,  back.col = "white"){
+  if (length(hue.name) > 1) stop("complement.slice currently only takes one hue")
   if (!hue.name %in% munsell.map$hue) stop("invalid hue name")
   hues <- levels(munsell.map$hue)[-1]
   index <- which(hues == hue.name)
-  complement <- hues[(index + 20) %% 40]
+  comp.hue <- hues[(index + 20) %% 40]
   munsell.sub <- subset(munsell.map, 
-    hue == "N" | hue == hue.name | hue == complement)
+    hue == "N" | hue == hue.name | hue == comp.hue)
   munsell.sub <- within(munsell.sub, {
-    chroma[hue == complement] <- -chroma[hue == complement]
-    hue <- factor(hue, levels = c(complement, "N", hues[index]))
+    chroma <- ifelse(hue == comp.hue, -1, 1) * chroma
+    hue <- factor(hue, levels = c(comp.hue, "N", hues[index]))
     })
   
-  ggplot(aes(x = factor(chroma), y = value), 
+  ggplot(aes(x = chroma, y = value), 
     data = munsell.sub) + 
      geom_tile(aes(fill = hex), colour = back.col,  size = 1) +
     geom_text(aes(label = name, colour = value > 4), 
       angle = 45, size = 2) +
      scale_colour_manual(values = c("white","black")) +
-    scale_x_discrete("Chroma") + 
+    scale_x_continuous("Chroma") + 
     scale_y_continuous("Value") +
-    facet_grid(. ~ hue,  scales = "free_x",  space = "free")  +
+    facet_grid(. ~ hue,  scale = "free_x", space = "free")  +
     opts(aspect.ratio = 1) +
      plot_common(back.col)
 }
 
-#plot rgb and closest
+#' Plot closest Munsell colour to an RGB colour
+#'
+#' Take an RGB colour and plots it along with the closest Munsell colour (using #' rgb2munsell to find it)
+#' @param R, B, G take vectors of red, green and blue proportions or give R a 
+#' 3 column matrix 
+#' @param back.col colour for the background
+#' @seealso rgb2munsell
+#' @examples
+#' plot.closest(0.1, 0.1, 0.3)
+#' plot.closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3)) 
 plot.closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
   closest <- rgb2munsell(R, G, B)
   ncolours <- length(closest)
