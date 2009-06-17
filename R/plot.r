@@ -1,4 +1,7 @@
-.plot_common <- function(bg.col){
+#' Default display settings for plots of rectangular format
+#' @param bg.col takes colour to use as background colour
+
+plot_common <- function(bg.col){
   list(scale_fill_identity(), 
   opts(panel.grid.major = theme_blank(), 
   panel.grid.minor = theme_blank(), 
@@ -9,8 +12,6 @@
   axis.text.y = theme_blank(),
   axis.ticks = theme_blank(),
   axis.ticks.y = theme_blank(),
-  axis.title.x = theme_blank(),
-  axis.title.y = theme_blank(),
   legend.background = theme_blank(),
   legend.key = theme_blank(),
   legend.text = theme_blank(),
@@ -18,7 +19,9 @@
   drop = "legend_box"))
 }
 
-.plot_polar <- function(bg.col){
+#' Default display settings for plots of polar format
+#' @param bg.col takes colour to use as background colour
+plot_polar <- function(bg.col){
   list(scale_fill_identity(), 
   opts(panel.grid.major = theme_blank(), 
   panel.grid.minor = theme_blank(), 
@@ -32,8 +35,22 @@
   drop = "legend_box"))
 }
 
-# takes munsell text specifications and plots them
-# should take hex too? 
+#' Plot a munsell colour
+#'
+#' Takes munsell text specifications and plots colour squares of them.
+#' @param colour.specs character vector specifying colours in Munsell form
+#' @param back.col specification of background colour of display
+#' @param ... passed to check.munsell. Add fix = TRUE to fix "bad" colours()
+#' @return A ggplot object
+#' @examples
+#' plot.munsell("5R 5/6")
+#' plot.munsell("5R 5/6",  back.col = "grey40")
+#' p <- plot.munsell(c("5R 6/6", "5Y 6/6", "5G 6/6", "5B 6/6", "5P 6/6"),
+#'  back.col = "grey40")
+#' p
+#' # returned object is a ggplot object so we can alter the layout
+#' summary(p)
+#' p + facet_wrap(~ names, nrow = 1)
 plot.munsell <- function(colour.specs,  back.col = "white", ...){
   if(length(colour.specs) == 1) add.ops <- list(geom_text(aes(label = names)))
   else add.ops <- list(facet_wrap(~ names))
@@ -44,46 +61,68 @@ plot.munsell <- function(colour.specs,  back.col = "white", ...){
     scale_fill_identity() + add.ops +
     scale_x_continuous(expand = c(0, 0))+
     scale_y_continuous(expand = c(0, 0))+
-    opts(aspect.ratio = 1) + .plot_common(back.col)
+    opts(aspect.ratio = 1) +  plot_common(back.col)
 }
 
-
+#' Plot all colours with the same hue
+#'
+#' Plots slices of the Munsell colour system where hue is constant.
+#' @param hue.name character vector of the desired hues. Or "all" for all hues.
+#' @param back.col colour for the background
+#' @return ggplot object
+#' @examples
+#' hue.slice("5R")
+#' hue.slice(c("5R", "5P"))
+#' \dontrun{hue.slice("all")}
 hue.slice <- function(hue.name = "all",  back.col = "white"){
-  if (hue.name == "all") {
+  if (any(hue.name == "all")) {
     return(ggplot(aes(x = factor(chroma), y = factor(value)), 
       data = munsell.map) +
        geom_tile(aes(fill = hex), colour = back.col) +
       facet_wrap(~ hue) +
       scale_colour_manual(values = c("white","black")) +
-      scale_x_discrete("Chroma") + 
+      scale_x_discrete("Chroma", expand = c(0, 0)) + 
       opts(aspect.ratio = 1) +
-      scale_y_discrete("Value", expand = c(0.25, 0)) +
-      .plot_common(back.col))
+      scale_y_discrete("Value", expand = c(0, 0)) +
+       plot_common(back.col))
   }
   else {
-    if (!hue.name %in% munsell.map$hue) stop("invalid hue name")
+    if (!all(hue.name %in% munsell.map$hue)) stop("invalid hue names")
   ggplot(aes(x = factor(chroma), y = factor(value)), 
-    data = subset(munsell.map, hue == hue.name)) +
+    data = subset(munsell.map, hue %in% hue.name)) +
      geom_tile(aes(fill = hex), colour = back.col, size = 1) +
     geom_text(aes(label = name, colour = value > 4), 
       angle = 45, size = 2) +
      scale_colour_manual(values = c("white","black")) +
     scale_x_discrete("Chroma") + 
-    scale_y_discrete("Value", expand = c(0.25, 0)) +
-    .plot_common(back.col) +
-    opts(aspect.ratio = 1) 
+    scale_y_discrete("Value", expand = c(0.125, 0)) +
+     plot_common(back.col) +
+    opts(aspect.ratio = 1) +
+    facet_wrap(~ hue)
   }
 }
+#' Plot all colours with the same value
+#'
+#' Plots slices of the Munsell colour system where value is constant.
+#' @param value.name integer vector of the desired values. 
+#' @param back.col colour for the background
+#' @return ggplot object
+#' @examples
+#' value.slice(2)
+#' value.slice(c(2, 4))
+#' # all values 
+#' \dontrun{value.slice(1:10)}
 
 value.slice <- function(value.name,  back.col = "white"){
-  if (!value.name %in% munsell.map$value) stop("invalid Value")
+  if (!all(value.name %in% munsell.map$value)) stop("invalid Value")
   ggplot(aes(x = hue, y = factor(chroma)), 
-    data = subset(munsell.map, value == value.name & hue != "N")) +
+    data = subset(munsell.map, value %in% value.name & hue != "N" & !is.na(hex))) +
      geom_tile(aes(fill = hex), colour = back.col) +
      coord_polar() +
     scale_x_discrete("Hue") + 
     scale_y_discrete("Chroma") +
-    .plot_polar(back.col)
+    facet_wrap(~ value) +
+    plot_polar(back.col)
 }
 
 chroma.slice <- function(chroma.name,  back.col = "white"){
@@ -97,7 +136,7 @@ chroma.slice <- function(chroma.name,  back.col = "white"){
     scale_x_discrete("Hue") + 
     scale_y_continuous("Value") +
     opts(aspect.ratio = 1/4) +
-    .plot_common(back.col)  
+     plot_common(back.col)  
 }
 
 complement.slice <- function(hue.name,  back.col = "white"){
@@ -122,7 +161,7 @@ complement.slice <- function(hue.name,  back.col = "white"){
     scale_y_continuous("Value") +
     facet_grid(. ~ hue,  scales = "free_x",  space = "free")  +
     opts(aspect.ratio = 1) +
-    .plot_common(back.col)
+     plot_common(back.col)
 }
 
 #plot rgb and closest
@@ -138,6 +177,6 @@ plot.closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
     colour = back.col, size = 2) +
     geom_text(aes(label = name), size = 2) +
     opts(aspect.ratio = ncolours) +
-    .plot_common(back.col) + facet_wrap(~ type)
+     plot_common(back.col) + facet_wrap(~ type)
 }
 

@@ -28,4 +28,6 @@ examples <- function(){
 
   plot.munsell(c(cols, desaturate(cols)))
   plot.munsell(c(cols, saturate(cols)))
+  
+  plot.munsell(c(cols, complement(cols)))
 }

@@ -4,4 +4,6 @@ investigate white point and fix
 better sequnce functions
 function to check if coul exists and do something sensible if it doesn't
 fix text colour on some plots
-look into roxygen
+*look into roxygen
+no easy way to fix chroma and value and get sequence of hues
+hue.slice("all") - not squares
