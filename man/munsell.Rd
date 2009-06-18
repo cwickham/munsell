@@ -13,7 +13,7 @@ this package value should be an integer in 0:10 and chroma an even number
 at most 24.  Note that not all possible specifications result in 
 representable colours.  Regular recycling rules apply.}
 \value{a character string specification of a hex colour}
-\seealso{check.munsell, text.munsell}
+\seealso{\code{\link{check.munsell}}, \code{\link{text.munsell}}}
 \arguments{\item{hue}{a character vector of Munsell hues}
 \item{value}{a numeric vector of values}
 \item{chroma}{a numeric vector of chromas}

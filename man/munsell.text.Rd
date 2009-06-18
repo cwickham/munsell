@@ -13,7 +13,7 @@ this package value should be an integer in 0:10 and chroma an even number
 at most 24.  Note that not all possible specifications result in 
 representable colours.}
 \value{a character string specification of a hex colour}
-\seealso{check.munsell, munsell}
+\seealso{\code{\link{check.munsell}}, \code{\link{munsell}}}
 \arguments{\item{colour.spec}{a character string representing a Munsell colour.}
 \item{...}{passed on to check.munsell. Use fix = TRUE to fix "bad" colours}}
 \examples{munsell.text("5PB 5/10")
