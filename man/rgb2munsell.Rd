@@ -5,8 +5,9 @@
 \description{Converts an RGB colour to Munsell}
 \details{Finds the closest Munsell colour (in LUV space) to the specified RGB colour}
 \seealso{\code{\link{plot.closest}}}
-\arguments{\item{R,}{B, G take vectors of red, green and blue proportions or give R a 
-3 column matrix with the proportions in the columns.}}
+\arguments{\item{R}{a numeric vector of red values or a 3 column matrix with the proportions R,  G,  B in the columns.}
+\item{G}{numeric vector of green values}
+\item{B}{numeric vector of blue values}}
 \examples{rgb2munsell(0.1, 0.1, 0.3)
 rgb2munsell(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3))
 plot.closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3))}
