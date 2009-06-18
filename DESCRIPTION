@@ -10,5 +10,4 @@ Description: Functions for exploring and using the Munsell colour
 Depends: ggplot2, colorspace
 License: MIT
 LazyData: true
-Collate: 'alter.r' 'check.r' 'convert.r' 'examples.r' 'getmunsellmap.R'
-    'plot.r'
+Collate: 'alter.r' 'check.r' 'convert.r' 'plot.r'

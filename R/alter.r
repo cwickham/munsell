@@ -1,5 +1,12 @@
 #TO DO: fix lighter/darker etc. to warn if already lightest etc.
-
+# cols <- c("5PB 2/4", "5Y 7/8")
+# plot.munsell(c(cols, lighter(cols)))
+# plot.munsell(c(cols, darker(cols)))
+# 
+# plot.munsell(c(cols, desaturate(cols)))
+# plot.munsell(c(cols, saturate(cols)))
+# 
+# plot.munsell(c(cols, complement(cols)))
 #lighter and darker functions
 lighter <- function(col.name){
   col.split <- lapply(strsplit(col.name, "/"), 

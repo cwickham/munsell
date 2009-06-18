@@ -35,6 +35,27 @@ plot_polar <- function(bg.col){
   drop = "legend_box"))
 }
 
+#' Plot hex colours
+#'
+#' Quick way to look at a set of hex colours.
+#' @param hex.colour character vector specifying colours in hex form
+#' @param back.col specification of background colour of display
+#' @return A ggplot object
+#' @examples
+#' plot.hex("#000000")
+#' plot.hex(c("#000000","#FFFFFF"))
+plot.hex <- function(hex.colours,  back.col = "white"){
+  if(length(hex.colours) == 1) add.ops <- list(geom_text(aes(label = names)))
+  else add.ops <- list(facet_wrap(~ names))
+  
+  df <- data.frame(colour = hex.colours, names = hex.colours, x = 0, y = 0)
+  ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = colour)) + 
+     scale_fill_identity() + add.ops + 
+     scale_x_continuous(expand = c(0, 0))+
+     scale_y_continuous(expand = c(0, 0))+
+     opts(aspect.ratio = 1) +  plot_common(back.col)
+}
+
 #' Plot a munsell colour
 #'
 #' Takes munsell text specifications and plots colour squares of them.
@@ -195,9 +216,10 @@ complement.slice <- function(hue.name,  back.col = "white"){
 #'
 #' Take an RGB colour and plots it along with the closest Munsell colour (using #' rgb2munsell to find it)
 #' @param R, B, G take vectors of red, green and blue proportions or give R a 
-#' 3 column matrix 
+#' 3 column matrix with the proportions in the columns.
 #' @param back.col colour for the background
 #' @seealso rgb2munsell
+#' @return ggplot object
 #' @examples
 #' plot.closest(0.1, 0.1, 0.3)
 #' plot.closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3)) 
