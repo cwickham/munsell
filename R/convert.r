@@ -12,7 +12,7 @@
 #' @param colour.spec a character string representing a Munsell colour.
 #' @param ... passed on to check.munsell. Use fix = TRUE to fix "bad" colours
 #' @return a character string specification of a hex colour
-#' @seealso check.munsell, munsell
+#' @seealso \code{\link{check.munsell}}, \code{\link{munsell}}
 #' @examples
 #' munsell.text("5PB 5/10")
 #' # use a munsell colour in a plot
@@ -41,7 +41,7 @@ munsell.text <- function(colour.spec, ...){
 #' @param chroma a numeric vector of chromas
 #' @param ... passed on to check.munsell. Use fix = TRUE to fix "bad" colours
 #' @return a character string specification of a hex colour
-#' @seealso check.munsell, text.munsell
+#' @seealso \code{\link{check.munsell}}, \code{\link{text.munsell}}
 #' @examples
 #' munsell("5PB", 5, 10)
 #' # All values of 5PB with chroma 10
@@ -61,7 +61,7 @@ munsell <- function(hue, value, chroma, ...){
 #'
 #' @param R, B, G take vectors of red, green and blue proportions or give R a 
 #' 3 column matrix with the proportions in the columns.
-#' @seealso plot.closest
+#' @seealso \code{\link{plot.closest}}
 #' @examples
 #' rgb2munsell(0.1, 0.1, 0.3)
 #' rgb2munsell(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3))

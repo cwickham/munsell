@@ -214,11 +214,11 @@ complement.slice <- function(hue.name,  back.col = "white"){
 
 #' Plot closest Munsell colour to an RGB colour
 #'
-#' Take an RGB colour and plots it along with the closest Munsell colour (using #' rgb2munsell to find it)
+#' Take an RGB colour and plots it along with the closest Munsell colour (using #' \code{\link{rgb2munsell}} to find it)
 #' @param R, B, G take vectors of red, green and blue proportions or give R a 
 #' 3 column matrix with the proportions in the columns.
 #' @param back.col colour for the background
-#' @seealso rgb2munsell
+#' @seealso \code{\link{rgb2munsell}}
 #' @return ggplot object
 #' @examples
 #' plot.closest(0.1, 0.1, 0.3)
