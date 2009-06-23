@@ -10,7 +10,7 @@
 #' at most 24.  Note that not all possible specifications result in 
 #' representable colours.  
 #' @param colour.spec a character string representing a Munsell colour.
-#' @param ... passed on to check.munsell. Use fix = TRUE to fix "bad" colours
+#' @param ... passed on to \code{\link{check.munsell}}. Use \code{fix = TRUE} to fix "bad" colours
 #' @return a character string specification of a hex colour
 #' @seealso \code{\link{check.munsell}}, \code{\link{munsell}}
 #' @examples
@@ -39,7 +39,7 @@ munsell.text <- function(colour.spec, ...){
 #' @param hue a character vector of Munsell hues
 #' @param value a numeric vector of values
 #' @param chroma a numeric vector of chromas
-#' @param ... passed on to check.munsell. Use fix = TRUE to fix "bad" colours
+#' @param ... passed on to \code{\link{check.munsell}}. Use \code{fix = TRUE} to fix "bad" colours
 #' @return a character string specification of a hex colour
 #' @seealso \code{\link{check.munsell}}, \code{\link{text.munsell}}
 #' @examples

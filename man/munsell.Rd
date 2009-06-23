@@ -17,7 +17,7 @@ representable colours.  Regular recycling rules apply.}
 \arguments{\item{hue}{a character vector of Munsell hues}
 \item{value}{a numeric vector of values}
 \item{chroma}{a numeric vector of chromas}
-\item{...}{passed on to check.munsell. Use fix = TRUE to fix "bad" colours}}
+\item{...}{passed on to \code{\link{check.munsell}}. Use \code{fix = TRUE} to fix "bad" colours}}
 \examples{munsell("5PB", 5, 10)
 # All values of 5PB with chroma 10
 munsell("5PB", 1:9, 10) # note some are undefined

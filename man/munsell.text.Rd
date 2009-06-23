@@ -15,7 +15,7 @@ representable colours.}
 \value{a character string specification of a hex colour}
 \seealso{\code{\link{check.munsell}}, \code{\link{munsell}}}
 \arguments{\item{colour.spec}{a character string representing a Munsell colour.}
-\item{...}{passed on to check.munsell. Use fix = TRUE to fix "bad" colours}}
+\item{...}{passed on to \code{\link{check.munsell}}. Use \code{fix = TRUE} to fix "bad" colours}}
 \examples{munsell.text("5PB 5/10")
 # use a munsell colour in a plot
 ggplot(data.frame(x = 1:10)) + geom_point(aes(x = x, y = x), 
