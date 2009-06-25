@@ -1,4 +1,5 @@
 #' Default display settings for plots of rectangular format
+#' @keywords internal
 #' @param bg.col takes colour to use as background colour
 
 plot_common <- function(bg.col){
@@ -20,6 +21,7 @@ plot_common <- function(bg.col){
 }
 
 #' Default display settings for plots of polar format
+#' @keywords internal
 #' @param bg.col takes colour to use as background colour
 plot_polar <- function(bg.col){
   list(scale_fill_identity(), 
@@ -42,13 +44,13 @@ plot_polar <- function(bg.col){
 #' @param back.col specification of background colour of display
 #' @return A ggplot object
 #' @examples
-#' plot.hex("#000000")
-#' plot.hex(c("#000000","#FFFFFF"))
-plot.hex <- function(hex.colours,  back.col = "white"){
-  if(length(hex.colours) == 1) add.ops <- list(geom_text(aes(label = names)))
+#' plot_hex("#000000")
+#' plot_hex(c("#000000","#FFFFFF"))
+plot_hex <- function(hex.colour,  back.col = "white"){
+  if(length(hex.colour) == 1) add.ops <- list(geom_text(aes(label = names)))
   else add.ops <- list(facet_wrap(~ names))
   
-  df <- data.frame(colour = hex.colours, names = hex.colours, x = 0, y = 0)
+  df <- data.frame(colour = hex.colour, names = hex.colour, x = 0, y = 0)
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = colour)) + 
      scale_fill_identity() + add.ops + 
      scale_x_continuous(expand = c(0, 0))+
@@ -59,25 +61,25 @@ plot.hex <- function(hex.colours,  back.col = "white"){
 #' Plot a munsell colour
 #'
 #' Takes munsell text specifications and plots colour squares of them.
-#' @param colour.specs character vector specifying colours in Munsell form
+#' @param cols character vector specifying colours in Munsell form
 #' @param back.col specification of background colour of display
-#' @param ... passed to check.munsell. Add fix = TRUE to fix "bad" colours()
+#' @param ... passed to check_mnsl. Add fix = TRUE to fix "bad" colours()
 #' @return A ggplot object
 #' @examples
-#' plot.munsell("5R 5/6")
-#' plot.munsell("5R 5/6",  back.col = "grey40")
-#' p <- plot.munsell(c("5R 6/6", "5Y 6/6", "5G 6/6", "5B 6/6", "5P 6/6"),
+#' plot_mnsl("5R 5/6")
+#' plot_mnsl("5R 5/6",  back.col = "grey40")
+#' p <- plot_mnsl(c("5R 6/6", "5Y 6/6", "5G 6/6", "5B 6/6", "5P 6/6"),
 #'  back.col = "grey40")
 #' p
 #' # returned object is a ggplot object so we can alter the layout
 #' summary(p)
 #' p + facet_wrap(~ names, nrow = 1)
-plot.munsell <- function(colour.specs,  back.col = "white", ...){
-  if(length(colour.specs) == 1) add.ops <- list(geom_text(aes(label = names)))
+plot_mnsl <- function(cols,  back.col = "white", ...){
+  if(length(cols) == 1) add.ops <- list(geom_text(aes(label = names)))
   else add.ops <- list(facet_wrap(~ names))
-  colour.specs <- check.munsell(colour.specs, ...)
-  df <- data.frame(names = factor(colour.specs, levels = colour.specs),  
-    hex = munsell.text(colour.specs), x = 0 , y = 0)
+  cols <- check_mnsl(cols, ...)
+  df <- data.frame(names = factor(cols, levels = cols),  
+    hex = mnsl2hex(cols), x = 0 , y = 0)
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = hex)) + 
     scale_fill_identity() + add.ops +
     scale_x_continuous(expand = c(0, 0))+
@@ -92,10 +94,10 @@ plot.munsell <- function(colour.specs,  back.col = "white", ...){
 #' @param back.col colour for the background
 #' @return ggplot object
 #' @examples
-#' hue.slice("5R")
-#' hue.slice(c("5R", "5P"))
-#' \dontrun{hue.slice("all")}
-hue.slice <- function(hue.name = "all",  back.col = "white"){
+#' hue_slice("5R")
+#' hue_slice(c("5R", "5P"))
+#' \dontrun{hue_slice("all")}
+hue_slice <- function(hue.name = "all",  back.col = "white"){
   if (any(hue.name == "all")) {
     return(ggplot(aes(x = factor(chroma), y = factor(value)), 
       data = munsell.map) +
@@ -130,11 +132,11 @@ hue.slice <- function(hue.name = "all",  back.col = "white"){
 #' @param back.col colour for the background
 #' @return ggplot object
 #' @examples
-#' value.slice(2)
-#' value.slice(c(2, 4))
+#' value_slice(2)
+#' value_slice(c(2, 4))
 #' # all values 
-#' \dontrun{value.slice(1:10)}
-value.slice <- function(value.name,  back.col = "white"){
+#' \dontrun{value_slice(1:10)}
+value_slice <- function(value.name,  back.col = "white"){
   if (!all(value.name %in% munsell.map$value)) stop("invalid Value")
   ggplot(aes(x = hue, y = factor(chroma)), 
     data = subset(munsell.map, value %in% value.name & hue != "N" & !is.na(hex))) +
@@ -153,16 +155,16 @@ value.slice <- function(value.name,  back.col = "white"){
 #' @param back.col colour for the background
 #' @return ggplot object
 #' @examples
-#' chroma.slice(2)
-#' chroma.slice(18)
-#' Maybe want to delete text and add axis instead
-#' p <- chroma.slice(18)
+#' chroma_slice(2)
+#' chroma_slice(18)
+#' # Maybe want to delete text and add axis instead
+#' p <- chroma_slice(18)
 #' p$layers[[2]] <- NULL # remove text layer
 #' p + opts(axis.text.x = theme_text(angle = 90, hjust = 1), 
 #'  axis.text.y = theme_text())  
 #' # all values 
-#' \dontrun{chroma.slice(seq(0, 38, by = 2))}
-chroma.slice <- function(chroma.name,  back.col = "white"){
+#' \dontrun{chroma_slice(seq(0, 38, by = 2))}
+chroma_slice <- function(chroma.name,  back.col = "white"){
   if (!all(chroma.name %in% munsell.map$chroma)) stop("invalid Chroma")
   ggplot(aes(x = hue, y = value), 
     data = subset(munsell.map, chroma %in% chroma.name & hue != "N")) +
@@ -184,10 +186,10 @@ chroma.slice <- function(chroma.name,  back.col = "white"){
 #' @param back.col colour for the background
 #' @return ggplot object
 #' @examples
-#' complement.slice("5PB")
-#' complement.slice("5R")
-complement.slice <- function(hue.name,  back.col = "white"){
-  if (length(hue.name) > 1) stop("complement.slice currently only takes one hue")
+#' complement_slice("5PB")
+#' complement_slice("5R")
+complement_slice <- function(hue.name,  back.col = "white"){
+  if (length(hue.name) > 1) stop("complement_slice currently only takes one hue")
   if (!hue.name %in% munsell.map$hue) stop("invalid hue name")
   hues <- levels(munsell.map$hue)[-1]
   index <- which(hues == hue.name)
@@ -214,22 +216,23 @@ complement.slice <- function(hue.name,  back.col = "white"){
 
 #' Plot closest Munsell colour to an RGB colour
 #'
-#' Take an RGB colour and plots it along with the closest Munsell colour (using \code{\link{rgb2munsell}} to find it)
-#' @param R a numeric vector of red values or a 3 column matrix with the proportions R,  G,  B in the columns.
+#' Take an RGB colour and plots it along with the closest Munsell colour (using \code{\link{rgb2mnsl}} to find it)
+#' @param R a numeric vector of red values or a 3 column matrix with the 
+#' proportions R,  G,  B in the columns.
 #' @param G numeric vector of green values
 #' @param B numeric vector of blue values
 #' @param back.col colour for the background
-#' @seealso \code{\link{rgb2munsell}}
+#' @seealso \code{\link{rgb2mnsl}}
 #' @return ggplot object
 #' @examples
-#' plot.closest(0.1, 0.1, 0.3)
-#' plot.closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3)) 
-plot.closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
-  closest <- rgb2munsell(R, G, B)
+#' plot_closest(0.1, 0.1, 0.3)
+#' plot_closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3)) 
+plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
+  closest <- rgb2mnsl(R, G, B)
   ncolours <- length(closest)
   rgbnames <- apply(round(RGB(R, G, B)@coords, 2), 1, paste, collapse = ", ")
   little.df <- data.frame(type = rep(c("actual", "closest"), each = ncolours),  
-    hex = c(hex(RGB(R,G,B)),  munsell.text(closest)), 
+    hex = c(hex(RGB(R,G,B)),  mnsl2hex(closest)), 
     name = c(rgbnames, closest), 
     x = rep(c(0, 0), each = ncolours), y = rep(1:ncolours), 2)
   ggplot(data = little.df, aes(x = x, y = y)) + geom_tile(aes(fill = hex),

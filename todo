@@ -7,3 +7,5 @@ fix text colour on some plots
 *look into roxygen
 no easy way to fix chroma and value and get sequence of hues
 hue.slice("all") - not squares
+all functions use check munsell.
+fix lighter/darker etc. to warn if already lightest etc.
