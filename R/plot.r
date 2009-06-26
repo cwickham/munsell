@@ -11,6 +11,8 @@ plot_common <- function(bg.col){
   axis.line = theme_blank(), 
   axis.text.x = theme_blank(), 
   axis.text.y = theme_blank(),
+  axis.title.x = theme_blank(),
+  axis.title.y = theme_blank(),
   axis.ticks = theme_blank(),
   axis.ticks.y = theme_blank(),
   legend.background = theme_blank(),
@@ -63,7 +65,7 @@ plot_hex <- function(hex.colour,  back.col = "white"){
 #' Takes munsell text specifications and plots colour squares of them.
 #' @param cols character vector specifying colours in Munsell form
 #' @param back.col specification of background colour of display
-#' @param ... passed to check_mnsl. Add fix = TRUE to fix "bad" colours()
+#' @param ... passed to \code{\link{check_mnsl}}. Add fix = TRUE to fix "bad" colours()
 #' @return A ggplot object
 #' @examples
 #' plot_mnsl("5R 5/6")

@@ -1,8 +1,8 @@
 \name{hvc2mnsl}
 \alias{hvc2mnsl}
-\title{Converts a hue, chroma and value to a character representation of a Munsell #' colour...}
+\title{Converts a hue, chroma and value to a Munsell colour...}
 \usage{hvc2mnsl(hue, value, chroma, ...)}
-\description{Converts a hue, chroma and value to a character representation of a Munsell #' colour}
+\description{Converts a hue, chroma and value to a Munsell colour}
 \details{Takes separate specifications of hue, value and chroma and returns the 
 text specification of that colour.
 

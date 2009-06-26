@@ -3,7 +3,7 @@
 \title{Make a munsell colour less saturated...}
 \usage{desaturate(col)}
 \description{Make a munsell colour less saturated}
-\details{Decreases the chroma of the Munsell colour by one step (+ 2).}
+\details{Decreases the chroma of the Munsell colour by one step (- 2).}
 \value{character vector of Munsell colours}
 \arguments{\item{col}{character vector of Munsell colours}}
 \examples{desaturate("5PB 2/4")

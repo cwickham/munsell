@@ -48,7 +48,7 @@ saturate <- function(col){
 
 #' Make a munsell colour less saturated
 #'
-#' Decreases the chroma of the Munsell colour by one step (+ 2).
+#' Decreases the chroma of the Munsell colour by one step (- 2).
 #' @param col character vector of Munsell colours
 #' @return character vector of Munsell colours
 #' @examples 

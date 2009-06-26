@@ -25,7 +25,7 @@ mnsl2hex <- function(col, ...){
   munsell.map[positions, "hex"]
 }
 
-#' Converts a hue, chroma and value to a character representation of a Munsell #' colour
+#' Converts a hue, chroma and value to a Munsell colour
 #'
 #' Takes separate specifications of hue, value and chroma and returns the 
 #' text specification of that colour.

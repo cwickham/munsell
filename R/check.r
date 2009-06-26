@@ -17,8 +17,9 @@ check_mnsl <- function(col,  fix = FALSE){
   right.format <- grep("^[N]|([0-9]?.?[0-9][A-Z]{1,2})[ ][0-9]?.?[0-9]/[0-9]?.?[0-9]{1,2}$",
     col)
   if (length(right.format) != length((col))) {
-   bad.cols <- paste(col[-right.format],  sep = ", ")
-    stop(paste("some of your colours are not correctly formatted:",  bad.cols))  
+    if (length(right.format) == 0) {bad.cols <- paste(col,  collapse = ", ")}
+    else {bad.cols <- paste(col[-right.format],  collapse = ", ")}
+    stop("some of your colours are not correctly formatted:",  bad.cols)
   }
   #check hues
   hues <- gsub("[0-9 /.]", "", col)
@@ -27,8 +28,9 @@ check_mnsl <- function(col,  fix = FALSE){
   if (!all(good.hue)){
     bad.hue <- paste(hues[!good.hue], "in", col[!good.hue],  
       collapse = "; ")
-    stop(paste("you have specified invalid hue names: ", bad.hue, 
-      "\n hues should be one of", paste(act.hues,  collapse = ", ")))
+    act.hue.str <- paste(act.hues, collapse = ", ")
+    stop("you have specified invalid hue names: ", bad.hue, 
+      "\n hues should be one of ", act.hue.str)
   }
   col.split <- lapply(strsplit(col, "/"), 
      function(x) unlist(strsplit(x, " ")))
@@ -42,21 +44,22 @@ check_mnsl <- function(col,  fix = FALSE){
   if(!all(good.step)){
     bad.step <- paste(step[!good.step], "in", col[!good.step],  
       collapse = "; ")
-    stop(paste("you have specified invalid hue steps: ", bad.step, 
-       "\n hues steps should be one of", paste(act.steps,  collapse = ", ")))
+    act.step.str <- paste(act.steps,  collapse = ", ")
+    stop("you have specified invalid hue steps: ", bad.step, 
+       "\n hues steps should be one of ", act.step.str)
   }
   good.value <- values == round(values) & values <= 10 & values >= 0
   if(!all(good.value)) {
     bad.value <- paste(values[!good.value], "in", col[!good.value],  
       collapse = "; ")
-    stop(paste("some colours have values that are not integers between 0 and 10: ", bad.value))
+    stop("some colours have values that are not integers between 0 and 10: ", bad.value)
   }
   good.chroma <- (chromas %% 2) == 0 
   if(!all(good.chroma)) {
     bad.chroma <- paste(chromas[!good.chroma], "in", col[!good.chroma],  
       collapse = "; ")
-    stop(paste("some colours have chromas that aren't multiples of two: ",
-      bad.chroma))
+    stop("some colours have chromas that are not multiples of two: ",
+      bad.chroma)
   }
   col <- in_gamut(col,  fix = fix)
   result <- rep(NA,  length(missing))
