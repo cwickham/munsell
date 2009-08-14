@@ -2,26 +2,36 @@
 getmunsellmap <- function(){
   col.map <- read.table("real.dat",  header = TRUE)
 
-  #convert to XYZ
+  # correct sequence
+  # 1. convert xyY to XYZ
+  # 2. convert to XYZ to use correct reference white (C to D65)
+  # 3. convert XYZ (D65) to sRGB
+
+  # 1. convert to XYZ
+  # http://www.brucelindbloom.com/index.html?ColorCalcHelp.html
+  # Y needs to be scaled down by 100
   col.map <- within(col.map, {
   	Y <- Y/100
   	X <- x * Y / y
-  	Z <- ((1 - x -y) * Y) / y
+  	Z <- ((1 - x - y) * Y) / y
   })
 
-
-  M_adapt_C_to_D65 <- matrix(c(0.990448, -0.012371, -0.003564, -0.007168, 1.015594, 0.006770, -0.011615, -0.002928, 0.918157), ncol=3, byrow=TRUE)
-
-  col.map[ , c("X", "Y", "Z")] <- as.matrix(col.map[, c("X", "Y", "Z")]) %*% M_adapt_C_to_D65
+  # 2. convert to XYZ to use correct reference white (C to D65)
+  # http://www.brucelindbloom.com/index.html?ColorCalcHelp.html
+  # using Bradford method
+  Bradford.C.D65 <- matrix(c(0.990448, -0.012371, -0.003564, -0.007168, 1.015594, 0.006770, -0.011615, -0.002928, 0.918157), ncol=3, byrow=TRUE)
+  col.map[ , c("X", "Y", "Z")] <- as.matrix(col.map[, c("X", "Y", "Z")]) %*%
+    Bradford.C.D65
+  
+  # 3. Use colorspace methods to convert XYZ to hex (RGB)  
+  col.map$hex <- hex(XYZ(100 * as.matrix(col.map[, c("X", "Y", "Z")])))
 
   cols <- c("R", "YR", "Y", "GY", "G", "BG", "B", "PB", "P", "RP")
   ints <- seq(2.5, 10, 2.5)
-
   col.map$h <- factor(col.map$h,  levels = paste(rep(ints, 10), 
     rep(cols, each = 4), sep = ""))
 
-  col.map$hex <- hex(XYZ(100 * as.matrix(col.map[, c("X", "Y", "Z")])))
-
+  # from here: http://wiki.laptop.org/go/Munsell
   grey.map <- read.table("greys.dat",  header = TRUE)
   grey.map$hex <-  hex(RGB(as.matrix(1/255 * grey.map[, c("r", "b", "g")])))
 

@@ -77,7 +77,9 @@ plot_hex <- function(hex.colour,  back.col = "white"){
 #' summary(p)
 #' p + facet_wrap(~ names, nrow = 1)
 plot_mnsl <- function(cols,  back.col = "white", ...){
-  if(length(cols) == 1) add.ops <- list(geom_text(aes(label = names)))
+  if(length(cols) == 1) {add.ops <- list(
+    geom_text(aes(label = names, colour = text_colour(as.character(names)))), 
+    scale_colour_identity())}
   else add.ops <- list(facet_wrap(~ names))
   cols <- check_mnsl(cols, ...)
   df <- data.frame(names = factor(cols, levels = cols),  
@@ -105,7 +107,6 @@ hue_slice <- function(hue.name = "all",  back.col = "white"){
       data = munsell.map) +
        geom_tile(aes(fill = hex), colour = back.col) +
       facet_wrap(~ hue) +
-      scale_colour_manual(values = c("white","black")) +
       scale_x_discrete("Chroma", expand = c(0, 0)) + 
       opts(aspect.ratio = 1) +
       scale_y_discrete("Value", expand = c(0, 0)) +
@@ -116,9 +117,9 @@ hue_slice <- function(hue.name = "all",  back.col = "white"){
   ggplot(aes(x = factor(chroma), y = factor(value)), 
     data = subset(munsell.map, hue %in% hue.name)) +
      geom_tile(aes(fill = hex), colour = back.col, size = 1) +
-    geom_text(aes(label = name, colour = value > 4), 
+    geom_text(aes(label = name, colour = text_colour(name)), 
       angle = 45, size = 2) +
-     scale_colour_manual(values = c("white","black")) +
+     scale_colour_identity() +
     scale_x_discrete("Chroma") + 
     scale_y_discrete("Value", expand = c(0.125, 0)) +
      plot_common(back.col) +
@@ -171,9 +172,9 @@ chroma_slice <- function(chroma.name,  back.col = "white"){
   ggplot(aes(x = hue, y = value), 
     data = subset(munsell.map, chroma %in% chroma.name & hue != "N")) +
      geom_tile(aes(fill = hex), colour = back.col) +
-    geom_text(aes(label = name, colour = value > 4), 
+    geom_text(aes(label = name, colour = text_colour(name)), 
       angle = 45, size = 2) +
-     scale_colour_manual(values = c("white","black")) +
+     scale_colour_identity() +
     scale_x_discrete("Hue") + 
     scale_y_continuous("Value") +
     opts(aspect.ratio = 1/4) +
@@ -206,9 +207,9 @@ complement_slice <- function(hue.name,  back.col = "white"){
   ggplot(aes(x = chroma, y = value), 
     data = munsell.sub) + 
      geom_tile(aes(fill = hex), colour = back.col,  size = 1) +
-    geom_text(aes(label = name, colour = value > 4), 
+    geom_text(aes(label = name, colour = text_colour(name)), 
       angle = 45, size = 2) +
-     scale_colour_manual(values = c("white","black")) +
+     scale_colour_identity() +
     scale_x_continuous("Chroma") + 
     scale_y_continuous("Value") +
     facet_grid(. ~ hue,  scale = "free_x", space = "free")  +
@@ -236,11 +237,26 @@ plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
   little.df <- data.frame(type = rep(c("actual", "closest"), each = ncolours),  
     hex = c(hex(RGB(R,G,B)),  mnsl2hex(closest)), 
     name = c(rgbnames, closest), 
-    x = rep(c(0, 0), each = ncolours), y = rep(1:ncolours), 2)
+    x = rep(c(0, 0), each = ncolours), y = rep(1:ncolours, 2), 
+    text.colour = rep(text_colour(closest), 2))
   ggplot(data = little.df, aes(x = x, y = y)) + geom_tile(aes(fill = hex),
     colour = back.col, size = 2) +
-    geom_text(aes(label = name), size = 2) +
+    geom_text(aes(label = name, colour = text.colour), size = 2) +
+    scale_colour_identity() +
     opts(aspect.ratio = ncolours) +
      plot_common(back.col) + facet_wrap(~ type)
 }
 
+#' Get text colour
+#'
+#' Get the appropriate text colour for writing on a munsell colour.
+#' @param a character vector of munsell colours
+#' @return a vector of "black" or "white"
+#' @keywords internal
+text_colour <- function(cols){
+  col.split <- lapply(strsplit(cols, "/"), 
+     function(x) unlist(strsplit(x, " ")))
+  col.split <- lapply(col.split, gsub, pattern = "[A-Z]", replacement = "")
+  values <- as.numeric(sapply(col.split, "[", 2))
+  ifelse(values >4, "black", "white")
+}

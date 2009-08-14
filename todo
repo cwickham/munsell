@@ -1,11 +1,11 @@
 * rename everything 
 check grey behaving right
-investigate white point and fix
+* investigate white point and fix
 better sequnce functions
-function to check if coul exists and do something sensible if it doesn't
-fix text colour on some plots
-*look into roxygen
-no easy way to fix chroma and value and get sequence of hues
+* function to check if coul exists and do something sensible if it doesn't
+* fix text colour on some plots
+* look into roxygen
+* use mnsl_hues no easy way to fix chroma and value and get sequence of hues
 hue.slice("all") - not squares
 all functions use check munsell.
 fix lighter/darker etc. to warn if already lightest etc.

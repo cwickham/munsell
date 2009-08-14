@@ -116,3 +116,13 @@ fix_mnsl <- function(col){
   }
   unlist(lapply(col.split, max.chroma))
 }
+
+#' Munsell hues
+#'
+#' Returns a character vector of the Munsell hues in hue order starting at 2.5R and excluding grey ("N").
+#' @return  a character vector containing the fixed colours.
+#' @examples 
+#' mnsl_hues()
+mnsl_hues <- function(){
+ as.character(unique(munsell.map$hue)[-1])
+}
