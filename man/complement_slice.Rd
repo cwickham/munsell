@@ -1,7 +1,7 @@
 \name{complement_slice}
 \alias{complement_slice}
 \title{A vertical slice through the Munsell space...}
-\usage{complement_slice(hue.name, back.col=white)}
+\usage{complement_slice(hue.name, back.col="white")}
 \description{A vertical slice through the Munsell space}
 \details{Plot a hue and its complement at all values and chromas}
 \value{ggplot object}

@@ -1,7 +1,7 @@
 \name{plot_closest}
 \alias{plot_closest}
 \title{Plot closest Munsell colour to an RGB colour...}
-\usage{plot_closest(R, G, B, back.col=white)}
+\usage{plot_closest(R, G, B, back.col="white")}
 \description{Plot closest Munsell colour to an RGB colour}
 \details{Take an RGB colour and plots it along with the closest Munsell colour (using \code{\link{rgb2mnsl}} to find it)}
 \seealso{\code{\link{rgb2mnsl}}}

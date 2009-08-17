@@ -1,7 +1,7 @@
 \name{plot_hex}
 \alias{plot_hex}
 \title{Plot hex colours...}
-\usage{plot_hex(hex.colour, back.col=white)}
+\usage{plot_hex(hex.colour, back.col="white")}
 \description{Plot hex colours}
 \details{Quick way to look at a set of hex colours.}
 \value{A ggplot object}

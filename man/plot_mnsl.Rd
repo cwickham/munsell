@@ -1,7 +1,7 @@
 \name{plot_mnsl}
 \alias{plot_mnsl}
 \title{Plot a munsell colour...}
-\usage{plot_mnsl(cols, back.col=white, ...)}
+\usage{plot_mnsl(cols, back.col="white", ...)}
 \description{Plot a munsell colour}
 \details{Takes munsell text specifications and plots colour squares of them.}
 \value{A ggplot object}

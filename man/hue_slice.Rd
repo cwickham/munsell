@@ -1,7 +1,7 @@
 \name{hue_slice}
 \alias{hue_slice}
 \title{Plot all colours with the same hue...}
-\usage{hue_slice(hue.name=all, back.col=white)}
+\usage{hue_slice(hue.name="all", back.col="white")}
 \description{Plot all colours with the same hue}
 \details{Plots slices of the Munsell colour system where hue is constant.}
 \value{ggplot object}

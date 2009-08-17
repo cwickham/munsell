@@ -1,7 +1,7 @@
 \name{chroma_slice}
 \alias{chroma_slice}
 \title{Plot all colours with the same chroma...}
-\usage{chroma_slice(chroma.name, back.col=white)}
+\usage{chroma_slice(chroma.name, back.col="white")}
 \description{Plot all colours with the same chroma}
 \details{Plots slices of the Munsell colour system where chroma is constant.}
 \value{ggplot object}
