@@ -139,7 +139,7 @@ hue_slice <- function(hue.name = "all",  back.col = "white"){
 #' value_slice(c(2, 4))
 #' # all values 
 #' \dontrun{value_slice(1:10)}
-value_slice <- function(value.name,  back.col = "white"){
+value_slice <- function(value.name = 1:10,  back.col = "white"){
   if (!all(value.name %in% munsell.map$value)) stop("invalid Value")
   ggplot(aes(x = hue, y = factor(chroma)), 
     data = subset(munsell.map, value %in% value.name & hue != "N" & !is.na(hex))) +
@@ -167,7 +167,7 @@ value_slice <- function(value.name,  back.col = "white"){
 #'  axis.text.y = theme_text())  
 #' # all values 
 #' \dontrun{chroma_slice(seq(0, 38, by = 2))}
-chroma_slice <- function(chroma.name,  back.col = "white"){
+chroma_slice <- function(chroma.name = seq(0, 38, by = 2),  back.col = "white"){
   if (!all(chroma.name %in% munsell.map$chroma)) stop("invalid Chroma")
   ggplot(aes(x = hue, y = value), 
     data = subset(munsell.map, chroma %in% chroma.name & hue != "N")) +
