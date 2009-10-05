@@ -1,7 +1,7 @@
 \name{value_slice}
 \alias{value_slice}
 \title{Plot all colours with the same value...}
-\usage{value_slice(value.name, back.col="white")}
+\usage{value_slice(value.name=1:10, back.col="white")}
 \description{Plot all colours with the same value}
 \details{Plots slices of the Munsell colour system where value is constant.}
 \value{ggplot object}
