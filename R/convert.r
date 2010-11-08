@@ -18,6 +18,7 @@
 #' @examples
 #' mnsl2hex("5PB 5/10")
 #' # use a munsell colour in a plot
+#' require("ggplot2")
 #' ggplot(data.frame(x = 1:10)) + geom_point(aes(x = x, y = x), 
 #'   colour = mnsl2hex("5PB 5/10"))
 mnsl2hex <- function(col, ...){
