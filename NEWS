@@ -1,2 +1,6 @@
 Version 0.2
 ==============================================================================
+
+* added a NAMESPACE and removed package dependencies - colorspace is now
+  imported, and ggplot2 is only a suggestion - you don't need it if you're
+  using munsell only for colour choice, not for visualising the space.
