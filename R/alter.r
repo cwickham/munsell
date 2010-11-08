@@ -3,6 +3,7 @@
 #' Increases the value of the Munsell colour by 1.
 #' @param col character vector of Munsell colours
 #' @return character vector of Munsell colours
+#' @export
 #' @examples 
 #' lighter("5PB 2/4")
 #' cols <- c("5PB 2/4", "5Y 7/8")
@@ -19,6 +20,7 @@ lighter <- function(col){
 #' Decreases the value of the Munsell colour by 1.
 #' @param col character vector of Munsell colours
 #' @return character vector of Munsell colours
+#' @export
 #' @examples 
 #' darker("5PB 2/4")
 #' cols <- c("5PB 2/4", "5Y 7/8")
@@ -35,6 +37,7 @@ darker <- function(col){
 #' Increases the chroma of the Munsell colour by one step (+ 2).
 #' @param col character vector of Munsell colours
 #' @return character vector of Munsell colours
+#' @export
 #' @examples
 #' saturate("5PB 2/4")
 #' cols <- c("5PB 2/4", "5Y 7/8")
@@ -51,6 +54,7 @@ saturate <- function(col){
 #' Decreases the chroma of the Munsell colour by one step (- 2).
 #' @param col character vector of Munsell colours
 #' @return character vector of Munsell colours
+#' @export
 #' @examples 
 #' desaturate("5PB 2/4")
 #' cols <- c("5PB 2/4", "5Y 7/8")
@@ -70,6 +74,7 @@ desaturate <- function(col){
 #' @param ... passed on to \code{\link{in_gamut}}. Use \code{fix = TRUE} to
 #' fix "bad" complement
 #' @return character vector of Munsell colours
+#' @export
 #' @examples 
 #' complement("5PB 2/4")
 #' cols <- c("5PB 2/4", "5Y 7/8")
@@ -95,6 +100,7 @@ complement <- function(col, ...){
 #' @param to character string of last Munsell colour
 #' @param n number of colours in sequence
 #' @return character vector of Munsell colours
+#' @export
 #' @examples
 #' seq_mnsl("5R 2/4", "5R 5/16", 4)
 #' plot_mnsl(seq_mnsl("5R 2/4", "5R 5/16", 4))

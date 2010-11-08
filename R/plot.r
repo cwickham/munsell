@@ -1,7 +1,6 @@
 #' Default display settings for plots of rectangular format
 #' @keywords internal
 #' @param bg.col takes colour to use as background colour
-
 plot_common <- function(bg.col){
   list(scale_fill_identity(), 
   opts(panel.grid.major = theme_blank(), 
@@ -45,6 +44,7 @@ plot_polar <- function(bg.col){
 #' @param hex.colour character vector specifying colours in hex form
 #' @param back.col specification of background colour of display
 #' @return A ggplot object
+#' @export
 #' @examples
 #' plot_hex("#000000")
 #' plot_hex(c("#000000","#FFFFFF"))
@@ -67,6 +67,7 @@ plot_hex <- function(hex.colour,  back.col = "white"){
 #' @param back.col specification of background colour of display
 #' @param ... passed to \code{\link{check_mnsl}}. Add fix = TRUE to fix "bad" colours()
 #' @return A ggplot object
+#' @export
 #' @examples
 #' plot_mnsl("5R 5/6")
 #' plot_mnsl("5R 5/6",  back.col = "grey40")
@@ -97,6 +98,7 @@ plot_mnsl <- function(cols,  back.col = "white", ...){
 #' @param hue.name character vector of the desired hues. Or "all" for all hues.
 #' @param back.col colour for the background
 #' @return ggplot object
+#' @export
 #' @examples
 #' hue_slice("5R")
 #' hue_slice(c("5R", "5P"))
@@ -134,6 +136,7 @@ hue_slice <- function(hue.name = "all",  back.col = "white"){
 #' @param value.name integer vector of the desired values. 
 #' @param back.col colour for the background
 #' @return ggplot object
+#' @export
 #' @examples
 #' value_slice(2)
 #' value_slice(c(2, 4))
@@ -157,6 +160,7 @@ value_slice <- function(value.name = 1:10,  back.col = "white"){
 #' @param chroma.name integer vector of the desired values. 
 #' @param back.col colour for the background
 #' @return ggplot object
+#' @export
 #' @examples
 #' chroma_slice(2)
 #' chroma_slice(18)
@@ -188,6 +192,7 @@ chroma_slice <- function(chroma.name = seq(0, 38, by = 2),  back.col = "white"){
 #' @param hue.name character string of the desired hue. 
 #' @param back.col colour for the background
 #' @return ggplot object
+#' @export
 #' @examples
 #' complement_slice("5PB")
 #' complement_slice("5R")
@@ -227,6 +232,7 @@ complement_slice <- function(hue.name,  back.col = "white"){
 #' @param back.col colour for the background
 #' @seealso \code{\link{rgb2mnsl}}
 #' @return ggplot object
+#' @export
 #' @examples
 #' plot_closest(0.1, 0.1, 0.3)
 #' plot_closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3)) 

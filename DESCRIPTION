@@ -6,7 +6,9 @@ Author: Charlotte Wickham <cwickham@gmail.com>
 Maintainer: Charlotte Wickham <cwickham@gmail.com>
 Description: Functions for exploring and using the Munsell
     colour system
-Depends: ggplot2, colorspace
+Depends: ggplot2
+Imports: colorspace
 License: MIT
 LazyData: true
-Collate: 'alter.r' 'check.r' 'convert.r' 'plot.r'
+Collate: 'alter.r' 'check.r' 'convert.r' 'munsell.r'
+    'plot.r'
