@@ -6,7 +6,7 @@ Author: Charlotte Wickham <cwickham@gmail.com>
 Maintainer: Charlotte Wickham <cwickham@gmail.com>
 Description: Functions for exploring and using the Munsell
     colour system
-Depends: ggplot2
+Suggests: ggplot2
 Imports: colorspace
 License: MIT
 LazyData: true

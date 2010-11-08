@@ -49,6 +49,7 @@ plot_polar <- function(bg.col){
 #' plot_hex("#000000")
 #' plot_hex(c("#000000","#FFFFFF"))
 plot_hex <- function(hex.colour,  back.col = "white"){
+  require("ggplot2")
   if(length(hex.colour) == 1) add.ops <- list(geom_text(aes(label = names)))
   else add.ops <- list(facet_wrap(~ names))
   
@@ -78,6 +79,8 @@ plot_hex <- function(hex.colour,  back.col = "white"){
 #' summary(p)
 #' p + facet_wrap(~ names, nrow = 1)
 plot_mnsl <- function(cols,  back.col = "white", ...){
+  require("ggplot2")
+
   if(length(cols) == 1) {add.ops <- list(
     geom_text(aes(label = names, colour = text_colour(as.character(names)))), 
     scale_colour_identity())}
@@ -104,6 +107,8 @@ plot_mnsl <- function(cols,  back.col = "white", ...){
 #' hue_slice(c("5R", "5P"))
 #' \dontrun{hue_slice("all")}
 hue_slice <- function(hue.name = "all",  back.col = "white"){
+  require("ggplot2")
+
   if (any(hue.name == "all")) {
     return(ggplot(aes(x = factor(chroma), y = factor(value)), 
       data = munsell.map) +
@@ -143,6 +148,8 @@ hue_slice <- function(hue.name = "all",  back.col = "white"){
 #' # all values 
 #' \dontrun{value_slice(1:10)}
 value_slice <- function(value.name = 1:10,  back.col = "white"){
+  require("ggplot2")
+
   if (!all(value.name %in% munsell.map$value)) stop("invalid Value")
   ggplot(aes(x = hue, y = factor(chroma)), 
     data = subset(munsell.map, value %in% value.name & hue != "N" & !is.na(hex))) +
@@ -172,6 +179,8 @@ value_slice <- function(value.name = 1:10,  back.col = "white"){
 #' # all values 
 #' \dontrun{chroma_slice(seq(0, 38, by = 2))}
 chroma_slice <- function(chroma.name = seq(0, 38, by = 2),  back.col = "white"){
+  require("ggplot2")
+
   if (!all(chroma.name %in% munsell.map$chroma)) stop("invalid Chroma")
   ggplot(aes(x = hue, y = value), 
     data = subset(munsell.map, chroma %in% chroma.name & hue != "N")) +
@@ -197,6 +206,8 @@ chroma_slice <- function(chroma.name = seq(0, 38, by = 2),  back.col = "white"){
 #' complement_slice("5PB")
 #' complement_slice("5R")
 complement_slice <- function(hue.name,  back.col = "white"){
+  require("ggplot2")
+
   if (length(hue.name) > 1) stop("complement_slice currently only takes one hue")
   if (!hue.name %in% munsell.map$hue) stop("invalid hue name")
   hues <- levels(munsell.map$hue)[-1]
@@ -237,6 +248,8 @@ complement_slice <- function(hue.name,  back.col = "white"){
 #' plot_closest(0.1, 0.1, 0.3)
 #' plot_closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3)) 
 plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
+  require("ggplot2")
+
   closest <- rgb2mnsl(R, G, B)
   ncolours <- length(closest)
   rgbnames <- apply(round(RGB(R, G, B)@coords, 2), 1, paste, collapse = ", ")
