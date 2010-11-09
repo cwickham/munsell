@@ -1,7 +1,6 @@
-\name{mnsl2hex}
-\alias{mnsl2hex}
+\name{mnsl}
 \title{Converts a Munsell colour to hex...}
-\usage{mnsl2hex(col, ...)}
+\usage{mnsl(col, ...)}
 
 \description{
   Converts a Munsell colour to hex
@@ -21,6 +20,8 @@
 }
 \value{a character string specification of a hex colour}
 \seealso{\code{\link{check_mnsl}}, \code{\link{hvc2mnsl}}}
+\alias{mnsl2hex}
+\alias{mnsl}
 \arguments{
   \item{col}{a character string representing a Munsell colour.}
   \item{...}{passed on to \code{\link{check_mnsl}}. Use \code{fix = TRUE} to
