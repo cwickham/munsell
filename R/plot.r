@@ -1,42 +1,24 @@
-#' Default display settings for plots of rectangular format
+#' Default munsell plot theme
+#' 
+#' Removes unnecessary clutter in plots
 #' @keywords internal
 #' @param bg.col takes colour to use as background colour
-plot_common <- function(bg.col){
-  list(scale_fill_identity(), 
-  opts(panel.grid.major = theme_blank(), 
-  panel.grid.minor = theme_blank(), 
-  panel.background = theme_blank(), 
-  plot.background = theme_rect(fill = bg.col), 
-  axis.line = theme_blank(), 
-  axis.text.x = theme_blank(), 
-  axis.text.y = theme_blank(),
-  axis.title.x = theme_blank(),
-  axis.title.y = theme_blank(),
-  axis.ticks = theme_blank(),
-  axis.ticks.y = theme_blank(),
-  legend.background = theme_blank(),
-  legend.key = theme_blank(),
-  legend.text = theme_blank(),
-  legend.title = theme_blank(), 
-  drop = "legend_box"))
+theme_munsell <- function(bg.col) {
+    theme(
+      panel.grid.major = element_line(colour = NA),
+      panel.grid.minor = element_line(colour = NA),
+      panel.background = element_rect(fill = bg.col), 
+      plot.background = element_blank(), 
+      axis.line = element_line(colour = NA), 
+      axis.ticks = element_blank(),
+      axis.text = element_blank(),
+      axis.title = element_blank(),
+      legend.background = element_blank(),
+      legend.key = element_blank(),
+      legend.text = element_text(),
+      legend.title = element_text())
 }
 
-#' Default display settings for plots of polar format
-#' @keywords internal
-#' @param bg.col takes colour to use as background colour
-plot_polar <- function(bg.col){
-  list(scale_fill_identity(), 
-  opts(panel.grid.major = theme_blank(), 
-  panel.grid.minor = theme_blank(), 
-  panel.background = theme_blank(), 
-  plot.background = theme_rect(fill = bg.col), 
-  axis.title.x = theme_blank(),
-  legend.background = theme_blank(),
-  legend.key = theme_blank(),
-  legend.text = theme_blank(),
-  legend.title = theme_blank(), 
-  drop = "legend_box"))
-}
 
 #' Plot hex colours
 #'
@@ -58,7 +40,7 @@ plot_hex <- function(hex.colour,  back.col = "white"){
      scale_fill_identity() + add.ops + 
      scale_x_continuous(expand = c(0, 0))+
      scale_y_continuous(expand = c(0, 0))+
-     opts(aspect.ratio = 1) +  plot_common(back.col)
+     coord_fixed(ratio = 1) + theme_munsell(back.col)    
 }
 
 #' Plot a munsell colour
@@ -89,11 +71,14 @@ plot_mnsl <- function(cols,  back.col = "white", ...){
   df <- data.frame(names = factor(cols, levels = cols),  
     hex = mnsl2hex(cols), x = 0 , y = 0)
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = hex)) + 
-    scale_fill_identity() + add.ops +
+    add.ops +
     scale_x_continuous(expand = c(0, 0))+
     scale_y_continuous(expand = c(0, 0))+
-    opts(aspect.ratio = 1) +  plot_common(back.col)
+    coord_fixed() +  
+    theme_munsell(back.col) +
+    scale_fill_identity()
 }
+    
 
 #' Plot all colours with the same hue
 #'
@@ -115,22 +100,23 @@ hue_slice <- function(hue.name = "all",  back.col = "white"){
        geom_tile(aes(fill = hex), colour = back.col) +
       facet_wrap(~ hue) +
       scale_x_discrete("Chroma", expand = c(0, 0)) + 
-      opts(aspect.ratio = 1) +
+      coord_fixed(ratio = 1) +
       scale_y_discrete("Value", expand = c(0, 0)) +
-       plot_common(back.col))
+      theme_munsell(back.col) +
+      scale_fill_identity())
   }
   else {
     if (!all(hue.name %in% munsell.map$hue)) stop("invalid hue names")
   ggplot(aes(x = factor(chroma), y = factor(value)), 
     data = subset(munsell.map, hue %in% hue.name)) +
      geom_tile(aes(fill = hex), colour = back.col, size = 1) +
-    geom_text(aes(label = name, colour = text_colour(name)), 
+     geom_text(aes(label = name, colour = text_colour(name)), 
       angle = 45, size = 2) +
      scale_colour_identity() +
     scale_x_discrete("Chroma") + 
     scale_y_discrete("Value", expand = c(0.125, 0)) +
-     plot_common(back.col) +
-    opts(aspect.ratio = 1) +
+    theme_munsell(back.col) +
+    scale_fill_identity()+
     facet_wrap(~ hue)
   }
 }
@@ -158,7 +144,8 @@ value_slice <- function(value.name = 1:10,  back.col = "white"){
     scale_x_discrete("Hue") + 
     scale_y_discrete("Chroma") +
     facet_wrap(~ value) +
-    plot_polar(back.col)
+    theme_munsell(back.col) +
+    scale_fill_identity()
 }
 
 #' Plot all colours with the same chroma
@@ -174,8 +161,8 @@ value_slice <- function(value.name = 1:10,  back.col = "white"){
 #' # Maybe want to delete text and add axis instead
 #' p <- chroma_slice(18)
 #' p$layers[[2]] <- NULL # remove text layer
-#' p + opts(axis.text.x = theme_text(angle = 90, hjust = 1), 
-#'  axis.text.y = theme_text())  
+#' p + theme(axis.text = element_text(), 
+#'           axis.text.x = element_text(angle = 90, hjust = 1))
 #' # all values 
 #' \dontrun{chroma_slice(seq(0, 38, by = 2))}
 chroma_slice <- function(chroma.name = seq(0, 38, by = 2),  back.col = "white"){
@@ -190,9 +177,10 @@ chroma_slice <- function(chroma.name = seq(0, 38, by = 2),  back.col = "white"){
      scale_colour_identity() +
     scale_x_discrete("Hue") + 
     scale_y_continuous("Value") +
-    opts(aspect.ratio = 1/4) +
+    coord_fixed(ratio = 1/4) +
     facet_wrap(~ chroma) +
-     plot_common(back.col)  
+    theme_munsell(back.col) +
+    scale_fill_identity() 
 }
 
 #' A vertical slice through the Munsell space
@@ -228,10 +216,10 @@ complement_slice <- function(hue.name,  back.col = "white"){
      scale_colour_identity() +
     scale_x_continuous("Chroma") + 
     scale_y_continuous("Value") +
-    facet_grid(. ~ hue,  scale = "free_x", space = "free")  +
-    opts(aspect.ratio = 1) +
-     plot_common(back.col)
-}
+    facet_grid(. ~ hue,  scales = "free_x", space = "free")  +
+    coord_fixed() +
+    theme_munsell(back.col)
+  }
 
 #' Plot closest Munsell colour to an RGB colour
 #'
@@ -262,8 +250,10 @@ plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
     colour = back.col, size = 2) +
     geom_text(aes(label = name, colour = text.colour), size = 2) +
     scale_colour_identity() +
-    opts(aspect.ratio = ncolours) +
-     plot_common(back.col) + facet_wrap(~ type)
+    coord_fixed(ratio = 1) +
+    theme_munsell(back.col) +
+    scale_fill_identity()+
+    facet_wrap(~ type)
 }
 
 #' Get text colour

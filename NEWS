@@ -1,6 +1,17 @@
+Version 0.4
+==============================================================================
+
+* fixed plotting functions to work with new themeing system in ggplot2 0.9.2
+
+Version 0.3
+==============================================================================
+
+* put lookup code data in the right place to avoid namespace problems.
+
 Version 0.2
 ==============================================================================
 
 * added a NAMESPACE and removed package dependencies - colorspace is now
   imported, and ggplot2 is only a suggestion - you don't need it if you're
   using munsell only for colour choice, not for visualising the space.
+
