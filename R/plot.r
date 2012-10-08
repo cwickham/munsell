@@ -35,7 +35,9 @@ plot_hex <- function(hex.colour,  back.col = "white"){
   if(length(hex.colour) == 1) add.ops <- list(geom_text(aes(label = names)))
   else add.ops <- list(facet_wrap(~ names))
   
-  df <- data.frame(colour = hex.colour, names = hex.colour, x = 0, y = 0)
+  df <- data.frame(colour = hex.colour, 
+                   names = factor(hex.colour, levels=hex.colour), 
+                   x = 0, y = 0)
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = colour)) + 
      scale_fill_identity() + add.ops + 
      scale_x_continuous(expand = c(0, 0))+

@@ -1,3 +1,4 @@
 ^\.Rproj\.user$
 ^\.gitignore$
-^\munsell.Rproj$
+^munsell.Rproj$
+^todo$
