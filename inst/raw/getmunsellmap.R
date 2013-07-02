@@ -1,5 +1,6 @@
 ### explore the mapping 
 getmunsellmap <- function(){
+  require(colorspace)
   col.map <- read.table("real.dat",  header = TRUE)
 
   # correct sequence
@@ -46,5 +47,11 @@ getmunsellmap <- function(){
   munsell.map <- merge(munsell.map, not.miss,  all.x = TRUE)
   munsell.map[munsell.map$name == "N 0/0" & !is.na(munsell.map$name), 
     c("L", "U", "V")] <- c(0, 0, 0)
-  save(munsell.map,  file  = "munsell_map.rdata")
+  
+  more.greys <- expand.grid(hue = unique(col.map$h), chroma = 0, value = 0:10)
+  munsell.map <- rbind(munsell.map, 
+    merge(more.greys, 
+      munsell.map[munsell.map$hue == "N", c("chroma", "value", "hex", "name", "L", "U", "V")]))
+  
+  save(munsell.map,  file  = "../../R/sysdata.rda")
 }

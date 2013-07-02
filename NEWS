@@ -1,3 +1,11 @@
+Version 0.4.2
+==============================================================================
+
+* hues with zero chroma are now defined but are named using the corresponding 
+grey (i.e. 5B 0/4 is equivalent to N 0/4) (fixes issue #3)
+
+* fixed slice_complement to display correct colours (issue #2).
+
 Version 0.4.1
 ==============================================================================
 

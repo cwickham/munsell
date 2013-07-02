@@ -167,7 +167,7 @@ value_slice <- function(value.name = 1:10,  back.col = "white"){
 #'           axis.text.x = element_text(angle = 90, hjust = 1))
 #' # all values 
 #' \dontrun{chroma_slice(seq(0, 38, by = 2))}
-chroma_slice <- function(chroma.name = seq(0, 38, by = 2),  back.col = "white"){
+chroma_slice <- function(chroma.name = seq(0, 26, by = 2),  back.col = "white"){
   require("ggplot2")
 
   if (!all(chroma.name %in% munsell.map$chroma)) stop("invalid Chroma")
@@ -204,7 +204,7 @@ complement_slice <- function(hue.name,  back.col = "white"){
   index <- which(hues == hue.name)
   comp.hue <- hues[(index + 20) %% 40]
   munsell.sub <- subset(munsell.map, 
-    hue == "N" | hue == hue.name | hue == comp.hue)
+     hue == hue.name | hue == comp.hue)
   munsell.sub <- within(munsell.sub, {
     chroma <- ifelse(hue == comp.hue, -1, 1) * chroma
     hue <- factor(hue, levels = c(comp.hue, "N", hues[index]))
