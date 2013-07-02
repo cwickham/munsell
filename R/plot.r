@@ -215,7 +215,8 @@ complement_slice <- function(hue.name,  back.col = "white"){
      geom_tile(aes(fill = hex), colour = back.col,  size = 1) +
     geom_text(aes(label = name, colour = text_colour(name)), 
       angle = 45, size = 2) +
-     scale_colour_identity() +
+    scale_fill_identity() +
+    scale_colour_identity() +
     scale_x_continuous("Chroma") + 
     scale_y_continuous("Value") +
     facet_grid(. ~ hue,  scales = "free_x", space = "free")  +
