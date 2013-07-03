@@ -1,7 +1,7 @@
 Package: munsell
 Type: Package
 Title: Munsell colour system
-Version: 0.4.1
+Version: 0.4.2
 Author: Charlotte Wickham <cwickham@gmail.com>
 Maintainer: Charlotte Wickham <cwickham@gmail.com>
 Description: Functions for exploring and using the Munsell

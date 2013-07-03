@@ -113,8 +113,8 @@ fix_mnsl <- function(col){
   col.split <- lapply(strsplit(col, "/"), 
      function(x) unlist(strsplit(x, " ")))
   max.chroma <- function(colour.args){
-    hue.value <- subset(munsell.map, hue == colour.args[1] & 
-        value == colour.args[2] & !is.na(hex)) 
+    hue.value <- munsell.map[munsell.map$hue == colour.args[1] & 
+        munsell.map$value == colour.args[2] & !is.na(munsell.map$hex),] 
     hue.value[which.max(hue.value$chroma), "name"]
   }
   unlist(lapply(col.split, max.chroma))

@@ -2,7 +2,7 @@
 \alias{chroma_slice}
 \title{Plot all colours with the same chroma}
 \usage{
-  chroma_slice(chroma.name = seq(0, 38, by = 2),
+  chroma_slice(chroma.name = seq(0, 26, by = 2),
     back.col = "white")
 }
 \arguments{

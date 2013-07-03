@@ -3,3 +3,4 @@
 ^munsell.Rproj$
 ^todo$
 ^.*\.Rproj$
+^\.git
