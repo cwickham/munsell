@@ -9,7 +9,7 @@ getmunsellmap <- function(){
   # 3. convert XYZ (D65) to sRGB
 
   # 1. convert to XYZ
-  # http://www.brucelindbloom.com/index.html?ColorCalcHelp.html
+  # http://www.brucelindbloom.com/Eqn_xyY_to_XYZ.html
   # Y needs to be scaled down by 100
   col.map <- within(col.map, {
   	Y <- Y/100
@@ -18,7 +18,7 @@ getmunsellmap <- function(){
   })
 
   # 2. convert to XYZ to use correct reference white (C to D65)
-  # http://www.brucelindbloom.com/index.html?ColorCalcHelp.html
+  # http://www.brucelindbloom.com/Eqn_ChromAdapt.html
   # using Bradford method
   Bradford.C.D65 <- matrix(c(0.990448, -0.012371, -0.003564, -0.007168, 1.015594, 0.006770, -0.011615, -0.002928, 0.918157), ncol=3, byrow=TRUE)
   col.map[ , c("X", "Y", "Z")] <- as.matrix(col.map[, c("X", "Y", "Z")]) %*%
