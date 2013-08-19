@@ -75,6 +75,10 @@ hvc2mnsl <- function(hue, value, chroma, ...){
 #' plot_closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3))
 rgb2mnsl <- function(R, G = NULL, B = NULL){
     LUV.vals <- as(RGB(R, G, B), "LUV")@coords
+    # check for black
+    if (any(LUV.vals[,"L"] == 0)){
+      LUV.vals[LUV.vals[,"L"] == 0, ] <- 0
+    }
     ncolors <- nrow(LUV.vals)
     dist.calc <- function(x, y) rowSums((rep(x, each = ncolors) - y) ^ 2)
     dists <- apply(munsell.map[, c("L", "U", "V")], 1, dist.calc, y = LUV.vals)
