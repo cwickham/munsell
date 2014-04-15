@@ -3,6 +3,8 @@ Version 0.4.3
 
 * fix plot_mnsl to show multiple swatches of identical colour
 
+* lighter, darker, saturate and desaturate take an additional argument 'steps' to specify how many steps to take.
+
 Version 0.4.2
 ==============================================================================
 

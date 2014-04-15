@@ -1,69 +1,77 @@
 #' Make a munsell colour lighter
 #'
-#' Increases the value of the Munsell colour by 1.
+#' Increases the value of the Munsell colour.
 #' @param col character vector of Munsell colours
+#' @param steps number of steps to take in increasing value
 #' @return character vector of Munsell colours
 #' @export
 #' @examples 
 #' lighter("5PB 2/4")
-#' cols <- c("5PB 2/4", "5Y 7/8")
-#' plot_mnsl(c(cols, lighter(cols)))
-lighter <- function(col){
+#' cols <- c("5PB 2/4", "5Y 6/8")
+#' p <- plot_mnsl(c(cols, lighter(cols), lighter(cols, 2)))
+#' p + facet_wrap(~ names, ncol = 2)
+lighter <- function(col, steps = 1){
   col.split <- lapply(strsplit(col, "/"), 
     function(x) unlist(strsplit(x, " ")))
   unlist(lapply(col.split, function(x) 
-    paste(x[1], " ", as.numeric(x[2]) + 1,"/", x[3] , sep = "")))  
+    paste(x[1], " ", as.numeric(x[2]) + steps,"/", x[3] , sep = "")))  
 }
 
 #' Make a munsell colour darker
 #'
 #' Decreases the value of the Munsell colour by 1.
 #' @param col character vector of Munsell colours
+#' @param steps number of steps to take in decreasing value
 #' @return character vector of Munsell colours
 #' @export
 #' @examples 
-#' darker("5PB 2/4")
-#' cols <- c("5PB 2/4", "5Y 7/8")
-#' plot_mnsl(c(cols, darker(cols)))
-darker <- function(col){
+#' darker("5PB 3/4")
+#' cols <- c("5PB 3/4", "5Y 7/8")
+#' p <- plot_mnsl(c(cols, darker(cols), darker(cols, 2)))
+#' p + facet_wrap(~ names, ncol = 2)
+darker <- function(col, steps = 1){
   col.split <- lapply(strsplit(col, "/"), 
     function(x) unlist(strsplit(x, " ")))
   unlist(lapply(col.split, function(x) 
-    paste(x[1], " ", as.numeric(x[2]) - 1,"/", x[3] , sep = "")))  
+    paste(x[1], " ", as.numeric(x[2]) - steps,"/", x[3] , sep = "")))  
 }
 
 #' Make a munsell colour more saturated
 #'
-#' Increases the chroma of the Munsell colour by one step (+ 2).
+#' Increases the chroma of the Munsell colour by step steps (multiples of 2).
 #' @param col character vector of Munsell colours
+#' @param steps number of steps to take in increasing chroma
 #' @return character vector of Munsell colours
 #' @export
 #' @examples
 #' saturate("5PB 2/4")
-#' cols <- c("5PB 2/4", "5Y 7/8")
-#' plot_mnsl(c(cols, saturate(cols)))
-saturate <- function(col){
+#' cols <- c("5PB 2/2", "5Y 7/6")
+#' p <- plot_mnsl(c(cols, saturate(cols), saturate(cols, 2)))
+#' p + facet_wrap(~ names, ncol = 2)
+saturate <- function(col, steps = 1){
   col.split <- lapply(strsplit(col, "/"), 
     function(x) unlist(strsplit(x, " ")))
   unlist(lapply(col.split, function(x) 
-    paste(x[1], " ", x[2], "/", as.numeric(x[3]) + 2, sep = "")))  
+    paste(x[1], " ", x[2], "/", as.numeric(x[3]) + 2*steps, sep = "")))  
 }
 
 #' Make a munsell colour less saturated
 #'
-#' Decreases the chroma of the Munsell colour by one step (- 2).
+#' Decreases the chroma of the Munsell colour by one step steps (multiples of 2).
 #' @param col character vector of Munsell colours
+#' @param steps number of steps to take in decreasing chroma
 #' @return character vector of Munsell colours
 #' @export
 #' @examples 
 #' desaturate("5PB 2/4")
-#' cols <- c("5PB 2/4", "5Y 7/8")
-#' plot_mnsl(c(cols, desaturate(cols)))
-desaturate <- function(col){
+#' cols <- c("5PB 2/6", "5Y 7/8")
+#' p <- plot_mnsl(c(cols, desaturate(cols), desaturate(cols, 2)))
+#' p + facet_wrap(~ names, ncol = 2)
+desaturate <- function(col, steps = 1){
   col.split <- lapply(strsplit(col, "/"), 
     function(x) unlist(strsplit(x, " ")))
   unlist(lapply(col.split, function(x) 
-    paste(x[1], " ", x[2], "/", as.numeric(x[3]) - 2, sep = "")))  
+    paste(x[1], " ", x[2], "/", as.numeric(x[3]) - 2*steps, sep = "")))  
 }
 
 #' Find the complement of a munsell colour 
