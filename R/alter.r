@@ -95,8 +95,9 @@ complement <- function(col, ...){
 
   comps <- unlist(lapply(col.split, function(x) {
       hue.index <- match(x[1],  hues)
-      paste(hues[(hue.index + 20) %% 40], " ", x[2], "/", x[3], sep = "")
+      paste(hues[((hue.index + 20 -1) %% 40) + 1], " ", x[2], "/", x[3], sep = "")
     }))
+  comps
   in_gamut(comps, ...)
 }
 
