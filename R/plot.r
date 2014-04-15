@@ -61,24 +61,28 @@ plot_hex <- function(hex.colour,  back.col = "white"){
 #' p
 #' # returned object is a ggplot object so we can alter the layout
 #' summary(p)
-#' p + facet_wrap(~ names, nrow = 1)
+#' p + facet_wrap(~ num, nrow = 1)
 plot_mnsl <- function(cols,  back.col = "white", ...){
   require("ggplot2")
-
-  if(length(cols) == 1) {add.ops <- list(
-    geom_text(aes(label = names, colour = text_colour(as.character(names)))), 
-    scale_colour_identity())}
-  else add.ops <- list(facet_wrap(~ names))
+  add.ops <- NULL
+  if(length(cols) > 1) {
+     add.ops <- list(facet_wrap(~ num))
+  }
   cols <- check_mnsl(cols, ...)
-  df <- data.frame(names = factor(cols, levels = cols),  
-    hex = mnsl2hex(cols), x = 0 , y = 0)
+  df <- data.frame(num = 1:length(cols), 
+    names = factor(cols,  levels = cols),  
+    hex = mnsl2hex(cols), x = 0 , y = 0, stringsAsFactors = FALSE)
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = hex)) + 
     add.ops +
+    geom_text(aes(label = names, colour = text_colour(as.character(names)))) +
     scale_x_continuous(expand = c(0, 0))+
     scale_y_continuous(expand = c(0, 0))+
     coord_fixed() +  
     theme_munsell(back.col) +
-    scale_fill_identity()
+    scale_fill_identity() + 
+    scale_colour_identity() + 
+    theme(strip.background = element_blank(),
+      strip.text = element_blank())
 }
     
 
