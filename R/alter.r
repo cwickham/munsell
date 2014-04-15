@@ -30,10 +30,7 @@ lighter <- function(col, steps = 1){
 #' p <- plot_mnsl(c(cols, darker(cols), darker(cols, 2)))
 #' p + facet_wrap(~ names, ncol = 2)
 darker <- function(col, steps = 1){
-  col.split <- lapply(strsplit(col, "/"), 
-    function(x) unlist(strsplit(x, " ")))
-  unlist(lapply(col.split, function(x) 
-    paste(x[1], " ", as.numeric(x[2]) - steps,"/", x[3] , sep = "")))  
+  lighter(col, step = -steps)
 }
 
 #' Make a munsell colour more saturated
@@ -68,10 +65,7 @@ saturate <- function(col, steps = 1){
 #' p <- plot_mnsl(c(cols, desaturate(cols), desaturate(cols, 2)))
 #' p + facet_wrap(~ names, ncol = 2)
 desaturate <- function(col, steps = 1){
-  col.split <- lapply(strsplit(col, "/"), 
-    function(x) unlist(strsplit(x, " ")))
-  unlist(lapply(col.split, function(x) 
-    paste(x[1], " ", x[2], "/", as.numeric(x[3]) - 2*steps, sep = "")))  
+  saturate(col, steps = -steps)
 }
 
 #' Find the complement of a munsell colour 
@@ -120,4 +114,42 @@ seq_mnsl <- function(from, to, n){
     seq(in.LUV$U[1], in.LUV$U[2],  length = n), 
     seq(in.LUV$V[1], in.LUV$V[2],  length = n)),  ncol = 3)
   rgb2mnsl(as(LUV(LUV.seq), "RGB")@coords)
+}
+
+#' Change the hue of a munsell colour
+#'
+#' Moves the hue of a munsell colour in the direction red->yellow->green->blue->purple->red
+#' @param col character vector of Munsell colours
+#' @param steps number of hue steps to take
+#' @return character vector of Munsell colours
+#' @export
+#' @examples 
+#' my_red <- "10R 4/8"
+#' rygbp(my_red)
+#' plot_mnsl(c(my_red, rygbp(my_red, 2), rygbp(my_red, 4)))
+rygbp <- function(col, steps = 1){
+  col.split <- lapply(strsplit(col, "/"), 
+    function(x) unlist(strsplit(x, " ")))
+  hues <- mnsl_hues()
+  
+  cols <- unlist(lapply(col.split, function(x) {
+    hue.index <- match(x[1],  hues)
+    paste(hues[((hue.index + steps - 1) %% 40) + 1], " ", x[2], "/", x[3], sep = "")
+  }))
+  cols
+}
+
+#' Change the hue of a munsell colour
+#'
+#' Moves the hue of a munsell colour in the direction purple->blue->green->yellow->red->purple
+#' @param col character vector of Munsell colours
+#' @param steps number of hue steps to take
+#' @return character vector of Munsell colours
+#' @export
+#' @examples 
+#' my_red <- "2.5R 4/8"
+#' pbgyr(my_red)
+#' plot_mnsl(c(my_red, pbgyr(my_red, 2), pbgyr(my_red, 4)))
+pbgyr <- function(col, steps = 1){
+  rygbp(col, steps = -steps)
 }

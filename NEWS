@@ -1,5 +1,6 @@
 Version 0.4.3
 ==============================================================================
+* add functions rygbp and pbgyr to change the hue of a colour
 
 * fix plot_mnsl to show multiple swatches of identical colour
 

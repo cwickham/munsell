@@ -1,0 +1,24 @@
+\name{rygbp}
+\alias{rygbp}
+\title{Change the hue of a munsell colour}
+\usage{
+rygbp(col, steps = 1)
+}
+\arguments{
+  \item{col}{character vector of Munsell colours}
+
+  \item{steps}{number of hue steps to take}
+}
+\value{
+character vector of Munsell colours
+}
+\description{
+Moves the hue of a munsell colour in the direction
+red->yellow->green->blue->purple->red
+}
+\examples{
+my_red <- "10R 4/8"
+rygbp(my_red)
+plot_mnsl(c(my_red, rygbp(my_red, 2), rygbp(my_red, 4)))
+}
+
