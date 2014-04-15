@@ -70,7 +70,7 @@ plot_mnsl <- function(cols,  back.col = "white", ...){
   }
   cols <- check_mnsl(cols, ...)
   df <- data.frame(num = 1:length(cols), 
-    names = factor(cols,  levels = cols),  
+    names = factor(cols,  levels = unique(cols)),  
     hex = mnsl2hex(cols), x = 0 , y = 0, stringsAsFactors = FALSE)
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = hex)) + 
     add.ops +
