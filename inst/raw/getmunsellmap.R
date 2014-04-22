@@ -34,7 +34,7 @@ getmunsellmap <- function(){
 
   # from here: http://wiki.laptop.org/go/Munsell
   grey.map <- read.table("greys.dat",  header = TRUE)
-  grey.map$hex <-  hex(RGB(as.matrix(1/255 * grey.map[, c("r", "b", "g")])))
+  grey.map$hex <-  hex(sRGB(as.matrix(1/255 * grey.map[, c("r", "b", "g")])))
 
   munsell.map <- rbind(grey.map[, c("h", "C", "V", "hex")], 
     col.map[, c("h", "C", "V", "hex")])
