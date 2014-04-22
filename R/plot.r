@@ -228,9 +228,9 @@ complement_slice <- function(hue.name,  back.col = "white"){
     theme_munsell(back.col)
   }
 
-#' Plot closest Munsell colour to an RGB colour
+#' Plot closest Munsell colour to an sRGB colour
 #'
-#' Take an RGB colour and plots it along with the closest Munsell colour (using \code{\link{rgb2mnsl}} to find it)
+#' Take an sRGB colour and plots it along with the closest Munsell colour (using \code{\link{rgb2mnsl}} to find it)
 #' @param R a numeric vector of red values or a 3 column matrix with the 
 #' proportions R,  G,  B in the columns.
 #' @param G numeric vector of green values
@@ -247,9 +247,9 @@ plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
 
   closest <- rgb2mnsl(R, G, B)
   ncolours <- length(closest)
-  rgbnames <- apply(round(RGB(R, G, B)@coords, 2), 1, paste, collapse = ", ")
+  rgbnames <- apply(round(sRGB(R, G, B)@coords, 2), 1, paste, collapse = ", ")
   little.df <- data.frame(type = rep(c("actual", "closest"), each = ncolours),  
-    hex = c(hex(RGB(R,G,B)),  mnsl2hex(closest)), 
+    hex = c(hex(sRGB(R,G,B)),  mnsl2hex(closest)), 
     name = c(rgbnames, closest), 
     x = rep(c(0, 0), each = ncolours), y = rep(1:ncolours, 2), 
     text.colour = rep(text_colour(closest), 2))

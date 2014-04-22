@@ -59,9 +59,9 @@ hvc2mnsl <- function(hue, value, chroma, ...){
   selected
 }
 
-#' Converts an RGB colour to Munsell
+#' Converts an sRGB colour to Munsell
 #'
-#' Finds the closest Munsell colour (in LUV space) to the specified RGB colour
+#' Finds the closest Munsell colour (in LUV space) to the specified sRGB colour
 #'
 #' @param R a numeric vector of red values or a 3 column matrix with the
 #' proportions R,  G,  B in the columns.
@@ -74,7 +74,7 @@ hvc2mnsl <- function(hue, value, chroma, ...){
 #' rgb2mnsl(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3))
 #' plot_closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3))
 rgb2mnsl <- function(R, G = NULL, B = NULL){
-    LUV.vals <- as(RGB(R, G, B), "LUV")@coords
+    LUV.vals <- as(sRGB(R, G, B), "LUV")@coords
     # check for black
     if (any(LUV.vals[,"L"] == 0)){
       LUV.vals[LUV.vals[,"L"] == 0, ] <- 0

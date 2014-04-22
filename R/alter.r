@@ -113,7 +113,7 @@ seq_mnsl <- function(from, to, n){
   LUV.seq <- matrix(c(seq(in.LUV$L[1], in.LUV$L[2],  length = n), 
     seq(in.LUV$U[1], in.LUV$U[2],  length = n), 
     seq(in.LUV$V[1], in.LUV$V[2],  length = n)),  ncol = 3)
-  rgb2mnsl(as(LUV(LUV.seq), "RGB")@coords)
+  rgb2mnsl(as(LUV(LUV.seq), "sRGB")@coords)
 }
 
 #' Change the hue of a munsell colour
