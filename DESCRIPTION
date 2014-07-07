@@ -11,9 +11,3 @@ Suggests:
 Imports:
     colorspace
 License: MIT + file LICENSE
-Collate:
-    'alter.r'
-    'check.r'
-    'convert.r'
-    'munsell.r'
-    'plot.r'
