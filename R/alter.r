@@ -11,10 +11,9 @@
 #' p <- plot_mnsl(c(cols, lighter(cols), lighter(cols, 2)))
 #' p + facet_wrap(~ names, ncol = 2)
 lighter <- function(col, steps = 1){
-  col.split <- lapply(strsplit(col, "/"), 
-    function(x) unlist(strsplit(x, " ")))
-  unlist(lapply(col.split, function(x) 
-    paste(x[1], " ", as.numeric(x[2]) + steps,"/", x[3] , sep = "")))  
+  col_hvc <- mnsl2hvc(col)
+  col_hvc[, "value"] <- col_hvc[, "value"] + steps
+  hvc2mnsl(col_hvc)
 }
 
 #' Make a munsell colour darker
@@ -46,10 +45,9 @@ darker <- function(col, steps = 1){
 #' p <- plot_mnsl(c(cols, saturate(cols), saturate(cols, 2)))
 #' p + facet_wrap(~ names, ncol = 2)
 saturate <- function(col, steps = 1){
-  col.split <- lapply(strsplit(col, "/"), 
-    function(x) unlist(strsplit(x, " ")))
-  unlist(lapply(col.split, function(x) 
-    paste(x[1], " ", x[2], "/", as.numeric(x[3]) + 2*steps, sep = "")))  
+  col_hvc <- mnsl2hvc(col)
+  col_hvc[, "chroma"] <- col_hvc[, "chroma"] + 2*steps
+  hvc2mnsl(col_hvc)
 }
 
 #' Make a munsell colour less saturated
@@ -82,17 +80,11 @@ desaturate <- function(col, steps = 1){
 #' cols <- c("5PB 2/4", "5Y 7/8")
 #' plot_mnsl(c(cols, complement(cols)))
 complement <- function(col, ...){
-  col <- check_mnsl(col, ...)
-  col.split <- lapply(strsplit(col, "/"), 
-    function(x) unlist(strsplit(x, " ")))
-  hues <- levels(munsell.map$hue)[-1]
-
-  comps <- unlist(lapply(col.split, function(x) {
-      hue.index <- match(x[1],  hues)
-      paste(hues[((hue.index + 20 -1) %% 40) + 1], " ", x[2], "/", x[3], sep = "")
-    }))
-  comps
-  in_gamut(comps, ...)
+  col_hvc <- mnsl2hvc(col)
+  
+  inds <- match(col_hvc$hue, mnsl_hues())
+  col_hvc[, "hue"] <-  mnsl_hues()[((inds + 20 -1) %% 40) + 1]
+  hvc2mnsl(col_hvc)
 }
 
 #' Generate a sequence of Munsell colours
@@ -128,15 +120,11 @@ seq_mnsl <- function(from, to, n){
 #' rygbp(my_red)
 #' plot_mnsl(c(my_red, rygbp(my_red, 2), rygbp(my_red, 4)))
 rygbp <- function(col, steps = 1){
-  col.split <- lapply(strsplit(col, "/"), 
-    function(x) unlist(strsplit(x, " ")))
-  hues <- mnsl_hues()
+  col_hvc <- mnsl2hvc(col)
   
-  cols <- unlist(lapply(col.split, function(x) {
-    hue.index <- match(x[1],  hues)
-    paste(hues[((hue.index + steps - 1) %% 40) + 1], " ", x[2], "/", x[3], sep = "")
-  }))
-  cols
+  inds <- match(col_hvc$hue, mnsl_hues())
+  col_hvc[, "hue"] <-  mnsl_hues()[((inds + steps -1) %% 40) + 1]
+  hvc2mnsl(col_hvc)
 }
 
 #' Change the hue of a munsell colour

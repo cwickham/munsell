@@ -6,6 +6,8 @@ Version 0.4.3
 
 * add function mnsl2hvc to pull apart a munsell string
 
+* reimplement altering functions to make use of mnsl2hvc and hvc2mnsl
+
 * fix plot_mnsl to show multiple swatches of identical colour
 
 * lighter, darker, saturate and desaturate take an additional argument 'steps' to specify how many steps to take.
