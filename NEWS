@@ -4,6 +4,8 @@ Version 0.4.3
 
 * add functions rygbp and pbgyr to change the hue of a colour
 
+* add function mnsl2hvc to pull apart a munsell string
+
 * fix plot_mnsl to show multiple swatches of identical colour
 
 * lighter, darker, saturate and desaturate take an additional argument 'steps' to specify how many steps to take.
