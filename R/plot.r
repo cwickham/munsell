@@ -271,9 +271,6 @@ plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
 #' @export
 #' @keywords internal
 text_colour <- function(cols){
-  col.split <- lapply(strsplit(cols, "/"), 
-     function(x) unlist(strsplit(x, " ")))
-  col.split <- lapply(col.split, gsub, pattern = "[A-Z]", replacement = "")
-  values <- as.numeric(sapply(col.split, "[", 2))
+  values <-  mnsl2hvc(cols)[, "value"]
   ifelse(values >4, "black", "white")
 }
