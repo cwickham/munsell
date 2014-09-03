@@ -199,19 +199,19 @@ chroma_slice <- function(chroma.name = seq(0, 26, by = 2),  back.col = "white"){
 #' @examples
 #' complement_slice("5PB")
 #' complement_slice("5R")
+#' complement_slice("10G")
 complement_slice <- function(hue.name,  back.col = "white"){
   require("ggplot2")
 
   if (length(hue.name) > 1) stop("complement_slice currently only takes one hue")
   if (!hue.name %in% munsell.map$hue) stop("invalid hue name")
-  hues <- levels(munsell.map$hue)[-1]
-  index <- which(hues == hue.name)
-  comp.hue <- hues[(index + 20) %% 40]
+  comp.hue <- mnsl2hvc(complement(hvc2mnsl(hue.name, 2, 2)))$hue 
   munsell.sub <- subset(munsell.map, 
      hue == hue.name | hue == comp.hue)
+  
   munsell.sub <- within(munsell.sub, {
     chroma <- ifelse(hue == comp.hue, -1, 1) * chroma
-    hue <- factor(hue, levels = c(comp.hue, "N", hues[index]))
+    hue <- factor(hue, levels = c(comp.hue, "N", hue.name))
     })
   
   ggplot(aes(x = chroma, y = value), 
