@@ -62,7 +62,7 @@ check_mnsl <- function(col,  fix = FALSE){
     stop("some colours have chromas that are not multiples of two: ",
       bad.chroma)
   }
-  col <- in_gamut(col,  fix = fix)
+  # col <- in_gamut(col,  fix = fix)
   result <- rep(NA,  length(missing))
   result[!missing] <- col
   result
@@ -123,7 +123,7 @@ fix_mnsl <- function(col){
 #' Munsell hues
 #'
 #' Returns a character vector of the Munsell hues in hue order starting at 2.5R and excluding grey ("N").
-#' @return  a character vector containing the fixed colours.
+#' @return  a character vector containing the hue values.
 #' @export
 #' @examples 
 #' mnsl_hues()

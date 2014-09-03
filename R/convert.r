@@ -53,16 +53,17 @@ mnsl2hex <- mnsl
 #' hvc2mnsl("5PB", 5, 10)
 #' # All values of 5PB with chroma 10
 #' hvc2mnsl("5PB", 1:9, 10) # note some are undefined
-#' plot_mnsl(hvc2mnsl("5PB", 1:9, 2))
+#' plot_mnsl(hvc2mnsl("5PB", 1:9, 10))
 hvc2mnsl <- function(hue, value = NULL, chroma = NULL, ...){
   if(!(is.null(value) == is.null(chroma))) stop("specify both value and chroma")
   hcv <- hue
   if(!is.null(value)) {
     hcv <- cbind(hcv, value, chroma)
   }
+  hcv <- na.exclude(hcv)
   selected <- paste(hcv[, 1], " ", hcv[, 2], "/", hcv[, 3],  sep = "")
   selected <- check_mnsl(selected, ...)
-  selected
+  na_handle(hcv, selected)
 }
 
 #' Converts a Munsell colour to a hue, chroma and value triplet
@@ -88,6 +89,8 @@ hvc2mnsl <- function(hue, value = NULL, chroma = NULL, ...){
 #' hvc2mnsl(mnsl2hvc("5PB 5/10"))
 mnsl2hvc <- function(col, ...){
   col <- check_mnsl(col, ...)
+  col <- na.exclude(col)
+  if (length(col) == 0) stop("zero non-missing colours")
   col.split <- lapply(strsplit(col, "/"), 
     function(x) unlist(strsplit(x, " ")))
   col_mat <- data.frame(do.call(rbind, col.split),
@@ -95,7 +98,7 @@ mnsl2hvc <- function(col, ...){
   colnames(col_mat) <- c("hue", "value", "chroma")
   col_mat[, "value"] <- as.numeric(col_mat[, "value"])
   col_mat[, "chroma"] <- as.numeric(col_mat[, "chroma"])
-  col_mat
+  na_handle(col, col_mat)
 }
 #' Converts an sRGB colour to Munsell
 #'
