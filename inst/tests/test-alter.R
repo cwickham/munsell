@@ -49,6 +49,7 @@ test_that("hue edges",{
 
 context("Handling NAs")
 test_that(" NA handler", {
+expect_equivalent(na_handle(na.exclude(NA), numeric(0)), as.numeric(NA))
 # vector vector
 expect_equal(na_handle(na.exclude(c(NA, 1:2)), 3:4), c(NA, 3, 4))
 # vector dataframe

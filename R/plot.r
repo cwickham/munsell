@@ -3,7 +3,7 @@
 #' Removes unnecessary clutter in plots
 #' @keywords internal
 #' @param bg.col takes colour to use as background colour
-theme_munsell <- function(bg.col) {
+theme_munsell <- function(bg.col = "white") {
     theme(
       panel.grid.major = element_line(colour = NA),
       panel.grid.minor = element_line(colour = NA),
@@ -68,13 +68,16 @@ plot_mnsl <- function(cols,  back.col = "white", ...){
   if(length(cols) > 1) {
      add.ops <- list(facet_wrap(~ num))
   }
-  cols <- check_mnsl(cols, ...)
+  cols <- check_mnsl(cols)
+  cols <- in_gamut(cols, ...)
   df <- data.frame(num = 1:length(cols), 
-    names = factor(cols,  levels = unique(cols)),  
+    names = factor(cols,  levels = c(unique(cols))),
     hex = mnsl2hex(cols), x = 0 , y = 0, stringsAsFactors = FALSE)
+  df$labels <- factor(df$names,  levels = c(unique(cols), "NA"))
+  df$labels[is.na(df$labels)] <- "NA"
   ggplot(data = df,  aes(x = x,  y = y)) + geom_tile(aes(fill = hex)) + 
     add.ops +
-    geom_text(aes(label = names, colour = text_colour(as.character(names)))) +
+    geom_text(aes(label = labels, colour = text_colour(as.character(names)))) +
     scale_x_continuous(expand = c(0, 0))+
     scale_y_continuous(expand = c(0, 0))+
     coord_fixed() +  

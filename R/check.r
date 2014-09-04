@@ -11,9 +11,9 @@
 #' @examples 
 #' check_mnsl(c("5R 5/8","2.5R 9/28"))
 #' @keywords internal
-check_mnsl <- function(col,  fix = FALSE){
-  missing <- is.na(col)
-  col <- toupper(col[!missing])
+check_mnsl <- function(col){
+  col_na <- na.exclude(col)
+  col <- toupper(as.vector(col_na))
   # check format
   right.format <- grep("^[N]|([0-9]?.?[0-9][A-Z]{1,2})[ ][0-9]?.?[0-9]/[0-9]?.?[0-9]{1,2}$",
     col)
@@ -62,10 +62,7 @@ check_mnsl <- function(col,  fix = FALSE){
     stop("some colours have chromas that are not multiples of two: ",
       bad.chroma)
   }
-  # col <- in_gamut(col,  fix = fix)
-  result <- rep(NA,  length(missing))
-  result[!missing] <- col
-  result
+  na_handle(col_na, col)
 }
 
 #' Checks if a Munsell colour is defined in RGB space
@@ -83,6 +80,7 @@ check_mnsl <- function(col,  fix = FALSE){
 #' in_gamut(c("5R 5/8","2.5R 9/28"))
 #' @keywords internal
 in_gamut <- function(col, fix = FALSE){
+  col <- na.exclude(col)
   positions <- match(col, munsell.map$name)
   hex <- munsell.map[positions, "hex"]
   if(any(is.na(hex))){
@@ -95,7 +93,7 @@ in_gamut <- function(col, fix = FALSE){
       col[is.na(hex)] <- fix_mnsl(col[is.na(hex)])
     }
   }
-  col
+  na_handle(col, as.vector(col))
 }
 #' Fix an undefined Munsell colour
 #'

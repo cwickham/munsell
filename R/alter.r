@@ -12,7 +12,7 @@
 #' p + facet_wrap(~ names, ncol = 2)
 lighter <- function(col, steps = 1){
   col <- na.exclude(col)
-  col_hvc <- mnsl2hvc(col)
+  col_hvc <- mnsl2hvc(as.vector(col))
   
   col_hvc[, "value"] <- col_hvc[, "value"] + steps
   # check edge cases
@@ -89,7 +89,7 @@ darker <- function(col, steps = 1){
 saturate <- function(col, steps = 1){
   col <- na.exclude(col)
   
-  col_hvc <- mnsl2hvc(col)
+  col_hvc <- mnsl2hvc(as.vector(col))
   col_hvc[, "chroma"] <- col_hvc[, "chroma"] + 2*steps
   greys <- col_hvc[, "chroma"] <= 0
   if (any(greys)){
@@ -132,7 +132,7 @@ desaturate <- function(col, steps = 1){
 complement <- function(col, ...){
   col <- na.exclude(col)
   
-  col_hvc <- mnsl2hvc(col)
+  col_hvc <- mnsl2hvc(as.vector(col))
   greys <- col_hvc[, "hue"] == "N"
   inds <- match(col_hvc$hue, mnsl_hues())
   col_hvc[, "hue"] <-  mnsl_hues()[((inds + 20 -1) %% 40) + 1]
@@ -182,7 +182,7 @@ seq_mnsl <- function(from, to, n, fix = FALSE){
 rygbp <- function(col, steps = 1){
   col <- na.exclude(col)
   
-  col_hvc <- mnsl2hvc(col)
+  col_hvc <- mnsl2hvc(as.vector(col))
   greys <- col_hvc[, "hue"] == "N"
 
   inds <- match(col_hvc$hue, mnsl_hues())
