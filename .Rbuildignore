@@ -4,3 +4,7 @@
 ^todo$
 ^.*\.Rproj$
 ^\.git
+^issues$
+^\.Rhistory
+READMEimages
+^README\.Rmd$
