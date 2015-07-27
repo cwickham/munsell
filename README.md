@@ -50,7 +50,7 @@ p <- plot_mnsl(c(
 p
 ```
 
-![](README-manipulate-blue-1.png)
+![](READMEimages/manipulate-blue-1.png)
 
 Each function optionally takes the number of steps to take in the dimension and consequently are easily used to create scales in a particular dimension.
 
@@ -59,7 +59,7 @@ p <- plot_mnsl(sapply(0:6, darker, col = "5PB 7/4"))
 p + facet_wrap(~ num, nrow = 1)
 ```
 
-![](README-palette-1.png)
+![](READMEimages/palette-1.png)
 
 Colour space exploration
 ------------------------
@@ -70,4 +70,4 @@ Slices through the colour space of constant hue, chroma or value can be displaye
 complement_slice("5R")
 ```
 
-![](README-complement-slice-1.png)
+![](READMEimages/complement-slice-1.png)
