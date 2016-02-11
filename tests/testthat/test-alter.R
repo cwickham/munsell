@@ -1,5 +1,3 @@
-# test cases
-library(testthat)
 
 context("Lightening/darkening colours")
 
