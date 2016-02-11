@@ -1,6 +1,6 @@
 #' Make a munsell colour lighter
 #'
-#' Increases the value of the Munsell colour.
+#' Increases the value of the Munsell colour. 
 #' @param col character vector of Munsell colours
 #' @param steps number of steps to take in increasing value
 #' @return character vector of Munsell colours
@@ -9,7 +9,11 @@
 #' lighter("5PB 2/4")
 #' cols <- c("5PB 2/4", "5Y 6/8")
 #' p <- plot_mnsl(c(cols, lighter(cols), lighter(cols, 2)))
-#' p + facet_wrap(~ names, ncol = 2)
+#' p + ggplot2::facet_wrap(~ names, ncol = 2)
+#' # lighter and darker are usually reversible
+#' lighter(darker("5PB 2/4"))
+#' # unless you try to pass though white or black
+#' lighter(darker("5PB 1/4"))
 lighter <- function(col, steps = 1){
   col <- na.exclude(col)
   col_hvc <- mnsl2hvc(as.vector(col))
@@ -69,9 +73,9 @@ na_handle <- function(naobj, res){
 #' darker("5PB 3/4")
 #' cols <- c("5PB 3/4", "5Y 7/8")
 #' p <- plot_mnsl(c(cols, darker(cols), darker(cols, 2)))
-#' p + facet_wrap(~ names, ncol = 2)
+#' p + ggplot2::facet_wrap(~ names, ncol = 2)
 darker <- function(col, steps = 1){
-  lighter(col, step = -steps)
+  lighter(col, steps = -steps)
 }
 
 #' Make a munsell colour more saturated
@@ -85,7 +89,7 @@ darker <- function(col, steps = 1){
 #' saturate("5PB 2/4")
 #' cols <- c("5PB 2/2", "5Y 7/6")
 #' p <- plot_mnsl(c(cols, saturate(cols), saturate(cols, 2)))
-#' p + facet_wrap(~ names, ncol = 2)
+#' p + ggplot2::facet_wrap(~ names, ncol = 2)
 saturate <- function(col, steps = 1){
   col <- na.exclude(col)
   
@@ -110,7 +114,7 @@ saturate <- function(col, steps = 1){
 #' desaturate("5PB 2/4")
 #' cols <- c("5PB 2/6", "5Y 7/8")
 #' p <- plot_mnsl(c(cols, desaturate(cols), desaturate(cols, 2)))
-#' p + facet_wrap(~ names, ncol = 2)
+#' p + ggplot2::facet_wrap(~ names, ncol = 2)
 desaturate <- function(col, steps = 1){
   saturate(col, steps = -steps)
 }
@@ -150,12 +154,15 @@ complement <- function(col, ...){
 #' @param from character string of first Munsell colour
 #' @param to character string of last Munsell colour
 #' @param n number of colours in sequence
+#' @param fix Should colours outside of the gamut be fixed? 
+#' Passed on to \code{\link{fix_mnsl}}
 #' @return character vector of Munsell colours
 #' @export
 #' @examples
 #' seq_mnsl("5R 2/4", "5R 5/16", 4)
 #' plot_mnsl(seq_mnsl("5R 2/4", "5R 5/16", 4))
-#' plot_mnsl(seq_mnsl("5R 2/4", complement("5R 2/4", fix = TRUE), 5))
+#' plot_mnsl(seq_mnsl("5R 5/6", 
+#'   complement("5R 5/6"), 5))
 seq_mnsl <- function(from, to, n, fix = FALSE){
   cols <- in_gamut(c(from, to), fix = fix)
   if(any(is.na(cols))) stop("Colors must be in gamut")

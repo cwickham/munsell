@@ -12,6 +12,9 @@ seq_mnsl(from, to, n, fix = FALSE)
 \item{to}{character string of last Munsell colour}
 
 \item{n}{number of colours in sequence}
+
+\item{fix}{Should colours outside of the gamut be fixed? 
+Passed on to \code{\link{fix_mnsl}}}
 }
 \value{
 character vector of Munsell colours

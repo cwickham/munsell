@@ -117,15 +117,17 @@ hue_slice <- function(hue.name = "all",  back.col = "white"){
       call. = FALSE)
   }
   if (any(hue.name == "all")) {
-    return(ggplot2::ggplot(ggplot2::aes(x = factor(chroma), y = factor(value)), 
-      data = munsell.map) +
-        ggplot2::geom_tile(aes(fill = hex), colour = back.col) +
-        ggplot2::facet_wrap(~ hue) +
-        ggplot2::scale_x_discrete("Chroma", expand = c(0, 0)) + 
-        ggplot2::coord_fixed(ratio = 1) +
-        ggplot2::scale_y_discrete("Value", expand = c(0, 0)) +
-        theme_munsell(back.col) +
-        ggplot2::scale_fill_identity())
+    return(
+      ggplot2::ggplot(ggplot2::aes(x = factor(chroma), y = factor(value)),
+        data = munsell.map) +
+      ggplot2::geom_tile(ggplot2::aes(fill = hex), colour = back.col) +
+      ggplot2::facet_wrap(~ hue) +
+      ggplot2::scale_x_discrete("Chroma", expand = c(0, 0)) + 
+      ggplot2::coord_fixed(ratio = 1) +
+      ggplot2::scale_y_discrete("Value", expand = c(0, 0)) +
+      theme_munsell(back.col) +
+      ggplot2::scale_fill_identity()
+      )
   }
   else {
     if (!all(hue.name %in% munsell.map$hue)) stop("invalid hue names")
