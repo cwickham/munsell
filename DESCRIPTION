@@ -7,7 +7,8 @@ Maintainer: Charlotte Wickham <cwickham@gmail.com>
 Description: Functions for exploring and using the Munsell
     colour system.
 Suggests:
-    ggplot2 (>= 2.0.0)
+    ggplot2 (>= 2.0.0),
+    testthat
 Imports:
     colorspace
 License: MIT + file LICENSE
