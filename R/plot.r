@@ -67,7 +67,7 @@ plot_hex <- function(hex.colour,  back.col = "white"){
 #' p
 #' # returned object is a ggplot object so we can alter the layout
 #' summary(p)
-#' p + facet_wrap(~ num, nrow = 1)
+#' p + ggplot2::facet_wrap(~ num, nrow = 1)
 plot_mnsl <- function(cols,  back.col = "white", ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 needed for this function to work. Please install it.",

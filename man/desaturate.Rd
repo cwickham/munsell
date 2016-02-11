@@ -21,6 +21,6 @@ Decreases the chroma of the Munsell colour by one step steps (multiples of 2).
 desaturate("5PB 2/4")
 cols <- c("5PB 2/6", "5Y 7/8")
 p <- plot_mnsl(c(cols, desaturate(cols), desaturate(cols, 2)))
-p + facet_wrap(~ names, ncol = 2)
+p + ggplot2::facet_wrap(~ names, ncol = 2)
 }
 

@@ -23,6 +23,7 @@ finding the closest munsell colours to a equidistant sequence of colours in  #' 
 \examples{
 seq_mnsl("5R 2/4", "5R 5/16", 4)
 plot_mnsl(seq_mnsl("5R 2/4", "5R 5/16", 4))
-plot_mnsl(seq_mnsl("5R 2/4", complement("5R 2/4", fix = TRUE), 5))
+plot_mnsl(seq_mnsl("5R 5/6", 
+  complement("5R 5/6"), 5))
 }
 

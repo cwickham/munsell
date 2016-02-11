@@ -21,6 +21,6 @@ Decreases the value of the Munsell colour by 1.
 darker("5PB 3/4")
 cols <- c("5PB 3/4", "5Y 7/8")
 p <- plot_mnsl(c(cols, darker(cols), darker(cols, 2)))
-p + facet_wrap(~ names, ncol = 2)
+p + ggplot2::facet_wrap(~ names, ncol = 2)
 }
 

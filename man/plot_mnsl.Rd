@@ -27,6 +27,6 @@ p <- plot_mnsl(c("5R 6/6", "5Y 6/6", "5G 6/6", "5B 6/6", "5P 6/6"),
 p
 # returned object is a ggplot object so we can alter the layout
 summary(p)
-p + facet_wrap(~ num, nrow = 1)
+p + ggplot2::facet_wrap(~ num, nrow = 1)
 }
 
