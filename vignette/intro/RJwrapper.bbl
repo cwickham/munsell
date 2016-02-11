@@ -1,0 +1,65 @@
+\begin{thebibliography}{9}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Arnold(2014)]{Arnold:2014aa}
+J.~B. Arnold.
+\newblock ggthemes: ggplot themes and scales, 2014.
+\newblock URL \url{https://github.com/jrnold/ggthemes/blob/master/DESCRIPTION}.
+\newblock R package version 1.7.0.
+
+\bibitem[Frazee(2014)]{Frazee:2014aa}
+A.~Frazee.
+\newblock Rskittlebrewer: for those times you want to make plots with
+  candy-themed color schemes, 2014.
+\newblock URL \url{https://github.com/alyssafrazee/RSkittleBrewer}.
+\newblock R packge version 1.1.
+
+\bibitem[Ihaka et~al.(2013)Ihaka, Murrell, Hornik, Fisher, and
+  Zeileis]{Ross-Ihaka:2013aa}
+R.~Ihaka, P.~Murrell, K.~Hornik, J.~C. Fisher, and A.~Zeileis.
+\newblock colorspace: Color space manipulation, 2013.
+\newblock URL \url{http://CRAN.R-project.org/package=colorspace}.
+\newblock R package version 1.2-4.
+
+\bibitem[Munsell and Cleland(1921)]{Munsell:1921aa}
+A.~H. Munsell and T.~M. Cleland.
+\newblock \emph{A Grammar of Color: Arrangements of Strathmore Papers in a
+  variety of printed colour combinations according to the Munsell Color
+  System}.
+\newblock The Strathmore Paper Company, 1921.
+
+\bibitem[Neuwirth(2011)]{Neuwirth:2011aa}
+E.~Neuwirth.
+\newblock Rcolorbrewer: Colorbrewer palettes, 2011.
+\newblock URL \url{http://CRAN.R-project.org/package=RColorBrewer}.
+\newblock R package version 1.0-5.
+
+\bibitem[Newhall et~al.(1943)Newhall, Nickerson, and Judd]{Newhall:1943aa}
+S.~M. Newhall, D.~Nickerson, and D.~B. Judd.
+\newblock Final report of the osa subcommittee on the spacing of the munsell
+  colors.
+\newblock \emph{JOSA}, 33\penalty0 (7):\penalty0 385--411, 1943.
+
+\bibitem[Ram(2014)]{Ram:2014aa}
+K.~Ram.
+\newblock wesanderson: A wes anderson palette generator, 2014.
+\newblock URL \url{https://github.com/karthik/wesanderson}.
+\newblock R package version 0.3.
+
+\bibitem[Ware(2013)]{Ware:2013aa}
+C.~Ware.
+\newblock \emph{Information visualization: perception for design}.
+\newblock Elsevier, 2013.
+\newblock ISBN 0123814642.
+
+\bibitem[Zeileis et~al.(2009)Zeileis, Hornik, and Murrell]{Zeileis:2009aa}
+A.~Zeileis, K.~Hornik, and P.~Murrell.
+\newblock Escaping rgbland: selecting colors for statistical graphics.
+\newblock \emph{Computational Statistics \& Data Analysis}, 53\penalty0
+  (9):\penalty0 3259--3270, 2009.
+
+\end{thebibliography}

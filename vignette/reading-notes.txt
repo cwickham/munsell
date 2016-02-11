@@ -1,0 +1,62 @@
+# Representing Color as Three Numbers
+Maureen Stone
+
+This article summarises the ideas behind representing colours as a triplet of numbers.
+
+Inherently this makes sense, because our visual system responds to light in a trivariate fashion.  We have three types of cones in our eyes, each with a particular response function over the visible light spectrum.  The response function is multiplied by the spectrum and integrated to give the signal for each cone.  Leads to two key concepts.  Trichromacy - we only need three numbers to accurately reflect how our eyes respond to visible light.  Metamerism - different light spectra can give the same visual response, i.e. two lights with different spectra can be indistinguishable.
+
+In practice the mapping of spectrum to three numbers, occurs through colour matching experiments.  An observer is supplied a colour to match and control over three primary light sources.  They mix the light sources until they produce a match to the colour.  The levels of the three light sources required become the RGB triplet.  
+
+You only need to do a finite number of experiments to get an infinite number of colours due to the linearity of the visual system (Grassmann's additivity law).  If a spectra S1 has triplet (R_1, G_1, B_1), and spectra S2 has triplet (R_2, G_2, B_2), then the spectra S_1 + S_2 has triplet (R_1 + R_2, G_1 + G_2, B_1 + B_2).  This means colour matching is generally done for set of monochromatic colours (spectra zero everywhere except a very narrow region of wavelengths) then other spectra can easily be constructed.
+
+Gives rise to colour matching functions - how much of R do I need at each wavelength.  Can be negative, means shining R on colour to be matched R = 645nm, G 526nm, B 444nm standard?
+
+Every observer is different but there are enough similarities to make a statistical average "normal observer" sensible.  CIE (1931) 2degree observer is one such average.  But also mathematically transforms RGB to avoid negative numbers, and make one dimension Y, represent brightness.
+
+Transforming between RGB and XYZ is a linear transform, [R G B] M = [X Y Z] 
+M = [ X_R  Y_R  Z_R ]
+    [ X_G  Y_G  Z_G ]
+    [ X_B  Y_B  Z_B ] 
+It relies on two assumptions, that they share an origin (0, 0, 0)_RGB = (0,0,0)_XYZ and that  RGB is linear in intensity
+
+The colour gamat is the volume of colour defined by the limits of RGB, a colour in one gamat may not transform to the interior of another (move to boundary by clipping or scaling)
+
+The trichromatic encoding is limited in that it only relevant to matching a single light (with known spectrum) and applies to viewing the light on a neutral background, by a normal viewer, who is fully adapted to viewing conditions.
+
+Perception of colours changes due to ambient lighting, a phenomenon known as adaptation.  For a X, Y, Z colour in one lighting, Von Krises transform gives the required X, Y, Z in a different lighting to give the same colour.  
+
+Perceptual colour spaces, distance in space proportional to distance in perception. LAB LUV Munsell
+
+
+Munsell Colour Notation
+
+
+Beginners should avoid Strong Color: Extreme red yellow and blue are discordant (They "shriek"" and "swear." Mark Twain calls Roxana's gown a "volcanic eruption of infernal splendors.") Yet there are some who claim that the child craves them and must have them to produce a thrill. So also does he crave candies matches and the carving knife He covets the trumpet fire gong and bass drum for their thrill but who would think them necessary to the musical training of the ear. Like the blazing bill board and the circus wagon they may be suffered out of doors but boisterous sounds and color sprees are unfit for the school room. 
+
+Popular color names are incongruous irrational and often ludicrous. One must smile in reading the list of 25 steps in a scale of blue made by Schiffer Muller in 1772:
+
+White pure 
+White silvery or pearly
+White milky
+Bluish white
+Pearly white
+Watery white
+Blue being born
+Blue dying or pale
+Mignon blue 
+Celestial blue or sky color
+Azure or ultramarine 
+Complete or perfect blue 
+Fine or queen blue 
+Covert blue or turquoise 
+King blue deep 
+Light brown blue or indigo
+Persian blue or woad flower
+Forge or steel blue
+Livid blue
+Blackish blue 
+Hellish blue 
+Black blue
+Blue black or charcoal 
+Velvet black 
+Jet black 
