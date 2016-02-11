@@ -31,9 +31,8 @@ representable colours.
 \examples{
 mnsl2hex("5PB 5/10")
 # use a munsell colour in a plot
-require("ggplot2")
-ggplot(data.frame(x = 1:10)) + geom_point(aes(x = x, y = x), 
-  colour = mnsl2hex("5PB 5/10"))
+plot.new()
+rect(0, 0, 1 ,1 , col = mnsl("5R 5/10"))
 }
 \seealso{
 \code{\link{check_mnsl}}, \code{\link{hvc2mnsl}}
