@@ -1,5 +1,7 @@
 Version 0.4.3
 ==============================================================================
+* many fixes to remove R CMD check notes/warnings
+
 * fix bug that gave incorrect greys 
 
 * add functions rygbp and pbgyr to change the hue of a colour
