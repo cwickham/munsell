@@ -24,7 +24,7 @@ getmunsellmap <- function(){
   col.map[ , c("X", "Y", "Z")] <- as.matrix(col.map[, c("X", "Y", "Z")]) %*%
     Bradford.C.D65
   
-  # 3. Use colorspace methods to convert XYZ to hex (RGB)  
+  # 3. Use colorspace methods to convert XYZ to hex (sRGB)  
   col.map$hex <- hex(XYZ(100 * as.matrix(col.map[, c("X", "Y", "Z")])))
 
   cols <- c("R", "YR", "Y", "GY", "G", "BG", "B", "PB", "P", "RP")

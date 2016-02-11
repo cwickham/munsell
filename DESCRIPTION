@@ -11,3 +11,4 @@ Suggests:
 Imports:
     colorspace
 License: MIT + file LICENSE
+RoxygenNote: 5.0.1
