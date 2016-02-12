@@ -25,4 +25,4 @@ There was one NOTE:
 ## Downstream dependencies
 I have also run R CMD check on downstream dependencies of munsell (soilprofile, scales, Rgraphics)
 
-All packages passed.
+All packages passed with no ERRORs or WARNINGs.
