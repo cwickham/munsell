@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 # munsell
 
-The `munsell` package provides easy access to, and manipulation of, the  Munsell colours.  The `munsell` package provides a mapping between Munsell's orginal notation (e.g. "5R 5/10") and hexidecimal sRGB strings suitable for use directly in R graphics.  The package also provides utilities to explore slices through the Munsell colour tree, to transform Munsell colours and display colour palettes.
+The `munsell` package provides easy access to, and manipulation of, the  Munsell colours.  The `munsell` package provides a mapping between Munsell's original notation (e.g. "5R 5/10") and hexadecimal sRGB strings suitable for use directly in R graphics.  The package also provides utilities to explore slices through the Munsell colour tree, to transform Munsell colours and display colour palettes.
 
-Munsell devised his system of colour notation to match the three percetual dimensions of colour: hue, value and chroma.  His notation provides a naming scheme to colours that eases the choice of color according to a specific purpose.  His century old advice is still relevent for the producers of statistical graphics and the munsell package aims to enable user to easily follow it.
+Munsell devised his system of colour notation to match the three perceptual dimensions of colour: hue, value and chroma.  His notation provides a naming scheme to colours that eases the choice of color according to a specific purpose.  His century old advice is still relevant for the producers of statistical graphics and the munsell package aims to enable user to easily follow it.
 
 Functions in `munsell` fall into three basic use categories: specifying Munsell colours, altering Munsell colours and exploring the Munsell color space.
 
