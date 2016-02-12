@@ -6,7 +6,7 @@ Author: Charlotte Wickham <cwickham@gmail.com>
 Maintainer: Charlotte Wickham <cwickham@gmail.com>
 Description: Provides easy access to, and manipulation of, the Munsell 
     colours. Provides a mapping between Munsell's 
-    original notation (e.g. "5R 5/10") and hexadecimal sRGB strings suitable 
+    original notation (e.g. "5R 5/10") and hexadecimal strings suitable 
     for use directly in R graphics. The package also provides utilities 
     to explore slices through the Munsell colour tree, to transform 
     Munsell colours and display colour palettes.
