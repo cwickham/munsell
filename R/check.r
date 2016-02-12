@@ -11,6 +11,8 @@
 #' @examples 
 #' check_mnsl(c("5R 5/8","2.5R 9/28"))
 #' @keywords internal
+#' @importFrom methods as
+#' @importFrom stats na.exclude
 check_mnsl <- function(col){
   col_na <- na.exclude(col)
   col <- toupper(as.vector(col_na))
@@ -76,6 +78,7 @@ check_mnsl <- function(col){
 #' @return  a character vector containing the input colours.  If any colours
 #' were outside the gamut they will be represented by NA.
 #' @export
+#' @importFrom stats na.exclude
 #' @examples 
 #' in_gamut(c("5R 5/8","2.5R 9/28"))
 #' @keywords internal

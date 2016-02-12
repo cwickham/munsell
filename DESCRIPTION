@@ -1,6 +1,6 @@
 Package: munsell
 Type: Package
-Title: Munsell colour system
+Title: Munsell Colour System
 Version: 0.4.3
 Author: Charlotte Wickham <cwickham@gmail.com>
 Maintainer: Charlotte Wickham <cwickham@gmail.com>
@@ -10,6 +10,7 @@ Suggests:
     ggplot2,
     testthat
 Imports:
-    colorspace
+    colorspace,
+    methods
 License: MIT + file LICENSE
 RoxygenNote: 5.0.1

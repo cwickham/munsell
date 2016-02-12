@@ -5,6 +5,7 @@
 #' @param steps number of steps to take in increasing value
 #' @return character vector of Munsell colours
 #' @export
+#' @importFrom stats na.exclude
 #' @examples 
 #' lighter("5PB 2/4")
 #' cols <- c("5PB 2/4", "5Y 6/8")
@@ -85,6 +86,7 @@ darker <- function(col, steps = 1){
 #' @param steps number of steps to take in increasing chroma
 #' @return character vector of Munsell colours
 #' @export
+#' @importFrom stats na.exclude
 #' @examples
 #' saturate("5PB 2/4")
 #' cols <- c("5PB 2/2", "5Y 7/6")
@@ -129,6 +131,7 @@ desaturate <- function(col, steps = 1){
 #' fix "bad" complement
 #' @return character vector of Munsell colours
 #' @export
+#' @importFrom stats na.exclude
 #' @examples 
 #' complement("5PB 2/4")
 #' cols <- c("5PB 2/4", "5Y 7/8")
@@ -158,6 +161,7 @@ complement <- function(col, ...){
 #' Passed on to \code{\link{fix_mnsl}}
 #' @return character vector of Munsell colours
 #' @export
+#' @importFrom methods as
 #' @examples
 #' seq_mnsl("5R 2/4", "5R 5/16", 4)
 #' plot_mnsl(seq_mnsl("5R 2/4", "5R 5/16", 4))
@@ -182,6 +186,7 @@ seq_mnsl <- function(from, to, n, fix = FALSE){
 #' @param steps number of hue steps to take
 #' @return character vector of Munsell colours
 #' @export
+#' @importFrom stats na.exclude
 #' @examples 
 #' my_red <- "10R 4/8"
 #' rygbp(my_red)

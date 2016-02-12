@@ -48,6 +48,7 @@ mnsl2hex <- mnsl
 #' @return a character string specification of a hex colour
 #' @seealso \code{\link{check_mnsl}}, \code{\link{mnsl2hex}}
 #' @export
+#' @importFrom stats na.exclude
 #' @examples
 #' hvc2mnsl("5PB", 5, 10)
 #' # All values of 5PB with chroma 10
@@ -82,6 +83,7 @@ hvc2mnsl <- function(hue, value = NULL, chroma = NULL, ...){
 #' @return a data frame with named columns hue, value and chroma containing the hue,
 #' value and chroma levels.
 #' @seealso \code{\link{check_mnsl}}, \code{\link{hvc2mnsl}}
+#' @importFrom stats na.exclude
 #' @export
 #' @examples
 #' mnsl2hvc("5PB 5/10")
@@ -109,6 +111,7 @@ mnsl2hvc <- function(col, ...){
 #' @param B numeric vector of blue values
 #' @seealso \code{\link{plot_closest}}
 #' @export
+#' @importFrom methods as
 #' @examples
 #' rgb2mnsl(0.1, 0.1, 0.3)
 #' rgb2mnsl(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3))
