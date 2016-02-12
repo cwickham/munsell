@@ -26,3 +26,4 @@ There was one NOTE:
 I have also run R CMD check on downstream dependencies of munsell (soilprofile, scales, Rgraphics)
 
 All packages passed with no ERRORs or WARNINGs.
+(https://github.com/cwickham/munsell/blob/master/revdep/summary.md)
