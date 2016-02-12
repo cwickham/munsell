@@ -33,7 +33,6 @@ Visually examining a colour can either be done by using `mnsl` with a base plott
 plot.new()
 rect(0, 0, 1 ,1 , col = mnsl("5R 5/10"))
 plot_mnsl("5R 5/10")
-#> Loading required package: ggplot2
 ```
 
 Colour manipulation
@@ -56,7 +55,7 @@ Each function optionally takes the number of steps to take in the dimension and 
 
 ``` r
 p <- plot_mnsl(sapply(0:6, darker, col = "5PB 7/4"))
-p + facet_wrap(~ num, nrow = 1)
+p + ggplot2::facet_wrap(~ num, nrow = 1)
 ```
 
 ![](READMEimages/palette-1.png)
