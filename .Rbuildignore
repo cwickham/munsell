@@ -4,8 +4,10 @@
 ^todo$
 ^.*\.Rproj$
 ^\.git
-^issues$
+^issues.R$
 ^\.Rhistory
 READMEimages
 ^README\.Rmd$
 ^vignette$
+^cran-comments.md$
+^revdep$

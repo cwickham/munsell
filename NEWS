@@ -1,6 +1,6 @@
 Version 0.4.3
 ==============================================================================
-* many fixes to remove R CMD check notes/warnings
+* many fixes to remove R CMD check notes/warnings fixes issue #5
 
 * fix bug that gave incorrect greys 
 
