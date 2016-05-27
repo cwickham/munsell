@@ -17,4 +17,6 @@ Imports:
     colorspace,
     methods
 License: MIT + file LICENSE
+URL: https://cran.r-project.org/package=munsell,
+    https://github.com/cwickham/munsell/
 RoxygenNote: 5.0.1
