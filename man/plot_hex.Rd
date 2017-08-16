@@ -21,4 +21,3 @@ Quick way to look at a set of hex colours.
 plot_hex("#000000")
 plot_hex(c("#000000","#FFFFFF"))
 }
-

@@ -1,7 +1,7 @@
 Package: munsell
 Type: Package
 Title: Utilities for Using Munsell Colours
-Version: 0.4.3.9000
+Version: 0.4.4.0000
 Author: Charlotte Wickham <cwickham@gmail.com>
 Maintainer: Charlotte Wickham <cwickham@gmail.com>
 Description: Provides easy access to, and manipulation of, the Munsell 
@@ -19,4 +19,4 @@ Imports:
 License: MIT + file LICENSE
 URL: https://cran.r-project.org/package=munsell,
     https://github.com/cwickham/munsell/
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

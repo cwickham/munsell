@@ -13,4 +13,3 @@ theme_munsell(bg.col = "white")
 Removes unnecessary clutter in plots
 }
 \keyword{internal}
-

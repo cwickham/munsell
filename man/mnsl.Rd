@@ -37,4 +37,3 @@ rect(0, 0, 1 ,1 , col = mnsl("5R 5/10"))
 \seealso{
 \code{\link{check_mnsl}}, \code{\link{hvc2mnsl}}
 }
-

@@ -29,4 +29,3 @@ plot_closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3))
 \seealso{
 \code{\link{rgb2mnsl}}
 }
-

@@ -28,4 +28,3 @@ p + ggplot2::theme(axis.text = ggplot2::element_text(),
 # all values 
 \dontrun{chroma_slice(seq(0, 38, by = 2))}
 }
-

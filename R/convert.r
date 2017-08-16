@@ -52,7 +52,7 @@ mnsl2hex <- mnsl
 #' @examples
 #' hvc2mnsl("5PB", 5, 10)
 #' # All values of 5PB with chroma 10
-#' hvc2mnsl("5PB", 1:9, 10) # note some are undefined
+#' hvc2mnsl("5PB", 1:9, 10) # note some are undefined; consider fix = TRUE
 #' plot_mnsl(hvc2mnsl("5PB", 1:9, 10))
 hvc2mnsl <- function(hue, value = NULL, chroma = NULL, ...){
   if(!(is.null(value) == is.null(chroma))) stop("specify both value and chroma")
@@ -91,7 +91,7 @@ hvc2mnsl <- function(hue, value = NULL, chroma = NULL, ...){
 mnsl2hvc <- function(col, ...){
   col <- check_mnsl(col, ...)
   col <- na.exclude(col)
-  if (length(col) == 0) stop("zero non-missing colours")
+  if (length(col) == 0) stop("Zero non-missing colours. Perhaps fix = TRUE?")
   col.split <- lapply(strsplit(col, "/"), 
     function(x) unlist(strsplit(x, " ")))
   col_mat <- data.frame(do.call(rbind, col.split),

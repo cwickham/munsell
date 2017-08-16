@@ -15,4 +15,3 @@ Returns a character vector of the Munsell hues in hue order starting at 2.5R and
 \examples{
 mnsl_hues()
 }
-

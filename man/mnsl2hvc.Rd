@@ -35,4 +35,3 @@ hvc2mnsl(mnsl2hvc("5PB 5/10"))
 \seealso{
 \code{\link{check_mnsl}}, \code{\link{hvc2mnsl}}
 }
-
