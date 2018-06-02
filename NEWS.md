@@ -2,6 +2,8 @@ Version 0.4.3.9000
 ==============================================================================
 * Fix to work with ggplot2 2.2.1.9000
 
+* move README images to folder that CRAN can find
+
 Version 0.4.3
 ==============================================================================
 * many fixes to remove R CMD check notes/warnings fixes issue (#5)
