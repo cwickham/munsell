@@ -248,8 +248,7 @@ complement_slice <- function(hue.name,  back.col = "white"){
     ggplot2::scale_colour_identity() +
     ggplot2::scale_x_continuous("Chroma") + 
     ggplot2::scale_y_continuous("Value") +
-    ggplot2::facet_grid(. ~ hue,  scales = "free_x", space = "free")  +
-    ggplot2::coord_fixed() +
+    ggplot2::facet_grid(. ~ hue,  scales = "free_x")  +
     theme_munsell(back.col)
   }
 
