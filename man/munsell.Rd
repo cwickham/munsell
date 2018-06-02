@@ -3,8 +3,8 @@
 \docType{package}
 \name{munsell}
 \alias{munsell}
-\alias{munsell-package}
 \alias{package-munsell}
+\alias{munsell-package}
 \title{Munsell colour system.}
 \description{
 This package makes it easy to access and manipulate the colours in the 
@@ -15,4 +15,3 @@ S. M. Newhall, D. Nickerson, and D. B. Judd. Final report of the O.S.A. subcommi
 
 Munsell Renotation Data, RIT Munsell Color Science Laboratory.  \url{http://www.cis.rit.edu/mcsl/online/munsell.php}
 }
-

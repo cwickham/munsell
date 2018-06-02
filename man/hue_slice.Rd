@@ -22,4 +22,3 @@ hue_slice("5R")
 hue_slice(c("5R", "5P"))
 \dontrun{hue_slice("all")}
 }
-

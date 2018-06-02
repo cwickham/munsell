@@ -29,4 +29,3 @@ p
 summary(p)
 p + ggplot2::facet_wrap(~ num, nrow = 1)
 }
-

@@ -41,4 +41,3 @@ plot_mnsl(hvc2mnsl("5PB", 1:9, 10))
 \seealso{
 \code{\link{check_mnsl}}, \code{\link{mnsl2hex}}
 }
-

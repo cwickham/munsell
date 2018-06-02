@@ -24,4 +24,3 @@ I.e. colour is of form "h v/c" and h,  v and c take valid values.
 check_mnsl(c("5R 5/8","2.5R 9/28"))
 }
 \keyword{internal}
-

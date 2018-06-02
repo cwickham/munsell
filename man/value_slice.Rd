@@ -23,4 +23,3 @@ value_slice(c(2, 4))
 # all values 
 \dontrun{value_slice(1:10)}
 }
-

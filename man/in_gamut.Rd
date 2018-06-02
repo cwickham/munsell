@@ -25,4 +25,3 @@ representable.
 in_gamut(c("5R 5/8","2.5R 9/28"))
 }
 \keyword{internal}
-

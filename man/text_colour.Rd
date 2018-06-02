@@ -16,4 +16,3 @@ a vector of "black" or "white"
 Get the appropriate text colour for writing on a munsell colour.
 }
 \keyword{internal}
-
