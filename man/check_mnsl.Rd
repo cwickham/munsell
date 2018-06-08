@@ -4,17 +4,18 @@
 \alias{check_mnsl}
 \title{Checks for valid Munsell colours}
 \usage{
-check_mnsl(col)
+check_mnsl(col, fix = FALSE)
 }
 \arguments{
 \item{col}{a character vector representing Munsell colours.}
 
 \item{fix}{passed on to \code{\link{fix_mnsl}}. Use \code{fix = TRUE} to
-fix "bad" colours}
+fix "bad" (out of gamut) colours}
 }
 \value{
 a character vector containing the input colours.  If any colours
-were outside the gamut they will be represented by NA.
+were outside the gamut they will be represented by NA, unless 
+\code{fix = TRUE} in which case the closest munsell color is returned.
 }
 \description{
 Checks user supplied munsell specification for validity.  

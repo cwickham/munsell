@@ -4,16 +4,17 @@
 #' I.e. colour is of form "h v/c" and h,  v and c take valid values.
 #' @param col a character vector representing Munsell colours.
 #' @param fix passed on to \code{\link{fix_mnsl}}. Use \code{fix = TRUE} to
-#' fix "bad" colours
+#' fix "bad" (out of gamut) colours
 #' @return  a character vector containing the input colours.  If any colours
-#' were outside the gamut they will be represented by NA.
+#' were outside the gamut they will be represented by NA, unless 
+#' \code{fix = TRUE} in which case the closest munsell color is returned.
 #' @export
 #' @examples 
 #' check_mnsl(c("5R 5/8","2.5R 9/28"))
 #' @keywords internal
 #' @importFrom methods as
 #' @importFrom stats na.exclude
-check_mnsl <- function(col){
+check_mnsl <- function(col, fix = FALSE){
   col_na <- na.exclude(col)
   col <- toupper(as.vector(col_na))
   # check format
@@ -64,6 +65,8 @@ check_mnsl <- function(col){
     stop("some colours have chromas that are not multiples of two: ",
       bad.chroma)
   }
+  # Finally, deal with out of gamut values if requested
+  col <- in_gamut(col, fix = fix)
   na_handle(col_na, col)
 }
 
@@ -76,7 +79,8 @@ check_mnsl <- function(col){
 #' @param fix passed on to \code{\link{fix_mnsl}}. Use \code{fix = TRUE} to
 #' fix "bad" colours
 #' @return  a character vector containing the input colours.  If any colours
-#' were outside the gamut they will be represented by NA.
+#' were outside the gamut they will be represented by NA, unless
+#' \code{fix = TRUE} in which case the nearest munsell color is returned.
 #' @export
 #' @importFrom stats na.exclude
 #' @examples 

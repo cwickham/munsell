@@ -14,7 +14,8 @@ fix "bad" colours}
 }
 \value{
 a character vector containing the input colours.  If any colours
-were outside the gamut they will be represented by NA.
+were outside the gamut they will be represented by NA, unless
+\code{fix = TRUE} in which case the nearest munsell color is returned.
 }
 \description{
 Not all possible correctly formatted Munsell colours result in a colour

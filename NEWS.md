@@ -1,5 +1,8 @@
-Version 0.4.3.9000
+
+Version 0.4.4
 ==============================================================================
+* mnsl2hex is intended to pass fix = TRUE via ... and this is documented. However, changes in check_mnsl had made this impossible.  This was fixed, with default fix = FALSE.  hvc2mnsl and mnsl2hvc also presumably had the same behavior.  Added unit test.  Updated documentation and messaged in several places.  Fixes issue #10.
+
 * Fix to work with ggplot2 2.2.1.9000
 
 * move README images to folder that CRAN can find
@@ -8,7 +11,7 @@ Version 0.4.3
 ==============================================================================
 * many fixes to remove R CMD check notes/warnings fixes issue (#5)
 
-* fix bug that gave incorrect greys 
+* fix bug that gave incorrect greys
 
 * add functions rygbp and pbgyr to change the hue of a colour
 
@@ -23,7 +26,7 @@ Version 0.4.3
 Version 0.4.2
 ==============================================================================
 
-* hues with zero chroma are now defined but are named using the corresponding 
+* hues with zero chroma are now defined but are named using the corresponding
 grey (i.e. 5B 0/4 is equivalent to N 0/4) (fixes issue #3)
 
 * fixed slice_complement to display correct colours (issue #2).
@@ -49,4 +52,3 @@ Version 0.2
 * added a NAMESPACE and removed package dependencies - colorspace is now
   imported, and ggplot2 is only a suggestion - you don't need it if you're
   using munsell only for colour choice, not for visualising the space.
-

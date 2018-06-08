@@ -77,8 +77,7 @@ plot_mnsl <- function(cols,  back.col = "white", ...){
   if(length(cols) > 1) {
      add.ops <- list(ggplot2::facet_wrap(~ num))
   }
-  cols <- check_mnsl(cols)
-  cols <- in_gamut(cols, ...)
+  cols <- check_mnsl(cols, ...)
   df <- data.frame(num = 1:length(cols), 
     names = factor(cols,  levels = c(unique(cols))),
     hex = mnsl2hex(cols), x = 0 , y = 0, stringsAsFactors = FALSE)
