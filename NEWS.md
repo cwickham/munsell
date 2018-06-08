@@ -3,6 +3,10 @@ Version 0.4.4
 ==============================================================================
 * mnsl2hex is intended to pass fix = TRUE via ... and this is documented. However, changes in check_mnsl had made this impossible.  This was fixed, with default fix = FALSE.  hvc2mnsl and mnsl2hvc also presumably had the same behavior.  Added unit test.  Updated documentation and messaged in several places.  Fixes issue #10.
 
+* Fix to work with ggplot2 2.2.1.9000
+
+* move README images to folder that CRAN can find
+
 Version 0.4.3
 ==============================================================================
 * many fixes to remove R CMD check notes/warnings fixes issue (#5)
