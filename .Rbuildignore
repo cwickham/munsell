@@ -12,3 +12,4 @@ READMEimages
 ^cran-comments.md$
 ^revdep$
 local_notes
+^\.travis\.yml$
