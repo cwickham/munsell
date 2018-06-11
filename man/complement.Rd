@@ -4,10 +4,12 @@
 \alias{complement}
 \title{Find the complement of a munsell colour}
 \usage{
-complement(col)
+complement(col, ...)
 }
 \arguments{
 \item{col}{character vector of Munsell colours}
+
+\item{...}{deprecated}
 }
 \value{
 character vector of Munsell colours

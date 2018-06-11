@@ -1,5 +1,6 @@
 Version 0.4.3.9000
 ==============================================================================
+* Passing `...` to `complement()` deprecated
 
 * Fix bug where fix = TRUE couldn't be passed to mnsl(), issue (#10).  Thanks to @bryanhanson
 
