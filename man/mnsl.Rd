@@ -10,7 +10,7 @@ mnsl(col, ...)
 \arguments{
 \item{col}{a character string representing a Munsell colour.}
 
-\item{...}{passed on to \code{\link{check_mnsl}}. Use \code{fix = TRUE} to
+\item{...}{passed on to \code{\link{in_gamut}}. Use \code{fix = TRUE} to
 fix "bad" colours}
 }
 \value{
@@ -35,5 +35,5 @@ plot.new()
 rect(0, 0, 1 ,1 , col = mnsl("5R 5/10"))
 }
 \seealso{
-\code{\link{check_mnsl}}, \code{\link{hvc2mnsl}}
+\code{\link{check_mnsl}},\code{\link{in_gamut}}, \code{\link{hvc2mnsl}}
 }

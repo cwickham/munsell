@@ -127,8 +127,6 @@ desaturate <- function(col, steps = 1){
 #' side of the hue circle. The complement is not defined 
 #' for greys (hue == "N"), and the function returns the grey untransformed.
 #' @param col character vector of Munsell colours
-#' @param ... passed on to \code{\link{in_gamut}}. Use \code{fix = TRUE} to
-#' fix "bad" complement
 #' @return character vector of Munsell colours
 #' @export
 #' @importFrom stats na.exclude
@@ -136,7 +134,7 @@ desaturate <- function(col, steps = 1){
 #' complement("5PB 2/4")
 #' cols <- c("5PB 2/4", "5Y 7/8")
 #' plot_mnsl(c(cols, complement(cols)))
-complement <- function(col, ...){
+complement <- function(col){
   col <- na.exclude(col)
   
   col_hvc <- mnsl2hvc(as.vector(col))

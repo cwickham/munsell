@@ -4,13 +4,10 @@
 \alias{complement}
 \title{Find the complement of a munsell colour}
 \usage{
-complement(col, ...)
+complement(col)
 }
 \arguments{
 \item{col}{character vector of Munsell colours}
-
-\item{...}{passed on to \code{\link{in_gamut}}. Use \code{fix = TRUE} to
-fix "bad" complement}
 }
 \value{
 character vector of Munsell colours

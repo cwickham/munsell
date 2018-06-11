@@ -10,10 +10,10 @@
 #' at most 24.  Note that not all possible specifications result in 
 #' representable colours.  
 #' @param col a character string representing a Munsell colour.
-#' @param ... passed on to \code{\link{check_mnsl}}. Use \code{fix = TRUE} to
+#' @param ... passed on to \code{\link{in_gamut}}. Use \code{fix = TRUE} to
 #' fix "bad" colours
 #' @return a character string specification of a hex colour
-#' @seealso \code{\link{check_mnsl}}, \code{\link{hvc2mnsl}}
+#' @seealso \code{\link{check_mnsl}},\code{\link{in_gamut}}, \code{\link{hvc2mnsl}}
 #' @aliases mnsl2hex mnsl
 #' @export mnsl2hex mnsl
 #' @examples
@@ -22,7 +22,8 @@
 #' plot.new()
 #' rect(0, 0, 1 ,1 , col = mnsl("5R 5/10"))
 mnsl <- function(col, ...){
-  col <- check_mnsl(col, ...)
+  col <- check_mnsl(col)
+  col <- in_gamut(col, ...)
   positions <- match(col, munsell.map$name)
   munsell.map[positions, "hex"]
 }
