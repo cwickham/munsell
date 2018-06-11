@@ -1,11 +1,11 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-![Downloads](http://cranlogs.r-pkg.org/badges/last-week/munsell)
 
-[![Travis build
-status](https://travis-ci.org/cwickham/munsell.svg?branch=master)](https://travis-ci.org/cwickham/munsell)
+<!-- ![Downloads](http://cranlogs.r-pkg.org/badges/last-week/munsell) -->
 
-munsell
-=======
+<!-- [![Travis build status](https://travis-ci.org/cwickham/munsell.svg?branch=master)](https://travis-ci.org/cwickham/munsell) -->
+
+# munsell
 
 The `munsell` package provides easy access to, and manipulation of, the
 Munsell colours. The `munsell` package provides a mapping between
@@ -32,12 +32,11 @@ with:
 devtools::install_github("cwickham/munsell")
 ```
 
-Color specification
--------------------
+## Color specification
 
 Following Munsell, specifying colours is done with a specific string
 format: “H V/C” where H is a hue code (see `mnsl_hues()` for a list of
-those available, excluding “N”), V an integer in \[0, 10\] specifying
+those available, excluding “N”), V an integer in \([0, 10]\) specifying
 value, and C an even integer specifying chroma. The `mnsl` function
 takes the string and returns a hexadecimal RGB representation:
 
@@ -57,8 +56,7 @@ rect(0, 0, 1 ,1 , col = mnsl("5R 5/10"))
 plot_mnsl("5R 5/10")
 ```
 
-Colour manipulation
--------------------
+## Colour manipulation
 
 `munsell` provides convenience functions that alter a colour by taking
 steps in the hue, value and chroma dimensions: `rygbp`, `pbgyr`,
@@ -73,7 +71,7 @@ p <- plot_mnsl(c(
 p
 ```
 
-![](man/figures/README-manipulate-blue-1.png)
+![](man/figures/README-manipulate-blue-1.png)<!-- -->
 
 Each function optionally takes the number of steps to take in the
 dimension and consequently are easily used to create scales in a
@@ -84,10 +82,9 @@ p <- plot_mnsl(sapply(0:6, darker, col = "5PB 7/4"))
 p + ggplot2::facet_wrap(~ num, nrow = 1)
 ```
 
-![](man/figures/README-palette-1.png)
+![](man/figures/README-palette-1.png)<!-- -->
 
-Colour space exploration
-------------------------
+## Colour space exploration
 
 Slices through the colour space of constant hue, chroma or value can be
 displayed using the functions: `hue_slice`, `chroma_slice` and
@@ -99,4 +96,4 @@ the opposite side of the colour sphere to that specified.
 complement_slice("5R")
 ```
 
-![](man/figures/README-complement-slice-1.png)
+![](man/figures/README-complement-slice-1.png)<!-- -->

@@ -1,7 +1,5 @@
 ---
-output:
-  md_document:
-    variant: markdown_github
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -14,9 +12,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-![Downloads](http://cranlogs.r-pkg.org/badges/last-week/munsell)
+<!-- ![Downloads](http://cranlogs.r-pkg.org/badges/last-week/munsell) -->
 
-[![Travis build status](https://travis-ci.org/cwickham/munsell.svg?branch=master)](https://travis-ci.org/cwickham/munsell)
+<!-- [![Travis build status](https://travis-ci.org/cwickham/munsell.svg?branch=master)](https://travis-ci.org/cwickham/munsell) -->
   
 # munsell
 
