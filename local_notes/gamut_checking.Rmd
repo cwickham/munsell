@@ -1,0 +1,105 @@
+---
+title: Gamut checking notes
+output: html_document
+---
+
+```{r}
+devtools::load_all()
+```
+
+https://github.com/cwickham/munsell/issues/10
+
+```{r, error = TRUE}
+mnsl2hex("5PB 5/10") # OK
+mnsl2hex("5PB 5/10", fix = TRUE) # Error unused argument
+```
+
+Which functions should check gamut, and which shouldn't?
+
+## Functions in alter.R
+
+Generally these functions shouldn't check for in gamut colors, since then you can chain through out of gamut colors into colors that are in the gamut, e.g. this color is in gamut
+```{r}
+plot_mnsl("5R 6/12")
+```
+
+A color one darker isn't in the gamut:
+```{r, error = TRUE}
+plot_mnsl(lighter("5R 6/12"))
+```
+
+But a color one lighter and one less saturated is:
+```{r}
+plot_mnsl(desaturate(lighter("5R 6/12")))
+```
+
+Why doesn't this generate a warning?  It just returns `NA`.
+```{r}
+mnsl(lighter("5R 6/12"))
+```
+
+These do not currently and shouldn't check for gamut (they do however call `mnsl2hvc()` which checks for format, but not `in_gamut()`:
+
+* `lighter()`/`darker()`
+* `saturate()`/`desaturate()`
+* `complement()`
+* `rygbp()`/`pbgyr()`
+```{r, error=TRUE}
+plot_mnsl("2.5G 8/12")
+plot_mnsl(rygbp("2.5G 8/12"))
+```
+
+`seq_mnsl()` checks endpoints are in gamut, then calls `rgb2mnsl()` which doesn't explicilty check colors are in gamut, but by construction will only return colors in gamut.
+
+## Functions in convert.R
+
+* `rgb2mnsl()` doesn't check but can't return values out of gamut.
+* `RGB2mnsl()` doesn't check but can't return values out of gamut.
+
+Calls `check_mnsl()`:
+
+* `mnsl()` - should look for out of gamut, and possibly fix
+* `hvc2mnsl()` shouldn't check for `in_gamut()` 
+* `mnsl2hvc()` shouldn't check for `in_gamut()` 
+
+## Functions in check.R
+
+`check_mnsl()` - checks for format validity, hadnles `NA`s, doesn't currently fix colors.  
+
+`in_gmaut()` - checks if color is inside gamut, i.e. representable.  Handles `NA`s warns if some colors are outside gamut, passes `fix` onto `fix_mnsl()`
+
+`fix_mnsl()` takes out of gamut colors and moves them in gamut.
+
+
+## Functions in plot.R
+
+`plot_mnsl()` starts with:
+
+```
+cols <- check_mnsl(cols)
+cols <- in_gamut(cols, ...)
+```
+
+and does nothing with explicit missing values (does it matter that it passes them on?).
+
+## Important points
+
+Decide where `NA` handling should occur (before `check_cols()`?), before `in_gamut()`, make sure it's done consistently.
+
+Any function that checks gamut, should allow fixing of colors.
+
+## Action Items
+
+- [ ] Pull in tests from @bryanhanson (also reason about error/warning inconsitency)
+
+- [x] Fix for `mnsl2hex("5PB 5/10", fix = TRUE)` should come by adding `in_gamut(, fix = fix)` to `mnsl()`
+
+- [x] Check all functions that call `in_gamut()` pass on a `fix` argument
+
+- [x] Try to express these expectations as tests, i.e. which calls should return an out of gamut color, which should return a warning, which an error.
+
+- [ ] Check tests for NA handling
+
+- [ ] Should any return an error for no non-missing colors?
+
+- [ ] Write this reasoning up
