@@ -1,5 +1,8 @@
 Version 0.4.3.9000
 ==============================================================================
+
+* Fix bug where fix = TRUE couldn't be passed to mnsl(), issue (#10).  Thanks to @bryanhanson
+
 * Fix to work with ggplot2 2.2.1.9000
 
 * move README images to folder that CRAN can find
