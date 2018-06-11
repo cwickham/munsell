@@ -21,9 +21,11 @@ test_that("Fix gets passed along to `in_gamut()`", {
 test_that("Converting out of gamut colors generate warnings", {
   expect_warning(mnsl("5PB 5/14"), "fix")
   expect_warning(mnsl(rygbp("2.5G 8/12")), "fix")
+  
 })
 
 test_that("Altering out of gamut colors don't generate warnings", {
   expect_equal(lighter("5R 6/12"), "5R 7/12")
   expect_equal(rygbp("2.5G 8/12"), "5G 8/12")
+  expect_equal(complement("2.5RP 8/12"), "2.5G 8/12")
 })
