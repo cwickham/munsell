@@ -1,9 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<!-- ![Downloads](http://cranlogs.r-pkg.org/badges/last-week/munsell) -->
+![Downloads](http://cranlogs.r-pkg.org/badges/last-week/munsell)
 
-<!-- [![Travis build status](https://travis-ci.org/cwickham/munsell.svg?branch=master)](https://travis-ci.org/cwickham/munsell) -->
+[![Travis build
+status](https://travis-ci.org/cwickham/munsell.svg?branch=master)](https://travis-ci.org/cwickham/munsell)
 
 # munsell
 
