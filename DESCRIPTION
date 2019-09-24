@@ -15,8 +15,9 @@ Suggests:
     testthat
 Imports:
     colorspace,
-    methods
+    methods,
+    utils
 License: MIT + file LICENSE
 URL: https://cran.r-project.org/package=munsell,
     https://github.com/cwickham/munsell/
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
