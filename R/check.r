@@ -3,8 +3,6 @@
 #' Checks user supplied munsell specification for validity.  
 #' I.e. colour is of form "h v/c" and h,  v and c take valid values.
 #' @param col a character vector representing Munsell colours.
-#' @param fix passed on to \code{\link{fix_mnsl}}. Use \code{fix = TRUE} to
-#' fix "bad" colours
 #' @return  a character vector containing the input colours.  If any colours
 #' were outside the gamut they will be represented by NA.
 #' @export

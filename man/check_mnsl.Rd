@@ -8,9 +8,6 @@ check_mnsl(col)
 }
 \arguments{
 \item{col}{a character vector representing Munsell colours.}
-
-\item{fix}{passed on to \code{\link{fix_mnsl}}. Use \code{fix = TRUE} to
-fix "bad" colours}
 }
 \value{
 a character vector containing the input colours.  If any colours

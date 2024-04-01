@@ -326,7 +326,7 @@ plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
 #' Get text colour
 #'
 #' Get the appropriate text colour for writing on a munsell colour.
-#' @param a character vector of munsell colours
+#' @param cols a character vector of munsell colours
 #' @return a vector of "black" or "white"
 #' @export
 #' @keywords internal

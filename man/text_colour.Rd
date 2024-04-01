@@ -7,7 +7,7 @@
 text_colour(cols)
 }
 \arguments{
-\item{a}{character vector of munsell colours}
+\item{cols}{a character vector of munsell colours}
 }
 \value{
 a vector of "black" or "white"
