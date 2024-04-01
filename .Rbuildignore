@@ -13,3 +13,4 @@ READMEimages
 ^revdep$
 local_notes
 ^\.travis\.yml$
+^\.github$

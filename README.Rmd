@@ -15,7 +15,9 @@ knitr::opts_chunk$set(
 
 ![Downloads](http://cranlogs.r-pkg.org/badges/last-week/munsell)
 
-[![Travis build status](https://travis-ci.org/cwickham/munsell.svg?branch=master)](https://travis-ci.org/cwickham/munsell)
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/cwickham/munsell/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cwickham/munsell/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
 # munsell
 
