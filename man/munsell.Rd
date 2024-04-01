@@ -20,6 +20,7 @@ Useful links:
 \itemize{
   \item \url{https://cran.r-project.org/package=munsell}
   \item \url{https://github.com/cwickham/munsell/}
+  \item Report bugs at \url{https://github.com/cwickham/munsell/issues}
 }
 
 }
