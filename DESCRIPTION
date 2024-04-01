@@ -1,7 +1,7 @@
 Package: munsell
 Type: Package
 Title: Utilities for Using Munsell Colours
-Version: 0.5.0.9000
+Version: 0.5.1
 Author: Charlotte Wickham <cwickham@gmail.com>
 Maintainer: Charlotte Wickham <cwickham@gmail.com>
 Description: Provides easy access to, and manipulation of, the Munsell 
