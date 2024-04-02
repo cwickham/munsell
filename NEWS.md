@@ -1,3 +1,5 @@
+# munsell (development version)
+
 # munsell 0.5.1
 
 * Fix documentation NOTEs
