@@ -105,13 +105,16 @@ plot_mnsl <- function(cols,  back.col = "white", ...){
 #' Plots slices of the Munsell colour system where hue is constant.
 #' @param hue.name character vector of the desired hues. Or "all" for all hues.
 #' @param back.col colour for the background
+#' @param label.size size of the text labels, in mm (passed to
+#'   \code{geom_text}). Defaults to 2. Ignored when \code{hue.name = "all"},
+#'   which has no labels.
 #' @return ggplot object
 #' @export
 #' @examples
 #' hue_slice("5R")
 #' hue_slice(c("5R", "5P"))
 #' \dontrun{hue_slice("all")}
-hue_slice <- function(hue.name = "all",  back.col = "white"){
+hue_slice <- function(hue.name = "all",  back.col = "white", label.size = 2){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 needed for this function to work. Please install it.",
       call. = FALSE)
@@ -135,7 +138,7 @@ hue_slice <- function(hue.name = "all",  back.col = "white"){
         data = subset(munsell.map, hue %in% hue.name)) +
       ggplot2::geom_tile(ggplot2::aes(fill = hex), colour = back.col, size = 1) +
       ggplot2::geom_text(ggplot2::aes(label = name, colour = text_colour(name)), 
-        angle = 45, size = 2) +
+        angle = 45, size = label.size) +
       ggplot2::scale_colour_identity() +
       ggplot2::scale_x_discrete("Chroma") + 
       ggplot2::scale_y_discrete("Value", expand = c(0.125, 0)) +
