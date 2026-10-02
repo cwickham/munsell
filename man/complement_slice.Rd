@@ -4,12 +4,15 @@
 \alias{complement_slice}
 \title{A vertical slice through the Munsell space}
 \usage{
-complement_slice(hue.name, back.col = "white")
+complement_slice(hue.name, back.col = "white", label.size = 2)
 }
 \arguments{
 \item{hue.name}{character string of the desired hue.}
 
 \item{back.col}{colour for the background}
+
+\item{label.size}{size of the text labels, in mm (passed to
+\code{geom_text}). Defaults to 2.}
 }
 \value{
 ggplot object

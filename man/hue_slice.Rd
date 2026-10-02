@@ -4,12 +4,16 @@
 \alias{hue_slice}
 \title{Plot all colours with the same hue}
 \usage{
-hue_slice(hue.name = "all", back.col = "white")
+hue_slice(hue.name = "all", back.col = "white", label.size = 2)
 }
 \arguments{
 \item{hue.name}{character vector of the desired hues. Or "all" for all hues.}
 
 \item{back.col}{colour for the background}
+
+\item{label.size}{size of the text labels, in mm (passed to
+\code{geom_text}). Defaults to 2. Ignored when \code{hue.name = "all"},
+which has no labels.}
 }
 \value{
 ggplot object

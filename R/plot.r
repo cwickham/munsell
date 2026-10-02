@@ -105,13 +105,16 @@ plot_mnsl <- function(cols,  back.col = "white", ...){
 #' Plots slices of the Munsell colour system where hue is constant.
 #' @param hue.name character vector of the desired hues. Or "all" for all hues.
 #' @param back.col colour for the background
+#' @param label.size size of the text labels, in mm (passed to
+#'   \code{geom_text}). Defaults to 2. Ignored when \code{hue.name = "all"},
+#'   which has no labels.
 #' @return ggplot object
 #' @export
 #' @examples
 #' hue_slice("5R")
 #' hue_slice(c("5R", "5P"))
 #' \dontrun{hue_slice("all")}
-hue_slice <- function(hue.name = "all",  back.col = "white"){
+hue_slice <- function(hue.name = "all",  back.col = "white", label.size = 2){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 needed for this function to work. Please install it.",
       call. = FALSE)
@@ -135,7 +138,7 @@ hue_slice <- function(hue.name = "all",  back.col = "white"){
         data = subset(munsell.map, hue %in% hue.name)) +
       ggplot2::geom_tile(ggplot2::aes(fill = hex), colour = back.col, size = 1) +
       ggplot2::geom_text(ggplot2::aes(label = name, colour = text_colour(name)), 
-        angle = 45, size = 2) +
+        angle = 45, size = label.size) +
       ggplot2::scale_colour_identity() +
       ggplot2::scale_x_discrete("Chroma") + 
       ggplot2::scale_y_discrete("Value", expand = c(0.125, 0)) +
@@ -179,6 +182,8 @@ value_slice <- function(value.name = 1:10,  back.col = "white"){
 #' Plots slices of the Munsell colour system where chroma is constant.
 #' @param chroma.name integer vector of the desired values. 
 #' @param back.col colour for the background
+#' @param label.size size of the text labels, in mm (passed to
+#'   \code{geom_text}). Defaults to 2.
 #' @return ggplot object
 #' @export
 #' @examples
@@ -191,7 +196,7 @@ value_slice <- function(value.name = 1:10,  back.col = "white"){
 #'    axis.text.x = ggplot2::element_text(angle = 90, hjust = 1))
 #' # all values 
 #' \dontrun{chroma_slice(seq(0, 38, by = 2))}
-chroma_slice <- function(chroma.name = seq(0, 26, by = 2),  back.col = "white"){
+chroma_slice <- function(chroma.name = seq(0, 26, by = 2),  back.col = "white", label.size = 2){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 needed for this function to work. Please install it.",
       call. = FALSE)
@@ -201,7 +206,7 @@ chroma_slice <- function(chroma.name = seq(0, 26, by = 2),  back.col = "white"){
       data = subset(munsell.map, chroma %in% chroma.name & hue != "N")) +
     ggplot2::geom_tile(ggplot2::aes(fill = hex), colour = back.col) +
     ggplot2::geom_text(ggplot2::aes(label = name, colour = text_colour(name)), 
-      angle = 45, size = 2) +
+      angle = 45, size = label.size) +
     ggplot2::scale_colour_identity() +
     ggplot2::scale_x_discrete("Hue") + 
     ggplot2::scale_y_continuous("Value") +
@@ -216,13 +221,15 @@ chroma_slice <- function(chroma.name = seq(0, 26, by = 2),  back.col = "white"){
 #' Plot a hue and its complement at all values and chromas
 #' @param hue.name character string of the desired hue. 
 #' @param back.col colour for the background
+#' @param label.size size of the text labels, in mm (passed to
+#'   \code{geom_text}). Defaults to 2.
 #' @return ggplot object
 #' @export
 #' @examples
 #' complement_slice("5PB")
 #' complement_slice("5R")
 #' complement_slice("10G")
-complement_slice <- function(hue.name,  back.col = "white"){
+complement_slice <- function(hue.name,  back.col = "white", label.size = 2){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 needed for this function to work. Please install it.",
       call. = FALSE)
@@ -243,7 +250,7 @@ complement_slice <- function(hue.name,  back.col = "white"){
       data = munsell.sub) + 
     ggplot2::geom_tile(ggplot2::aes(fill = hex), colour = back.col,  size = 1) +
     ggplot2::geom_text(ggplot2::aes(label = name, colour = text_colour(name)), 
-      angle = 45, size = 2) +
+      angle = 45, size = label.size) +
     ggplot2::scale_fill_identity() +
     ggplot2::scale_colour_identity() +
     ggplot2::scale_x_continuous("Chroma") + 
@@ -293,13 +300,15 @@ complement_slice <- function(hue.name,  back.col = "white"){
 #' @param G numeric vector of green values
 #' @param B numeric vector of blue values
 #' @param back.col colour for the background
+#' @param label.size size of the text labels, in mm (passed to
+#'   \code{geom_text}). Defaults to 2.
 #' @seealso \code{\link{rgb2mnsl}}
 #' @return ggplot object
 #' @export
 #' @examples
 #' plot_closest(0.1, 0.1, 0.3)
 #' plot_closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3)) 
-plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
+plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white", label.size = 2){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 needed for this function to work. Please install it.",
       call. = FALSE)
@@ -315,7 +324,7 @@ plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
   ggplot2::ggplot(data = little.df, ggplot2::aes(x = x, y = y)) + 
     ggplot2::geom_tile(ggplot2::aes(fill = hex),
       colour = back.col, size = 2) +
-    ggplot2::geom_text(ggplot2::aes(label = name, colour = text.colour), size = 2) +
+    ggplot2::geom_text(ggplot2::aes(label = name, colour = text.colour), size = label.size) +
     ggplot2::scale_colour_identity() +
     ggplot2::coord_fixed(ratio = 1) +
     theme_munsell(back.col) +

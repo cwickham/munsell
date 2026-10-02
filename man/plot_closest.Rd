@@ -4,7 +4,7 @@
 \alias{plot_closest}
 \title{Plot closest Munsell colour to an sRGB colour}
 \usage{
-plot_closest(R, G = NULL, B = NULL, back.col = "white")
+plot_closest(R, G = NULL, B = NULL, back.col = "white", label.size = 2)
 }
 \arguments{
 \item{R}{a numeric vector of red values or a 3 column matrix with the 
@@ -15,6 +15,9 @@ proportions R,  G,  B in the columns.}
 \item{B}{numeric vector of blue values}
 
 \item{back.col}{colour for the background}
+
+\item{label.size}{size of the text labels, in mm (passed to
+\code{geom_text}). Defaults to 2.}
 }
 \value{
 ggplot object
