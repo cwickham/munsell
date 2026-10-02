@@ -219,13 +219,15 @@ chroma_slice <- function(chroma.name = seq(0, 26, by = 2),  back.col = "white"){
 #' Plot a hue and its complement at all values and chromas
 #' @param hue.name character string of the desired hue. 
 #' @param back.col colour for the background
+#' @param label.size size of the text labels, in mm (passed to
+#'   \code{geom_text}). Defaults to 2.
 #' @return ggplot object
 #' @export
 #' @examples
 #' complement_slice("5PB")
 #' complement_slice("5R")
 #' complement_slice("10G")
-complement_slice <- function(hue.name,  back.col = "white"){
+complement_slice <- function(hue.name,  back.col = "white", label.size = 2){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 needed for this function to work. Please install it.",
       call. = FALSE)
@@ -246,7 +248,7 @@ complement_slice <- function(hue.name,  back.col = "white"){
       data = munsell.sub) + 
     ggplot2::geom_tile(ggplot2::aes(fill = hex), colour = back.col,  size = 1) +
     ggplot2::geom_text(ggplot2::aes(label = name, colour = text_colour(name)), 
-      angle = 45, size = 2) +
+      angle = 45, size = label.size) +
     ggplot2::scale_fill_identity() +
     ggplot2::scale_colour_identity() +
     ggplot2::scale_x_continuous("Chroma") + 
