@@ -1,5 +1,8 @@
 # munsell (development version)
 
+* `hue_slice()`, `chroma_slice()`, `complement_slice()` and `plot_closest()`
+  gain a `label.size` argument to control the size of label text (#6).
+
 # munsell 0.5.1
 
 * Fix documentation NOTEs
