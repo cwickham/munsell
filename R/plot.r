@@ -182,6 +182,8 @@ value_slice <- function(value.name = 1:10,  back.col = "white"){
 #' Plots slices of the Munsell colour system where chroma is constant.
 #' @param chroma.name integer vector of the desired values. 
 #' @param back.col colour for the background
+#' @param label.size size of the text labels, in mm (passed to
+#'   \code{geom_text}). Defaults to 2.
 #' @return ggplot object
 #' @export
 #' @examples
@@ -194,7 +196,7 @@ value_slice <- function(value.name = 1:10,  back.col = "white"){
 #'    axis.text.x = ggplot2::element_text(angle = 90, hjust = 1))
 #' # all values 
 #' \dontrun{chroma_slice(seq(0, 38, by = 2))}
-chroma_slice <- function(chroma.name = seq(0, 26, by = 2),  back.col = "white"){
+chroma_slice <- function(chroma.name = seq(0, 26, by = 2),  back.col = "white", label.size = 2){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 needed for this function to work. Please install it.",
       call. = FALSE)
@@ -204,7 +206,7 @@ chroma_slice <- function(chroma.name = seq(0, 26, by = 2),  back.col = "white"){
       data = subset(munsell.map, chroma %in% chroma.name & hue != "N")) +
     ggplot2::geom_tile(ggplot2::aes(fill = hex), colour = back.col) +
     ggplot2::geom_text(ggplot2::aes(label = name, colour = text_colour(name)), 
-      angle = 45, size = 2) +
+      angle = 45, size = label.size) +
     ggplot2::scale_colour_identity() +
     ggplot2::scale_x_discrete("Hue") + 
     ggplot2::scale_y_continuous("Value") +
@@ -298,13 +300,15 @@ complement_slice <- function(hue.name,  back.col = "white", label.size = 2){
 #' @param G numeric vector of green values
 #' @param B numeric vector of blue values
 #' @param back.col colour for the background
+#' @param label.size size of the text labels, in mm (passed to
+#'   \code{geom_text}). Defaults to 2.
 #' @seealso \code{\link{rgb2mnsl}}
 #' @return ggplot object
 #' @export
 #' @examples
 #' plot_closest(0.1, 0.1, 0.3)
 #' plot_closest(matrix(c(.1, .2, .4, .5, .6, .8),  ncol = 3)) 
-plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
+plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white", label.size = 2){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 needed for this function to work. Please install it.",
       call. = FALSE)
@@ -320,7 +324,7 @@ plot_closest <- function(R, G = NULL, B = NULL,  back.col = "white"){
   ggplot2::ggplot(data = little.df, ggplot2::aes(x = x, y = y)) + 
     ggplot2::geom_tile(ggplot2::aes(fill = hex),
       colour = back.col, size = 2) +
-    ggplot2::geom_text(ggplot2::aes(label = name, colour = text.colour), size = 2) +
+    ggplot2::geom_text(ggplot2::aes(label = name, colour = text.colour), size = label.size) +
     ggplot2::scale_colour_identity() +
     ggplot2::coord_fixed(ratio = 1) +
     theme_munsell(back.col) +

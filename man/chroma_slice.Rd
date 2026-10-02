@@ -4,12 +4,19 @@
 \alias{chroma_slice}
 \title{Plot all colours with the same chroma}
 \usage{
-chroma_slice(chroma.name = seq(0, 26, by = 2), back.col = "white")
+chroma_slice(
+  chroma.name = seq(0, 26, by = 2),
+  back.col = "white",
+  label.size = 2
+)
 }
 \arguments{
 \item{chroma.name}{integer vector of the desired values.}
 
 \item{back.col}{colour for the background}
+
+\item{label.size}{size of the text labels, in mm (passed to
+\code{geom_text}). Defaults to 2.}
 }
 \value{
 ggplot object
